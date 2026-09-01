@@ -31,16 +31,16 @@ button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation
 .header{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:42px}
 .header-left{display:flex;align-items:center;gap:8px;min-width:0}.menu-btn{width:38px;height:38px;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);display:grid;place-items:center;flex:0 0 auto}.hamburger{width:18px;height:14px;display:grid;gap:3px}.hamburger span{height:2px;background:currentColor}
 .app-logo{width:38px;height:38px;border-radius:10px;overflow:hidden;flex:0 0 auto}.brand{font-size:clamp(1.2rem,5vw,1.9rem);font-weight:950;white-space:nowrap}
-.btn{border:1px solid var(--border);border-radius:11px;background:var(--panel2);color:var(--text);padding:9px 10px;font-weight:800;white-space:nowrap}.btn.primary{background:var(--accent);color:#111;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}.btn:active{transform:scale(.97)}
+.btn{border:1px solid var(--border);border-radius:11px;background:var(--panel2);color:var(--text);padding:9px 10px;font-weight:800;white-space:nowrap}.btn.primary{background:var(--accent);color:#111;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}.btn:active{transform:scale(.97)}.icon-btn{width:38px;height:38px;padding:0;display:grid;place-items:center;font-size:1.15rem}
 input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius:10px;background:color-mix(in srgb,var(--panel2) 84%,#000);color:var(--text);padding:9px 10px;font-size:.9rem}
-.control-stack{display:grid;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:7px}
-.control-row{display:grid;gap:6px;align-items:center}
-.row-player{grid-template-columns:minmax(0,1.3fr) minmax(115px,1fr) auto}
-.row-profile{grid-template-columns:minmax(120px,1fr) auto auto}
-.row-life{grid-template-columns:minmax(120px,1fr) auto}
+.control-stack{display:grid;gap:7px;background:transparent;border:0;padding:0}
+.control-row{display:grid;gap:6px;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:7px}
+.row-player{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto}
+.row-profile{grid-template-columns:minmax(0,1fr) auto auto 38px}
+.row-life{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 .mini-help{font-size:.68rem;color:var(--muted);margin-top:-1px}
 
-.players{min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:8px;overflow:auto;scrollbar-width:none}.players::-webkit-scrollbar{display:none}
+.players{min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:calc((100% - 16px)/3);align-content:start;gap:8px;overflow:auto;scrollbar-width:none}.players::-webkit-scrollbar{display:none}
 .player{--pc:#60a5fa;min-height:0;border:1px solid color-mix(in srgb,var(--pc) 72%,var(--border));border-left:4px solid var(--pc);border-radius:15px;background:linear-gradient(180deg,color-mix(in srgb,var(--pc) 7%,var(--panel2)),var(--panel));display:grid;grid-template-rows:auto auto 1fr;overflow:hidden}
 .player.added{animation:playerIn .25s ease both}.player.removing{animation:playerOut .2s ease both}.player.life-change .life-main{animation:lifeBump .26s ease}
 .player.swimmer{box-shadow:0 0 0 2px color-mix(in srgb,var(--blue) 65%,transparent),0 0 22px color-mix(in srgb,var(--blue) 24%,transparent);animation:swimmerPulse 1.55s ease-in-out infinite}
@@ -57,7 +57,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 .life-row{display:grid;grid-template-columns:42px 1fr 42px;min-height:0;border-top:1px solid var(--border)}
 .life-btn{border:0;background:rgba(255,255,255,.035);color:var(--text);font-size:1.5rem;font-weight:900}.life-display{display:flex;align-items:center;justify-content:center;min-width:0}
 .life-main{font-size:clamp(2rem,8vw,3.25rem);font-weight:950;line-height:1}
-.state-swimmer .life-main{font-size:.88rem;color:var(--blue);letter-spacing:.01em;padding:4px 6px;border:1px solid color-mix(in srgb,var(--blue) 45%,var(--border));border-radius:999px;white-space:nowrap}
+.state-swimmer .life-main{font-size:.70rem;color:var(--blue);letter-spacing:.01em;padding:4px 6px;border:1px solid color-mix(in srgb,var(--blue) 45%,var(--border));border-radius:999px;white-space:nowrap}
 .state-over .life-main{font-size:.92rem;color:#fca5a5;white-space:nowrap}
 .empty{grid-column:1/-1;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border);border-radius:15px;color:var(--muted);text-align:center;padding:20px}
 .undo-bar{display:flex;justify-content:center}.undo-btn{opacity:.72;padding:8px 14px;border-radius:999px;font-size:.8rem}.undo-btn:disabled{opacity:.28}
@@ -71,7 +71,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 .drawer{position:absolute;left:0;top:0;bottom:0;width:min(340px,88vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:.24s;padding:max(16px,env(safe-area-inset-top)) 14px max(16px,env(safe-area-inset-bottom));display:flex;flex-direction:column}.drawer-overlay.open .drawer{transform:none}
 .drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.drawer-title{font-weight:950;font-size:1.2rem}.drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
 .drawer-nav{display:grid;gap:8px}.drawer-bottom{margin-top:auto}.drawer-item{display:flex;align-items:center;gap:12px;width:100%;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800;text-align:left}.drawer-item:active{background:var(--panel2)}
-.drawer-icon{width:28px;text-align:center;font-size:1.2rem;color:var(--accent2)}.drawer-icon.settings{font-size:1.55rem}.drawer-spacer{height:1px;background:var(--border);margin:8px 0}
+.drawer-icon{width:28px;text-align:center;font-size:1.2rem;color:var(--accent2)}.drawer-icon.settings{font-size:1.55rem}.drawer-spacer{height:0;background:transparent;margin:2px 0}
 
 .modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:14px;z-index:90}.modal-backdrop.open{display:flex}
 .modal{width:min(680px,100%);max-height:min(84dvh,760px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:18px}.modal-head{position:sticky;top:0;background:var(--panel);display:flex;justify-content:space-between;align-items:center;padding:14px 15px;border-bottom:1px solid var(--border);z-index:2}.modal-head h2{margin:0;font-size:1.15rem}.modal-body{padding:12px}.close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
@@ -84,9 +84,9 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 
 @media(max-width:640px){
  .brand{font-size:1.15rem}.header .btn{font-size:.76rem;padding:8px 9px}
- .row-player{grid-template-columns:minmax(0,1.15fr) minmax(105px,.9fr) auto}
- .row-profile{grid-template-columns:minmax(105px,1fr) auto auto}
- .row-life{grid-template-columns:minmax(110px,1fr) auto}
+ .row-player{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto}
+ .row-profile{grid-template-columns:minmax(0,1fr) auto auto 36px}
+ .row-life{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
  .control-row .btn{font-size:.75rem;padding:8px 9px}
  .rank-tabs{grid-template-columns:1fr}
  .player-list-actions{flex-direction:column}
@@ -95,7 +95,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
  #appRoot{gap:6px;padding-top:6px;padding-bottom:6px}.control-stack{padding:5px;gap:5px}input,select{padding:7px 8px;font-size:.78rem}.btn{padding:7px 8px}.players{gap:6px}
  .player-top{padding:5px 7px 4px}.player-avatar{width:28px;height:28px}.aaa-row{padding:0 7px 4px}.aaa-btn{height:26px}.life-row{grid-template-columns:38px 1fr 38px}
 }
-@media(min-width:760px){.players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}}
+@media(min-width:760px){.players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:calc((100% - 8px)/2)}}
 </style>
 </head>
 <body>
@@ -125,7 +125,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 
  <section class="control-stack">
   <div class="control-row row-player">
-   <input id="newPlayerInput" maxlength="24" placeholder="Neuen Spieler eingeben">
+   <input id="newPlayerInput" maxlength="24" placeholder="Neuer Spieler">
    <select id="knownPlayerSelect"><option value="">Spieler auswählen</option></select>
    <button class="btn primary" id="addPlayerBtn">Hinzufügen</button>
   </div>
@@ -134,6 +134,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
    <select id="profileSelect"><option value="">Profil auswählen</option></select>
    <button class="btn" id="profileAddBtn">Hinzufügen</button>
    <button class="btn" id="profileLoadBtn">Laden</button>
+   <button class="btn icon-btn" id="profileManageBtn" aria-label="Profil bearbeiten">⚙︎</button>
   </div>
 
   <div class="control-row row-life">
@@ -162,7 +163,6 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
   <div class="drawer-head"><div class="drawer-title">Knack</div><button class="drawer-close" id="drawerClose">✕</button></div>
   <nav class="drawer-nav">
    <button class="drawer-item" id="drawerPlayers"><span class="drawer-icon">👥</span><span>Spieler</span></button>
-   <div class="drawer-spacer"></div>
    <button class="drawer-item" id="drawerHistory"><span class="drawer-icon">↶</span><span>Letzte Spiele</span></button>
    <button class="drawer-item" id="drawerRanking"><span class="drawer-icon">🏆</span><span>Rangliste</span></button>
    <button class="drawer-item" id="drawerQr"><span class="drawer-icon">▦</span><span>QR-Code</span></button>
@@ -216,7 +216,33 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 
 <div class="modal-backdrop" id="settingsModal"><div class="modal">
  <div class="modal-head"><h2>Einstellungen</h2><button class="close" data-close="settingsModal">✕</button></div>
- <div class="modal-body"><div class="settings-section"><div class="settings-row"><div><strong>Design</strong></div><select id="themeSelect" style="width:150px"></select></div></div></div>
+ <div class="modal-body">
+  <div class="settings-section"><div class="settings-row"><div><strong>Design</strong></div><select id="themeSelect" style="width:150px"></select></div></div>
+  <div class="settings-section">
+   <h3>Statistik</h3>
+   <div class="small" style="margin-bottom:9px">Löscht die gemeinsame Rangliste und alle gespeicherten letzten Spiele.</div>
+   <button class="btn danger" id="resetStatsBtn" style="width:100%">Statistik zurücksetzen</button>
+  </div>
+ </div>
+</div></div>
+
+
+<div class="modal-backdrop" id="profileManageModal"><div class="modal">
+ <div class="modal-head"><h2>Profil bearbeiten</h2><button class="close" data-close="profileManageModal">✕</button></div>
+ <div class="modal-body">
+  <div class="small" style="margin-bottom:5px">Profilname</div>
+  <input id="profileManageName" maxlength="28">
+  <button class="btn primary" id="profileRenameBtn" style="width:100%;margin-top:10px">Namen speichern</button>
+  <button class="btn danger" id="profileDeleteBtn" style="width:100%;margin-top:8px">Profil löschen</button>
+ </div>
+</div></div>
+
+<div class="modal-backdrop" id="confirmAaaModal"><div class="modal">
+ <div class="modal-head"><h2>Super-Knack?</h2><button class="close" data-close="confirmAaaModal">✕</button></div>
+ <div class="modal-body">
+  <p id="confirmAaaText">Super-Knack?</p>
+  <button class="btn primary" id="confirmAaaBtn" style="width:100%">Bestätigen</button>
+ </div>
 </div></div>
 
 <div class="modal-backdrop" id="confirmNewGameModal"><div class="modal">
@@ -257,7 +283,7 @@ function loadLocal(){
 }
 let state=loadLocal();
 const persist=()=>localStorage.setItem("knack_v10_state",JSON.stringify(state));
-let sharedPlayers={},editingPlayerId=null,rankMode="lost",animateNewId=null,animateLifeId=null;
+let sharedPlayers={},editingPlayerId=null,rankMode="lost",animateNewId=null,animateLifeId=null,pendingAaaId=null;
 
 const esc=s=>String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
 const initials=n=>n.split(/\s+/).map(x=>x[0]).join("").slice(0,2).toUpperCase()||"?";
@@ -301,7 +327,11 @@ function renderGame(){
   card.innerHTML=`<div class="player-top"><div class="player-avatar" style="background:${p.color||"#60a5fa"}">${avatar}</div><div class="player-name">${esc(p.name)}</div><button class="remove">✕</button></div><div class="aaa-row"><button class="aaa-btn">AAA</button></div><div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${gp.life<=0?"Game Over":gp.life===1?"Schwimmer":gp.life}</div></div><button class="life-btn plus">+</button></div>`;
   card.querySelector(".minus").onclick=()=>life(gp.id,-1);
   card.querySelector(".plus").onclick=()=>life(gp.id,1);
-  card.querySelector(".aaa-btn").onclick=()=>aaa(gp.id);
+  card.querySelector(".aaa-btn").onclick=()=>{
+   pendingAaaId=gp.id;
+   $("confirmAaaText").textContent=`Super-Knack von ${p.name}?`;
+   openModal("confirmAaaModal");
+  };
   card.querySelector(".remove").onclick=()=>removeGamePlayer(gp.id,card);
   $("players").appendChild(card);
  });
@@ -343,6 +373,12 @@ function aaa(sourceId){
  state.game.players.forEach(p=>{if(p.id!==sourceId)p.life=Math.max(0,p.life-1)});
  persist();renderGame();
 }
+function confirmAaa(){
+ if(!pendingAaaId)return;
+ const id=pendingAaaId;pendingAaaId=null;
+ closeModal("confirmAaaModal");
+ aaa(id);
+}
 function removeGamePlayer(id,card){
  card.classList.add("removing");
  setTimeout(()=>{setUndo("Spieler entfernt");state.game.players=state.game.players.filter(p=>p.id!==id);persist();renderGame()},150);
@@ -373,18 +409,29 @@ function loadProfile(){
  state.game.players=(p.members||[]).filter(id=>sharedPlayers[id]).map(id=>({id:uid(),playerId:id,life:state.lives}));
  persist();renderGame();
 }
-function maybeDeleteProfile(){
+function openProfileManager(){
  const name=$("profileSelect").value;
- if(!name)return;
+ if(!name)return alert("Bitte zuerst ein Profil auswählen.");
+ $("profileManageName").value=name;
+ openModal("profileManageModal");
 }
-function attachProfileDeleteGesture(){
- $("profileSelect").addEventListener("contextmenu",e=>{
-   e.preventDefault();
-   const name=$("profileSelect").value;if(!name)return;
-   if(confirm(`Profil "${name}" löschen?`)){delete state.profiles[name];persist();refreshSelects();}
- });
+function renameProfile(){
+ const oldName=$("profileSelect").value;
+ const newName=$("profileManageName").value.trim();
+ if(!oldName||!state.profiles[oldName])return;
+ if(!newName)return alert("Profilname fehlt.");
+ if(newName!==oldName&&state.profiles[newName])return alert("Ein Profil mit diesem Namen existiert bereits.");
+ const profile=state.profiles[oldName];
+ if(newName!==oldName){delete state.profiles[oldName];state.profiles[newName]=profile;}
+ persist();refreshSelects();$("profileSelect").value=newName;closeModal("profileManageModal");
 }
-attachProfileDeleteGesture();
+function deleteProfile(){
+ const name=$("profileSelect").value;
+ if(!name||!state.profiles[name])return;
+ if(!confirm(`Profil "${name}" wirklich löschen?`))return;
+ delete state.profiles[name];persist();refreshSelects();closeModal("profileManageModal");
+}
+
 
 async function finishRound(){
  if(!state.game.players.length){closeModal("confirmNewGameModal");return}
@@ -448,6 +495,16 @@ async function migrateLocalPlayersToCloud(){
  localStorage.setItem("knack_v10_players_migrated","1");
 }
 
+async function resetStats(){
+ if(!confirm("Rangliste und letzte Spiele wirklich vollständig zurücksetzen?"))return;
+ try{
+  await remove(ref(db,"sharedHistory"));
+  closeModal("settingsModal");
+  alert("Statistik wurde zurückgesetzt.");
+ }catch{
+  alert("Statistik konnte nicht zurückgesetzt werden.");
+ }
+}
 async function getHistory(){const s=await get(ref(db,"sharedHistory"));return Object.values(s.val()||{}).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0))}
 async function showHistory(){
  closeDrawer();openModal("historyModal");$("historyBody").innerHTML='<div class="empty">Lade…</div>';
@@ -476,16 +533,16 @@ $("drawerHistory").onclick=showHistory;$("drawerRanking").onclick=showRanking;$(
 $("drawerSettings").onclick=()=>{closeDrawer();openModal("settingsModal")};
 
 $("addPlayerBtn").onclick=addFromMain;$("newPlayerInput").onkeydown=e=>{if(e.key==="Enter")addFromMain()};
-$("profileAddBtn").onclick=addProfile;$("profileLoadBtn").onclick=loadProfile;
+$("profileAddBtn").onclick=addProfile;$("profileLoadBtn").onclick=loadProfile;$("profileManageBtn").onclick=openProfileManager;$("profileRenameBtn").onclick=renameProfile;$("profileDeleteBtn").onclick=deleteProfile;
 $("livesSelect").onchange=()=>changeLives($("livesSelect").value);
 $("removeAllBtn").onclick=removeAll;$("undoBtn").onclick=undo;
-$("newGameBtn").onclick=()=>openModal("confirmNewGameModal");$("confirmNewGameBtn").onclick=finishRound;
+$("newGameBtn").onclick=()=>openModal("confirmNewGameModal");$("confirmNewGameBtn").onclick=finishRound;$("confirmAaaBtn").onclick=confirmAaa;
 
 $("newSharedPlayerBtn").onclick=()=>openPlayerEditor(null);$("saveSharedPlayerBtn").onclick=saveSharedPlayer;
 $("playerPhotoInput").onchange=e=>{if(e.target.files?.[0])resizePhoto(e.target.files[0])};
 
 $("themeSelect").innerHTML=Object.entries(THEMES).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join("");
-$("themeSelect").value=state.theme;$("themeSelect").onchange=()=>applyTheme($("themeSelect").value);
+$("themeSelect").value=state.theme;$("themeSelect").onchange=()=>applyTheme($("themeSelect").value);$("resetStatsBtn").onclick=resetStats;
 
 document.querySelectorAll(".rank-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".rank-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");rankMode=b.dataset.rank;renderRanking()});
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
