@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#050505">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -12,82 +12,86 @@
 <title>Knack</title>
 <style>
 :root{
-  --bg:#050505;--panel:#0c0c0c;--panel2:#151515;--panel3:#1f1f1f;
-  --border:rgba(255,255,255,.12);--text:#fff;--muted:#aaa;
-  --accent:#d4af37;--accent2:#f4d66b;--danger:#ef4444;--ok:#22c55e;--blue:#fff;
-  --overlay:rgba(0,0,0,.76)
+ --bg:#050505;--panel:#0c0c0c;--panel2:#151515;--panel3:#1f1f1f;
+ --border:rgba(255,255,255,.12);--text:#fff;--muted:#aaa;
+ --accent:#d4af37;--accent2:#f4d66b;--danger:#ef4444;--ok:#22c55e;--blue:#fff;--overlay:rgba(0,0,0,.78)
 }
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-body{min-height:100svh;background:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 34rem),var(--bg)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;overscroll-behavior:none;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+body{min-height:100dvh;background:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 34rem),var(--bg)}
 button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}.hidden{display:none!important}
 
 /* install */
-#installGate{min-height:100svh;display:grid;place-items:center;padding:18px}
+#installGate{height:100dvh;overflow:auto;display:grid;place-items:center;padding:max(18px,env(safe-area-inset-top)) 18px max(18px,env(safe-area-inset-bottom))}
 .install-card{width:min(520px,100%);background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.35)}
-.install-logo{width:86px;height:86px;border-radius:20px;overflow:hidden;margin-bottom:14px}
-.install-logo img,.app-logo img{width:100%;height:100%;object-fit:cover;display:block}
-.install-card h1{margin:0 0 6px;font-size:clamp(2rem,9vw,3rem);letter-spacing:-.05em}
-.install-card>p{color:var(--muted);line-height:1.45;margin:0 0 16px}
+.install-logo{width:86px;height:86px;border-radius:20px;overflow:hidden;margin-bottom:14px}.install-logo img,.app-logo img{width:100%;height:100%;object-fit:cover;display:block}
+.install-card h1{margin:0 0 6px;font-size:clamp(2rem,9vw,3rem);letter-spacing:-.05em}.install-card>p{color:var(--muted);line-height:1.45;margin:0 0 16px}
 .steps{display:grid;gap:10px}.step{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:12px}
 .num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111;display:grid;place-items:center;font-weight:900}.step strong{display:block;margin-bottom:2px}.hint{font-size:.84rem;color:var(--muted);line-height:1.35}
 
 /* splash */
-#splash{position:fixed;inset:0;background:var(--bg);z-index:200;overflow:hidden;display:grid;place-items:center}
-#splash.wipe{animation:splashWipe .85s cubic-bezier(.72,0,.22,1) forwards}
+#splash{position:fixed;inset:0;background:var(--bg);z-index:250;overflow:hidden;display:grid;place-items:center}
+#splash.wipe{animation:splashWipe .92s cubic-bezier(.72,0,.22,1) forwards}
+.splash-stack{display:grid;place-items:center;gap:16px}
+.splash-logo{width:112px;height:112px;border-radius:25px;overflow:hidden;opacity:0;transform:scale(.75);animation:logoBuild .42s .08s cubic-bezier(.2,.8,.3,1.18) forwards}
+.splash-logo img{width:100%;height:100%;object-fit:cover}
 .splash-word{display:flex;gap:.01em;font-size:clamp(4rem,20vw,9rem);font-weight:950;letter-spacing:-.06em;color:var(--text)}
-.splash-word span{opacity:0;transform:translateY(20px) scale(.68);animation:letterBuild .16s cubic-bezier(.2,.8,.3,1.25) forwards}
-.splash-word span:nth-child(1){animation-delay:.08s}.splash-word span:nth-child(2){animation-delay:.18s}.splash-word span:nth-child(3){animation-delay:.28s}.splash-word span:nth-child(4){animation-delay:.38s}.splash-word span:nth-child(5){animation-delay:.48s}
-@keyframes letterBuild{to{opacity:1;transform:none}}@keyframes splashWipe{from{clip-path:inset(0 0 0 0)}to{clip-path:inset(0 100% 0 0)}}
+.splash-word span{opacity:0;transform:translateY(20px) scale(.68);animation:letterBuild .18s cubic-bezier(.2,.8,.3,1.25) forwards}
+.splash-word span:nth-child(1){animation-delay:.38s}.splash-word span:nth-child(2){animation-delay:.50s}.splash-word span:nth-child(3){animation-delay:.62s}.splash-word span:nth-child(4){animation-delay:.74s}.splash-word span:nth-child(5){animation-delay:.86s}
+@keyframes logoBuild{to{opacity:1;transform:none}}@keyframes letterBuild{to{opacity:1;transform:none}}@keyframes splashWipe{from{clip-path:inset(0 0 0 0)}to{clip-path:inset(0 100% 0 0)}}
 
 /* main */
-#appRoot{width:min(980px,100%);height:100svh;margin:auto;display:grid;grid-template-rows:auto auto 1fr;gap:8px;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));overflow:hidden}
+#appRoot{width:min(980px,100%);height:100dvh;margin:auto;display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));overflow:hidden}
 .header{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:42px}.header-left{display:flex;align-items:center;gap:8px;min-width:0}
-.menu-btn{width:38px;height:38px;padding:0;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);display:grid;place-items:center}
-.hamburger{width:18px;height:14px;display:grid;gap:3px}.hamburger span{height:2px;background:currentColor;border-radius:2px}
+.menu-btn{width:38px;height:38px;padding:0;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);display:grid;place-items:center}.hamburger{width:18px;height:14px;display:grid;gap:3px}.hamburger span{height:2px;background:currentColor;border-radius:2px}
 .app-logo{width:38px;height:38px;border-radius:10px;overflow:hidden;flex:0 0 auto}.brand-wrap{min-width:0}.brand{font-size:clamp(1.2rem,5vw,1.9rem);font-weight:950;letter-spacing:-.04em;line-height:1}
-.roomline{font-size:.72rem;color:var(--muted);margin-top:3px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.room-code{color:var(--accent2);font-weight:900;letter-spacing:.08em}.online-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}
-.header-actions{display:flex;gap:6px;justify-content:flex-end}
-.btn{border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 12px;font-weight:800;transition:transform .14s ease}.btn:active{transform:scale(.96)}
-.btn.primary{background:var(--accent);color:#111;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}
+.roomline{font-size:.72rem;color:var(--muted);margin-top:3px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}.live-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}.host-crown{color:var(--accent2);font-size:.9rem}
+.header-actions{display:flex;gap:6px}.btn{border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 12px;font-weight:800;transition:transform .14s ease,filter .14s ease}.btn:active{transform:scale(.96)}
+.btn.primary{background:var(--accent);color:#111;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}.btn.ghost{background:transparent}
 input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius:11px;background:color-mix(in srgb,var(--panel2) 84%,#000);color:var(--text);outline:none;padding:10px 11px}
 input:focus,select:focus{border-color:var(--accent)}
 .toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:7px}
-.toolbar-row2{grid-column:1/-1;display:grid;grid-template-columns:minmax(110px,.7fr) minmax(130px,1fr) auto auto auto;gap:6px}
+.toolbar-row2{grid-column:1/-1;display:grid;grid-template-columns:minmax(108px,.7fr) minmax(130px,1fr) auto auto auto;gap:6px}
 .players{min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:8px;overflow:auto;scrollbar-width:none}.players::-webkit-scrollbar{display:none}
-.player{min-height:0;border:1px solid var(--border);border-radius:15px;background:linear-gradient(180deg,var(--panel2),var(--panel));display:grid;grid-template-rows:auto 1fr;overflow:hidden;transition:transform .2s ease,opacity .2s ease}
-.player.added{animation:playerIn .28s ease both}.player.removing{animation:playerOut .22s ease both}
-@keyframes playerIn{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:none}}@keyframes playerOut{to{opacity:0;transform:scale(.92) translateY(6px)}}
-.player-top{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;align-items:center;padding:7px 8px 5px}.player-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(.92rem,3.5vw,1.08rem);font-weight:850}
-.aaa-btn,.remove{height:28px;border-radius:8px;border:1px solid var(--border);font-weight:900}.aaa-btn{padding:0 8px;background:color-mix(in srgb,var(--accent) 14%,var(--panel2));color:var(--accent2);font-size:.72rem}.remove{width:28px;padding:0;background:rgba(239,68,68,.12);color:#fecaca}
+.player{--pc:#60a5fa;min-height:0;border:1px solid color-mix(in srgb,var(--pc) 72%,var(--border));border-left:4px solid var(--pc);border-radius:15px;background:linear-gradient(180deg,color-mix(in srgb,var(--pc) 7%,var(--panel2)),var(--panel));display:grid;grid-template-rows:auto 1fr;overflow:hidden;transition:transform .2s ease,opacity .2s ease,box-shadow .2s ease}
+.player.added{animation:playerIn .28s ease both}.player.removing{animation:playerOut .22s ease both}.player.aaa-hit{animation:aaaHit .5s ease}.player.swimmer{box-shadow:0 0 0 2px color-mix(in srgb,var(--blue) 65%,transparent),0 0 22px color-mix(in srgb,var(--blue) 24%,transparent);animation:swimmerPulse 1.55s ease-in-out infinite}
+@keyframes playerIn{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:none}}@keyframes playerOut{to{opacity:0;transform:scale(.92) translateY(6px)}}@keyframes aaaHit{0%{transform:none}35%{transform:translateX(-5px) scale(.98);filter:brightness(1.5)}70%{transform:translateX(3px)}100%{transform:none}}@keyframes swimmerPulse{50%{box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 85%,transparent),0 0 30px color-mix(in srgb,var(--blue) 35%,transparent)}}
+.player-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:6px;align-items:center;padding:7px 8px 5px}
+.player-color{width:11px;height:11px;border-radius:50%;background:var(--pc);box-shadow:0 0 8px color-mix(in srgb,var(--pc) 45%,transparent)}
+.player-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(.92rem,3.5vw,1.08rem);font-weight:850}.player-host{color:var(--accent2);margin-left:3px}
+.aaa-btn,.remove{height:28px;border-radius:8px;border:1px solid var(--border);font-weight:900}.aaa-btn{padding:0 8px;background:color-mix(in srgb,var(--pc) 13%,var(--panel2));color:var(--pc);font-size:.72rem}.remove{width:28px;padding:0;background:rgba(239,68,68,.12);color:#fecaca}
 .life-row{min-height:0;display:grid;grid-template-columns:45px minmax(0,1fr) 45px;align-items:stretch;border-top:1px solid var(--border)}.life-btn{border:0;border-radius:0;background:rgba(255,255,255,.035);color:var(--text);font-size:1.6rem;font-weight:900}
-.life-display{min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px 4px}.life-main{font-size:clamp(2rem,9vw,3.55rem);font-weight:950;line-height:.95;letter-spacing:-.06em}.life-main.bump{animation:lifeBump .26s ease}
-@keyframes lifeBump{0%{transform:scale(1)}45%{transform:scale(1.18)}100%{transform:scale(1)}}.state-swimmer .life-main{font-size:clamp(1.15rem,5vw,2rem);color:var(--blue);letter-spacing:-.02em}.state-over .life-main{font-size:clamp(1.05rem,4.7vw,1.85rem);color:#fca5a5;letter-spacing:-.02em}
+.life-display{min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px 4px}.life-main{font-size:clamp(2rem,9vw,3.55rem);font-weight:950;line-height:.95;letter-spacing:-.06em}.life-main.bump{animation:lifeBump .26s ease}@keyframes lifeBump{45%{transform:scale(1.18)}}
+.state-swimmer .life-main{font-size:clamp(1.15rem,5vw,2rem);color:var(--blue);letter-spacing:-.02em}.state-swimmer .life-main::before{content:"≋ ";font-size:.8em}.state-over .life-main{font-size:clamp(1.05rem,4.7vw,1.85rem);color:#fca5a5;letter-spacing:-.02em}
 .empty{grid-column:1/-1;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border);border-radius:15px;color:var(--muted);text-align:center;padding:20px}
+.undo-bar{display:flex;justify-content:center;pointer-events:none}.undo-btn{pointer-events:auto;opacity:.72;padding:8px 14px;border-radius:999px;font-size:.8rem;display:flex;gap:6px;align-items:center}.undo-btn:disabled{opacity:.28}
 
 /* drawer */
 .drawer-overlay{position:fixed;inset:0;background:rgba(2,6,23,.55);opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:80}.drawer-overlay.open{opacity:1;pointer-events:auto}
-.drawer{position:absolute;left:0;top:0;bottom:0;width:min(340px,88vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:transform .24s ease;padding:max(16px,env(safe-area-inset-top)) 14px 16px;box-shadow:20px 0 50px rgba(0,0,0,.25);display:flex;flex-direction:column}
-.drawer-overlay.open .drawer{transform:translateX(0)}.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.drawer-title{font-size:1.2rem;font-weight:950}
-.drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}.drawer-nav{display:grid;gap:8px}.drawer-bottom{margin-top:auto}
-.drawer-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800}.drawer-item:active{background:var(--panel2);border-color:var(--border)}
-.drawer-icon{width:28px;text-align:center;font-size:1.2rem}.drawer-icon.settings{font-size:1.55rem}.drawer-spacer{height:1px;background:var(--border);margin:8px 0}
+.drawer{position:absolute;left:0;top:0;bottom:0;width:min(340px,88vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:transform .24s ease;padding:max(16px,env(safe-area-inset-top)) 14px max(16px,env(safe-area-inset-bottom));box-shadow:20px 0 50px rgba(0,0,0,.25);display:flex;flex-direction:column}
+.drawer-overlay.open .drawer{transform:translateX(0)}.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.drawer-title{font-size:1.2rem;font-weight:950}.drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
+.drawer-nav{display:grid;gap:8px}.drawer-bottom{margin-top:auto}.drawer-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800}.drawer-item:active{background:var(--panel2);border-color:var(--border)}
+.drawer-svg{width:26px;height:26px;display:grid;place-items:center;color:var(--accent2)}.drawer-svg svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}.drawer-svg.settings svg{width:28px;height:28px}.drawer-spacer{height:1px;background:var(--border);margin:8px 0}
 
-/* room list + modal */
+/* modals */
 .modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:14px;z-index:90}.modal-backdrop.open{display:flex}
-.modal{width:min(680px,100%);max-height:min(82svh,740px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:18px;box-shadow:0 25px 80px rgba(0,0,0,.45)}
+.modal{width:min(680px,100%);max-height:min(84dvh,760px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:18px;box-shadow:0 25px 80px rgba(0,0,0,.45)}
 .modal-head{position:sticky;top:0;background:var(--panel);display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 15px;border-bottom:1px solid var(--border);z-index:2}.modal-head h2{margin:0;font-size:1.15rem}.modal-body{padding:12px}
 .close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
-.room-card,.history-item,.rank-item,.profile-item,.settings-section{border:1px solid var(--border);border-radius:12px;background:var(--panel2);padding:10px;margin-bottom:8px}
-.room-card{display:flex;align-items:center;justify-content:space-between;gap:10px}.room-name{font-weight:900}.room-meta{font-size:.76rem;color:var(--muted);margin-top:2px}
+.room-card,.history-item,.rank-item,.profile-item,.settings-section{border:1px solid var(--border);border-radius:13px;background:var(--panel2);padding:11px;margin-bottom:8px}
+.room-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}.room-logo{width:44px;height:44px;border-radius:12px;background:var(--panel3);overflow:hidden;display:grid;place-items:center}.room-logo img{width:100%;height:100%;object-fit:cover}.room-generic{font-weight:950;color:var(--accent2)}
+.room-name{font-weight:900}.room-meta{font-size:.76rem;color:var(--muted);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}.room-fresh{color:var(--ok)}
 .history-top,.rank-item,.profile-row{display:flex;justify-content:space-between;align-items:center;gap:10px}.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 10px;margin-top:7px;font-size:.84rem}.small{font-size:.78rem;color:var(--muted)}
+.rank-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}.rank-tab{padding:8px 5px;border-radius:10px;border:1px solid var(--border);background:var(--panel3);color:var(--text);font-size:.76rem;font-weight:800}.rank-tab.active{background:var(--accent);color:#111}
 .rank-pos{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--panel3);font-weight:900;flex:0 0 auto}.rank-name{flex:1;min-width:0;font-weight:800;overflow:hidden;text-overflow:ellipsis}.rank-score{font-weight:900;color:var(--accent2)}.medal{font-size:1.1rem}
-.profile-actions{display:flex;gap:6px}.theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.theme-card{border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--panel3);display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--text)}.theme-card.active{outline:2px solid var(--accent)}
-.swatches{display:flex;gap:4px}.swatch{width:15px;height:15px;border-radius:50%;border:1px solid rgba(127,127,127,.3)}.settings-section h3{margin:0 0 8px;font-size:1rem}
+.profile-actions{display:flex;gap:6px}.group-profile{display:grid;grid-template-columns:58px 1fr;gap:12px;align-items:center}.group-profile img{width:58px;height:58px;border-radius:50%}
+.settings-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}.settings-row:last-child{border-bottom:0}.toggle{width:48px;height:28px;border-radius:999px;background:var(--panel3);border:1px solid var(--border);padding:3px}.toggle-dot{width:20px;height:20px;border-radius:50%;background:var(--muted);transition:.2s}.toggle.on{background:color-mix(in srgb,var(--accent) 40%,var(--panel3))}.toggle.on .toggle-dot{transform:translateX(18px);background:var(--accent2)}
+.qr-box{text-align:center}.qr-box img{width:min(290px,80vw);background:white;border-radius:16px;padding:8px}.qr-url{font-size:.72rem;color:var(--muted);word-break:break-all;margin-top:7px}
+.onboarding .modal-head{display:none}.onboarding .modal-body{padding:20px}.welcome-icon{font-size:2.8rem;text-align:center;margin-bottom:8px}.welcome-title{text-align:center;font-size:1.35rem;font-weight:950;margin-bottom:5px}.welcome-sub{text-align:center;color:var(--muted);font-size:.86rem;margin-bottom:16px}
 
 @media(max-width:760px){
-  .header-actions .btn{padding:7px 8px;font-size:.74rem}
-  .toolbar-row2{grid-template-columns:minmax(100px,.7fr) minmax(110px,1fr) auto;grid-auto-rows:auto}
-  .toolbar-row2 .load-btn{grid-column:3}.toolbar-row2 .profile-save{grid-column:1/2}.toolbar-row2 .remove-all{grid-column:2/4}
+ .header-actions .btn{padding:7px 8px;font-size:.74rem}.toolbar-row2{grid-template-columns:minmax(96px,.7fr) minmax(108px,1fr) auto;grid-auto-rows:auto}.toolbar-row2 .profile-save{grid-column:1/2}.toolbar-row2 .remove-all{grid-column:2/4}
+ .rank-tabs{grid-template-columns:1fr}.room-card{grid-template-columns:42px 1fr auto}
 }
 @media(max-height:720px){#appRoot{gap:6px;padding-top:6px;padding-bottom:6px}.header{min-height:34px}.brand{font-size:1.05rem}.app-logo{width:32px;height:32px}.btn{padding:6px 8px;font-size:.72rem}.toolbar{padding:5px}input,select{padding:7px 8px;font-size:.8rem}.players{gap:6px}.player-top{padding:5px 7px 4px}.aaa-btn,.remove{height:25px}.remove{width:25px}.life-row{grid-template-columns:39px minmax(0,1fr) 39px}.life-main{font-size:clamp(1.7rem,7vh,2.8rem)}}
 @media(min-width:760px){.players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}}
@@ -95,218 +99,302 @@ input:focus,select:focus{border-color:var(--accent)}
 </head>
 <body>
 <section id="installGate">
-  <div class="install-card">
-    <div class="install-logo"><img id="installLogo" src="./logo-dark.png" alt=""></div>
-    <h1>Knack</h1>
-    <p>Knack funktioniert ausschließlich als Web‑App vom Home‑Bildschirm.</p>
-    <div class="steps">
-      <div class="step"><div class="num">1</div><div><strong>Auf Teilen tippen</strong><div class="hint">Öffne das Teilen-Menü in Safari über das Teilen-Symbol.</div></div></div>
-      <div class="step"><div class="num">2</div><div><strong>„Zum Home‑Bildschirm“ auswählen</strong><div class="hint">Bestätige anschließend das Hinzufügen der Web‑App.</div></div></div>
-      <div class="step"><div class="num">3</div><div><strong>Knack vom Home‑Bildschirm starten</strong><div class="hint">Von dort öffnet sich die App eigenständig.</div></div></div>
-    </div>
+ <div class="install-card">
+  <div class="install-logo"><img id="installLogo" src="./logo-dark.png" alt=""></div>
+  <h1>Knack</h1><p>Knack funktioniert ausschließlich als Web‑App vom Home‑Bildschirm.</p>
+  <div class="steps">
+   <div class="step"><div class="num">1</div><div><strong>Auf Teilen tippen</strong><div class="hint">Öffne das Teilen-Menü in Safari.</div></div></div>
+   <div class="step"><div class="num">2</div><div><strong>„Zum Home‑Bildschirm“ auswählen</strong><div class="hint">Bestätige das Hinzufügen der Web‑App.</div></div></div>
+   <div class="step"><div class="num">3</div><div><strong>Knack vom Home‑Bildschirm starten</strong><div class="hint">Danach öffnet sich die App im Vollbildmodus.</div></div></div>
   </div>
+ </div>
 </section>
 
 <section id="appRoot" class="hidden">
 <header class="header">
-  <div class="header-left">
-    <button class="menu-btn" id="menuBtn"><span class="hamburger"><span></span><span></span><span></span></span></button>
-    <div class="app-logo"><img id="appLogo" src="./logo-dark.png" alt="Knack"></div>
-    <div class="brand-wrap"><div class="brand">Knack</div><div class="roomline"><span><span class="online-dot"></span> Live</span><span id="roomNameLine">Kein Raum</span></div></div>
-  </div>
-  <div class="header-actions"><button class="btn primary" id="newGameBtn">Neues Spiel</button></div>
+ <div class="header-left">
+  <button class="menu-btn" id="menuBtn"><span class="hamburger"><span></span><span></span><span></span></span></button>
+  <div class="app-logo"><img id="appLogo" src="./logo-dark.png" alt="Knack"></div>
+  <div class="brand-wrap"><div class="brand">Knack</div><div class="roomline"><span id="liveStatus"><span class="live-dot"></span> Live</span><span id="roomNameLine">Kein Raum</span><span id="hostBadge" class="host-crown hidden">♛ Host</span></div></div>
+ </div>
+ <div class="header-actions"><button class="btn primary" id="newGameBtn">Neues Spiel</button></div>
 </header>
-
 <section class="toolbar">
-  <input id="playerInput" maxlength="24" placeholder="Spielername eingeben" autocomplete="off">
-  <button class="btn primary" id="addPlayerBtn">+ Spieler</button>
-  <div class="toolbar-row2">
-    <select id="modeSelect"><option value="3">3 Leben</option><option value="4" selected>4 Leben</option><option value="5">5 Leben</option></select>
-    <select id="profileSelect"><option value="">Profil auswählen</option></select>
-    <button class="btn load-btn" id="loadProfileBtn">Laden</button>
-    <button class="btn profile-save" id="profileBtn">Profil +</button>
-    <button class="btn danger remove-all" id="removeAllBtn">Alle entfernen</button>
-  </div>
+ <input id="playerInput" maxlength="24" placeholder="Spielername eingeben" autocomplete="off">
+ <button class="btn primary" id="addPlayerBtn">+ Spieler</button>
+ <div class="toolbar-row2">
+  <select id="modeSelect"><option value="3">3 Leben</option><option value="4" selected>4 Leben</option><option value="5">5 Leben</option></select>
+  <select id="profileSelect"><option value="">Profil auswählen</option></select>
+  <button class="btn" id="loadProfileBtn">Laden</button>
+  <button class="btn profile-save" id="profileBtn">Profil +</button>
+  <button class="btn danger remove-all" id="removeAllBtn">Alle entfernen</button>
+ </div>
 </section>
 <section class="players" id="players"></section>
+<div class="undo-bar"><button class="btn undo-btn" id="undoBtn" disabled>↶ <span>Rückgängig</span></button></div>
 </section>
 
-<div id="splash" class="hidden"><div class="splash-word"><span>K</span><span>N</span><span>A</span><span>C</span><span>K</span></div></div>
+<div id="splash" class="hidden"><div class="splash-stack"><div class="splash-logo"><img id="splashLogo" src="./logo-dark.png"></div><div class="splash-word"><span>K</span><span>N</span><span>A</span><span>C</span><span>K</span></div></div></div>
 
-<div class="drawer-overlay" id="drawerOverlay">
-<aside class="drawer">
-  <div class="drawer-head"><div class="drawer-title">Knack</div><button class="drawer-close" id="drawerClose">✕</button></div>
-  <nav class="drawer-nav">
-    <button class="drawer-item" id="drawerCreateRoom"><span class="drawer-icon">＋</span><span>Spielraum erstellen</span></button>
-    <button class="drawer-item" id="drawerRooms"><span class="drawer-icon">⌂</span><span>Verfügbare Räume</span></button>
-    <button class="drawer-item" id="drawerHistory"><span class="drawer-icon">🕘</span><span>Letzte Spiele</span></button>
-    <button class="drawer-item" id="drawerRanking"><span class="drawer-icon">🏆</span><span>Rangliste</span></button>
-    <div class="drawer-spacer"></div>
-    <button class="drawer-item" id="drawerProfile"><span class="drawer-icon">👤</span><span>Profil</span></button>
-  </nav>
-  <div class="drawer-bottom">
-    <button class="drawer-item" id="drawerSettings"><span class="drawer-icon settings">⚙︎</span><span>Einstellungen</span></button>
-  </div>
-</aside>
-</div>
+<div class="drawer-overlay" id="drawerOverlay"><aside class="drawer">
+ <div class="drawer-head"><div class="drawer-title">Knack</div><button class="drawer-close" id="drawerClose">✕</button></div>
+ <nav class="drawer-nav">
+  <button class="drawer-item" id="drawerCreateRoom"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span>Spielraum erstellen</span></button>
+  <button class="drawer-item" id="drawerRooms"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M4 9.5 12 3l8 6.5V20H4Z"/><path d="M9 20v-6h6v6"/></svg></span><span>Verfügbare Räume</span></button>
+  <button class="drawer-item" id="drawerHistory"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg></span><span>Letzte Spiele</span></button>
+  <button class="drawer-item" id="drawerRanking"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0Z"/><path d="M12 12v5M8 21h8M10 17h4"/><path d="M8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4"/></svg></span><span>Rangliste</span></button>
+  <div class="drawer-spacer"></div>
+  <button class="drawer-item" id="drawerProfile"><span class="drawer-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span>Profil</span></button>
+  <button class="drawer-item hidden" id="drawerLeave"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M10 5H5v14h5"/><path d="m14 8 4 4-4 4M18 12H9"/></svg></span><span>Raum verlassen</span></button>
+  <button class="drawer-item hidden" id="drawerCloseRoom"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></svg></span><span>Raum schließen</span></button>
+ </nav>
+ <div class="drawer-bottom"><button class="drawer-item" id="drawerSettings"><span class="drawer-svg settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1L7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1H21v4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg></span><span>Einstellungen</span></button></div>
+</aside></div>
 
 <div class="modal-backdrop" id="roomsModal"><div class="modal"><div class="modal-head"><h2>Verfügbare Räume</h2><button class="close" data-close="roomsModal">✕</button></div><div class="modal-body" id="roomsBody"></div></div></div>
-<div class="modal-backdrop" id="createRoomModal"><div class="modal"><div class="modal-head"><h2>Spielraum erstellen</h2><button class="close" data-close="createRoomModal">✕</button></div><div class="modal-body"><div class="small" id="createRoomHint" style="margin-bottom:10px"></div><button class="btn primary" id="createRoomBtn" style="width:100%">Raum erstellen</button></div></div></div>
-<div class="modal-backdrop" id="roomControlModal"><div class="modal"><div class="modal-head"><h2>Aktueller Raum</h2><button class="close" data-close="roomControlModal">✕</button></div><div class="modal-body"><div id="roomControlInfo" class="room-card"></div><button class="btn danger" id="closeRoomBtn" style="width:100%;margin-top:8px">Raum schließen</button></div></div></div>
+<div class="modal-backdrop" id="createRoomModal"><div class="modal"><div class="modal-head"><h2>Spielraum erstellen</h2><button class="close" data-close="createRoomModal">✕</button></div><div class="modal-body">
+ <div class="small" style="margin-bottom:6px">Raumname</div><input id="roomNameInput" maxlength="28" placeholder="z. B. Freitagabend">
+ <div class="small" style="margin:12px 0 6px">oder Profil auswählen</div><select id="roomProfileSelect"><option value="">Kein Profil</option></select>
+ <div id="roomProfilePreview" style="margin:10px 0"></div>
+ <button class="btn primary" id="createRoomBtn" style="width:100%;margin-top:5px">Raum erstellen</button>
+</div></div></div>
+
 <div class="modal-backdrop" id="historyModal"><div class="modal"><div class="modal-head"><h2>Letzte Spiele</h2><button class="close" data-close="historyModal">✕</button></div><div class="modal-body" id="historyBody"></div></div></div>
-<div class="modal-backdrop" id="rankingModal"><div class="modal"><div class="modal-head"><h2>Rangliste</h2><button class="close" data-close="rankingModal">✕</button></div><div class="modal-body" id="rankingBody"></div></div></div>
+<div class="modal-backdrop" id="rankingModal"><div class="modal"><div class="modal-head"><h2>Rangliste</h2><button class="close" data-close="rankingModal">✕</button></div><div class="modal-body"><div class="rank-tabs"><button class="rank-tab active" data-rank="lost">Wenigste verlorene Leben</button><button class="rank-tab" data-rank="wins">Meiste Siege</button><button class="rank-tab" data-rank="avg">Beste Ø-Wertung</button></div><div id="rankingBody"></div></div></div>
 <div class="modal-backdrop" id="profilesModal"><div class="modal"><div class="modal-head"><h2>Spielerprofile</h2><button class="close" data-close="profilesModal">✕</button></div><div class="modal-body" id="profilesBody"></div></div></div>
-<div class="modal-backdrop" id="myProfileModal"><div class="modal"><div class="modal-head"><h2>Profil</h2><button class="close" data-close="myProfileModal">✕</button></div><div class="modal-body"><div class="small" style="margin-bottom:8px">Dein Name wird für neu erstellte Räume verwendet, sofern kein Spielerprofil ausgewählt ist.</div><input id="myNameInput" maxlength="24" placeholder="Dein Name"><button class="btn primary" id="saveMyNameBtn" style="width:100%;margin-top:8px">Speichern</button></div></div></div>
-<div class="modal-backdrop" id="settingsModal"><div class="modal"><div class="modal-head"><h2>Einstellungen</h2><button class="close" data-close="settingsModal">✕</button></div><div class="modal-body"><div class="settings-section"><h3>App-Design</h3><div class="theme-grid" id="themeGrid"></div></div><div class="settings-section"><h3>Statistiken</h3><div class="small" style="margin-bottom:10px">Löscht die letzten Spiele und setzt die Rangliste dieses Raums zurück.</div><button class="btn danger" id="resetStatsBtn" style="width:100%">Statistiken zurücksetzen</button></div></div></div></div>
+
+<div class="modal-backdrop" id="myProfileModal"><div class="modal"><div class="modal-head"><h2>Profil</h2><button class="close" data-close="myProfileModal">✕</button></div><div class="modal-body">
+ <div class="small" style="margin-bottom:7px">Dein Name</div><input id="myNameInput" maxlength="24" placeholder="Dein Name"><button class="btn primary" id="saveMyNameBtn" style="width:100%;margin-top:8px">Speichern</button>
+ <div class="group-profile room-card" style="margin-top:14px"><div class="room-logo"><img src="./piya-logo.png"></div><div><div class="room-name">PIYA-Knack</div><div class="room-meta">Vorgespeichertes Gruppenprofil</div></div><span class="host-crown">★</span></div>
+</div></div></div>
+
+<div class="modal-backdrop" id="settingsModal"><div class="modal"><div class="modal-head"><h2>Einstellungen</h2><button class="close" data-close="settingsModal">✕</button></div><div class="modal-body">
+ <div class="settings-section"><div class="settings-row"><div><strong>Design</strong><div class="small">Farbschema und passendes Logo</div></div><select id="themeSelect" style="width:155px"></select></div>
+ <div class="settings-row"><div><strong>Haptisches Feedback</strong><div class="small">Vibration auf unterstützten Geräten</div></div><button class="toggle" id="hapticToggle"><span class="toggle-dot"></span></button></div></div>
+ <div class="settings-section"><h3>QR-Code zur Web-App</h3><div class="qr-box"><img src="./knack-app-qr.png"><div class="qr-url">https://mexi96.github.io/knackleben24/</div></div></div>
+ <div class="settings-section"><h3>Statistiken</h3><button class="btn danger" id="resetStatsBtn" style="width:100%">Statistiken zurücksetzen</button></div>
+</div></div></div>
+
+<div class="modal-backdrop onboarding" id="onboardingModal"><div class="modal"><div class="modal-body">
+ <div class="welcome-icon">👤</div><div class="welcome-title">Willkommen bei Knack!</div><div class="welcome-sub">Gib einmal deinen Namen ein. Er wird beim Beitreten zu Räumen automatisch verwendet.</div>
+ <input id="onboardingName" maxlength="24" placeholder="Dein Name"><button class="btn primary" id="onboardingSave" style="width:100%;margin-top:9px">Speichern</button>
+</div></div></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, update, remove } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+import { getDatabase, ref, set, get, onValue, update, remove, onDisconnect } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
-const isStandalone=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
-const installGate=document.getElementById("installGate"),appRoot=document.getElementById("appRoot"),splash=document.getElementById("splash");
-if(isStandalone){
-  installGate.classList.add("hidden");appRoot.classList.remove("hidden");splash.classList.remove("hidden");
-  setTimeout(()=>splash.classList.add("wipe"),1350);
-  setTimeout(()=>splash.classList.add("hidden"),2250);
+const APP_VERSION=6, STALE_MS=24*60*60*1000;
+function migrateLocalData(){
+ let state=null;try{state=JSON.parse(localStorage.getItem("knack_state_v6")||"null")}catch{}
+ if(state&&state.version===APP_VERSION)return state;
+ let profiles={};
+ for(const key of ["knack_player_profiles","knacktracker_profiles","knackleben24_profiles_multiplayer_v1","knackleben24_profiles_v2"]){
+  try{const old=JSON.parse(localStorage.getItem(key)||"{}");for(const [name,val] of Object.entries(old||{})){profiles[name]=Array.isArray(val)?{members:val}:val?.members?val:{members:[]}}}catch{}
+ }
+ profiles["PIYA-Knack"]={members:profiles["PIYA-Knack"]?.members||[],groupLogo:"piya-logo.png",preset:true};
+ const myName=localStorage.getItem("knack_my_name")||localStorage.getItem("knacktracker_my_name")||"";
+ const theme=localStorage.getItem("knack_theme")||localStorage.getItem("knacktracker_theme")||"dark";
+ state={version:APP_VERSION,myName,theme,haptics:true,profiles};
+ localStorage.setItem("knack_state_v6",JSON.stringify(state));return state
 }
+let state=migrateLocalData();
+function persist(){localStorage.setItem("knack_state_v6",JSON.stringify(state))}
+let clientId=localStorage.getItem("knack_client_id_v6");if(!clientId){clientId=(crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random()).replace(/[.#$[\]/]/g,"_");localStorage.setItem("knack_client_id_v6",clientId)}
+const userPlayerKey="u_"+clientId;
+
+const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+const installGate=document.getElementById("installGate"),appRoot=document.getElementById("appRoot"),splash=document.getElementById("splash");
+if(standalone){installGate.classList.add("hidden");appRoot.classList.remove("hidden");splash.classList.remove("hidden");setTimeout(()=>splash.classList.add("wipe"),1950);setTimeout(()=>{splash.classList.add("hidden");if(!state.myName)openModal("onboardingModal")},2900)}
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
 
-const firebaseConfig={
-  apiKey:"AIzaSyDboBSOJdzZCCMbtPh-X0tF7_xYQpRvc6o",
-  authDomain:"knackleben24.firebaseapp.com",
-  databaseURL:"https://knackleben24-default-rtdb.europe-west1.firebasedatabase.app/",
-  projectId:"knackleben24",
-  storageBucket:"knackleben24.firebasestorage.app",
-  messagingSenderId:"1048228405783",
-  appId:"1:1048228405783:web:a8af2cba896cb7cabff252",
-  measurementId:"G-KVSXJYCWTY"
-};
-const fbApp=initializeApp(firebaseConfig),db=getDatabase(fbApp);
+const firebaseConfig={apiKey:"AIzaSyDboBSOJdzZCCMbtPh-X0tF7_xYQpRvc6o",authDomain:"knackleben24.firebaseapp.com",databaseURL:"https://knackleben24-default-rtdb.europe-west1.firebasedatabase.app/",projectId:"knackleben24",storageBucket:"knackleben24.firebasestorage.app",messagingSenderId:"1048228405783",appId:"1:1048228405783:web:a8af2cba896cb7cabff252",measurementId:"G-KVSXJYCWTY"};
+const db=getDatabase(initializeApp(firebaseConfig));
 
 const THEMES={
-  dark:{name:"Dunkel",vars:{"--bg":"#050505","--panel":"#0c0c0c","--panel2":"#151515","--panel3":"#1f1f1f","--text":"#ffffff","--muted":"#aaaaaa","--accent":"#d4af37","--accent2":"#f4d66b","--blue":"#ffffff"}},
-  light:{name:"Hell",vars:{"--bg":"#f3f4f6","--panel":"#ffffff","--panel2":"#eceff3","--panel3":"#dfe4ea","--text":"#111827","--muted":"#687386","--accent":"#c79a18","--accent2":"#a87900","--blue":"#2563eb"}},
-  amber:{name:"Amber",vars:{"--bg":"#0b1020","--panel":"#151d31","--panel2":"#1d2942","--panel3":"#24314d","--text":"#f8fafc","--muted":"#9aa7bd","--accent":"#f59e0b","--accent2":"#fbbf24","--blue":"#38bdf8"}},
-  blue:{name:"Blau",vars:{"--bg":"#08111f","--panel":"#10223a","--panel2":"#17304d","--panel3":"#1f3d60","--text":"#f8fafc","--muted":"#a8b7cc","--accent":"#38bdf8","--accent2":"#7dd3fc","--blue":"#60a5fa"}},
-  green:{name:"Grün",vars:{"--bg":"#07140f","--panel":"#10241b","--panel2":"#183326","--panel3":"#204431","--text":"#f5fff9","--muted":"#9dc3ae","--accent":"#34d399","--accent2":"#6ee7b7","--blue":"#22d3ee"}},
-  purple:{name:"Violett",vars:{"--bg":"#120b1d","--panel":"#21142f","--panel2":"#2d1b40","--panel3":"#3b2453","--text":"#fbf8ff","--muted":"#b8a5cd","--accent":"#a78bfa","--accent2":"#c4b5fd","--blue":"#818cf8"}},
-  red:{name:"Rot",vars:{"--bg":"#160909","--panel":"#281010","--panel2":"#3a1717","--panel3":"#4a1d1d","--text":"#fff7f7","--muted":"#c9aaaa","--accent":"#f87171","--accent2":"#fca5a5","--blue":"#fb7185"}},
-  cyan:{name:"Cyan",vars:{"--bg":"#061416","--panel":"#0d262a","--panel2":"#12373d","--panel3":"#184850","--text":"#f4ffff","--muted":"#9fc2c7","--accent":"#22d3ee","--accent2":"#67e8f9","--blue":"#06b6d4"}},
-  orange:{name:"Orange",vars:{"--bg":"#160c05","--panel":"#271508","--panel2":"#3b200c","--panel3":"#4d2b12","--text":"#fff8f2","--muted":"#cdb7a4","--accent":"#ff8a2a","--accent2":"#ffb56d","--blue":"#ffd2ac"}},
-  pink:{name:"Pink",vars:{"--bg":"#170713","--panel":"#2a1024","--panel2":"#3b1733","--panel3":"#4e2043","--text":"#fff7fd","--muted":"#c8a6be","--accent":"#ff66c7","--accent2":"#ff9add","--blue":"#eab8ff"}},
-  ice:{name:"Eis",vars:{"--bg":"#071116","--panel":"#0e2029","--panel2":"#15303c","--panel3":"#1c414f","--text":"#f5fcff","--muted":"#a7c4d0","--accent":"#bdeaff","--accent2":"#e1f7ff","--blue":"#7dd3fc"}},
-  sand:{name:"Sand",vars:{"--bg":"#17130d","--panel":"#292116","--panel2":"#3b3021","--panel3":"#4d402d","--text":"#fffaf1","--muted":"#cbbda7","--accent":"#d8b36d","--accent2":"#ead09a","--blue":"#e8d7bb"}}
+ dark:{name:"Dunkel",v:["#050505","#0c0c0c","#151515","#1f1f1f","#ffffff","#aaaaaa","#d4af37","#f4d66b","#ffffff"]},
+ light:{name:"Hell",v:["#f3f4f6","#ffffff","#eceff3","#dfe4ea","#111827","#687386","#c79a18","#a87900","#2563eb"]},
+ amber:{name:"Amber",v:["#0b1020","#151d31","#1d2942","#24314d","#f8fafc","#9aa7bd","#f59e0b","#fbbf24","#38bdf8"]},
+ blue:{name:"Blau",v:["#08111f","#10223a","#17304d","#1f3d60","#f8fafc","#a8b7cc","#38bdf8","#7dd3fc","#60a5fa"]},
+ green:{name:"Grün",v:["#07140f","#10241b","#183326","#204431","#f5fff9","#9dc3ae","#34d399","#6ee7b7","#22d3ee"]},
+ purple:{name:"Violett",v:["#120b1d","#21142f","#2d1b40","#3b2453","#fbf8ff","#b8a5cd","#a78bfa","#c4b5fd","#818cf8"]},
+ red:{name:"Rot",v:["#160909","#281010","#3a1717","#4a1d1d","#fff7f7","#c9aaaa","#f87171","#fca5a5","#fb7185"]},
+ cyan:{name:"Cyan",v:["#061416","#0d262a","#12373d","#184850","#f4ffff","#9fc2c7","#22d3ee","#67e8f9","#06b6d4"]},
+ orange:{name:"Orange",v:["#160c05","#271508","#3b200c","#4d2b12","#fff8f2","#cdb7a4","#ff8a2a","#ffb56d","#ffd2ac"]},
+ pink:{name:"Pink",v:["#170713","#2a1024","#3b1733","#4e2043","#fff7fd","#c8a6be","#ff66c7","#ff9add","#eab8ff"]},
+ ice:{name:"Eis",v:["#071116","#0e2029","#15303c","#1c414f","#f5fcff","#a7c4d0","#bdeaff","#e1f7ff","#7dd3fc"]},
+ sand:{name:"Sand",v:["#17130d","#292116","#3b3021","#4d402d","#fffaf1","#cbbda7","#d8b36d","#ead09a","#e8d7bb"]}
 };
-let currentTheme=localStorage.getItem("knack_theme")||"dark";
-let playerProfiles=JSON.parse(localStorage.getItem("knack_player_profiles")||"{}");
-let myName=localStorage.getItem("knack_my_name")||"";
-let clientId=localStorage.getItem("knack_client_id");
-if(!clientId){clientId=crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random();localStorage.setItem("knack_client_id",clientId)}
-let currentRoom="",roomData={players:[],history:[],mode:4},unsubscribeRoom=null,lastPlayerCount=0,lastLifeMap={};
-
-const playersEl=document.getElementById("players"),playerInput=document.getElementById("playerInput"),profileSelect=document.getElementById("profileSelect"),modeSelect=document.getElementById("modeSelect");
 function applyTheme(key){
-  const t=THEMES[key]||THEMES.dark;Object.entries(t.vars).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
-  currentTheme=key;localStorage.setItem("knack_theme",key);
-  document.getElementById("appLogo").src=`./logo-${key}.png`;document.getElementById("installLogo").src=`./logo-${key}.png`;renderThemeGrid()
+ const t=THEMES[key]||THEMES.dark,[bg,p,p2,p3,text,muted,a,a2,blue]=t.v,r=document.documentElement.style;
+ [["--bg",bg],["--panel",p],["--panel2",p2],["--panel3",p3],["--text",text],["--muted",muted],["--accent",a],["--accent2",a2],["--blue",blue]].forEach(([k,v])=>r.setProperty(k,v));
+ state.theme=key;persist();["appLogo","installLogo","splashLogo"].forEach(id=>document.getElementById(id).src=`./logo-${key}.png`);document.querySelector('meta[name="theme-color"]').content=bg;
 }
-applyTheme(currentTheme);
-function renderThemeGrid(){
-  const grid=document.getElementById("themeGrid");if(!grid)return;
-  grid.innerHTML=Object.entries(THEMES).map(([key,t])=>`<button class="theme-card ${key===currentTheme?"active":""}" data-theme="${key}"><strong>${t.name}</strong><span class="swatches"><span class="swatch" style="background:${t.vars["--bg"]}"></span><span class="swatch" style="background:${t.vars["--panel2"]}"></span><span class="swatch" style="background:${t.vars["--accent"]}"></span></span></button>`).join("");
-  grid.querySelectorAll("[data-theme]").forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme))
-}
+applyTheme(state.theme);
+
+let currentRoom="",roomData={players:{},history:[],mode:4},unsub=null,disconnectOp=null,lastPlayers={},lastEffectAt=0,rankMode="lost";
+const playersEl=document.getElementById("players"),playerInput=document.getElementById("playerInput"),profileSelect=document.getElementById("profileSelect"),modeSelect=document.getElementById("modeSelect");
+const roomNameLine=document.getElementById("roomNameLine"),hostBadge=document.getElementById("hostBadge"),drawerLeave=document.getElementById("drawerLeave"),drawerCloseRoom=document.getElementById("drawerCloseRoom"),undoBtn=document.getElementById("undoBtn");
+const drawerOverlay=document.getElementById("drawerOverlay"),menuBtn=document.getElementById("menuBtn"),drawerClose=document.getElementById("drawerClose"),drawerCreateRoom=document.getElementById("drawerCreateRoom"),drawerRooms=document.getElementById("drawerRooms"),drawerHistory=document.getElementById("drawerHistory"),drawerRanking=document.getElementById("drawerRanking"),drawerProfile=document.getElementById("drawerProfile"),drawerSettings=document.getElementById("drawerSettings");
+const roomsBody=document.getElementById("roomsBody"),roomNameInput=document.getElementById("roomNameInput"),roomProfileSelect=document.getElementById("roomProfileSelect"),roomProfilePreview=document.getElementById("roomProfilePreview"),createRoomBtn=document.getElementById("createRoomBtn");
+const historyBody=document.getElementById("historyBody"),rankingBody=document.getElementById("rankingBody"),profilesBody=document.getElementById("profilesBody"),myNameInput=document.getElementById("myNameInput"),saveMyNameBtn=document.getElementById("saveMyNameBtn");
+const themeSelect=document.getElementById("themeSelect"),hapticToggle=document.getElementById("hapticToggle"),resetStatsBtn=document.getElementById("resetStatsBtn"),onboardingName=document.getElementById("onboardingName"),onboardingSave=document.getElementById("onboardingSave");
+const addPlayerBtn=document.getElementById("addPlayerBtn"),removeAllBtn=document.getElementById("removeAllBtn"),newGameBtn=document.getElementById("newGameBtn"),profileBtn=document.getElementById("profileBtn"),loadProfileBtn=document.getElementById("loadProfileBtn");
+
+const COLORS=["#60a5fa","#34d399","#f59e0b","#a78bfa","#f87171","#22d3ee","#f472b6","#84cc16","#fb923c","#e879f9"];
+function hashColor(name){let h=0;for(const c of name)h=(h*31+c.charCodeAt(0))>>>0;return COLORS[h%COLORS.length]}
 function roomRef(id=currentRoom){return ref(db,"rooms/"+id)}
 function maxLives(){return Number(roomData.mode||4)}
 function stateLabel(l){if(l<=0)return"Game Over";if(l===1)return"Schwimmer";return String(l)}
-function escapeHtml(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-function openModal(id){document.getElementById(id).classList.add("open")}function closeModal(id){document.getElementById(id).classList.remove("open")}function openDrawer(){document.getElementById("drawerOverlay").classList.add("open")}function closeDrawer(){document.getElementById("drawerOverlay").classList.remove("open")}
-
-function selectedProfileName(){
-  const key=profileSelect.value;return key&&playerProfiles[key]?key:""
-}
-function creatorRoomName(){
-  const p=selectedProfileName();if(p)return p;
-  if(myName.trim())return myName.trim();
-  return "Knack-Raum"
-}
+function esc(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function openModal(id){document.getElementById(id).classList.add("open")}function closeModal(id){document.getElementById(id).classList.remove("open")}
+function openDrawer(){drawerOverlay.classList.add("open")}function closeDrawer(){drawerOverlay.classList.remove("open")}
+function haptic(ms=25){if(!state.haptics)return;try{navigator.vibrate?.(ms)}catch{}}
+function profiles(){return state.profiles||{}}
 function refreshProfiles(){
-  profileSelect.innerHTML='<option value="">Profil auswählen</option>';Object.keys(playerProfiles).sort().forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;profileSelect.appendChild(o)})
+ profileSelect.innerHTML='<option value="">Profil auswählen</option>';roomProfileSelect.innerHTML='<option value="">Kein Profil</option>';
+ for(const n of Object.keys(profiles()).sort()){for(const sel of [profileSelect,roomProfileSelect]){const o=document.createElement("option");o.value=n;o.textContent=n;sel.appendChild(o)}}
+}
+refreshProfiles();
+
+async function migrateFirebaseRoom(id,d){
+ if(Array.isArray(d.players)){
+  const obj={};d.players.forEach((p,i)=>obj["legacy_"+i]={...p,color:p.color||hashColor(p.name||String(i)),static:true});
+  await update(roomRef(id),{players:obj,schemaVersion:6});d.players=obj
+ }
+ return d
+}
+function playersEntries(){return Object.entries(roomData.players||{}).map(([key,p])=>({key,...p}))}
+function updateHeader(){
+ roomNameLine.textContent=currentRoom?(roomData.name||"Spielraum"):"Kein Raum";
+ hostBadge.classList.toggle("hidden",!currentRoom||roomData.ownerId!==clientId);
+ drawerLeave.classList.toggle("hidden",!currentRoom);
+ drawerCloseRoom.classList.toggle("hidden",!currentRoom||roomData.ownerId!==clientId);
+ undoBtn.disabled=!currentRoom||!roomData.undo
 }
 function renderPlayers(){
-  const players=roomData.players||[],addedIndex=players.length>lastPlayerCount?players.length-1:-1;modeSelect.value=String(maxLives());playersEl.innerHTML="";
-  document.getElementById("roomNameLine").textContent=currentRoom?(roomData.name||"Spielraum"):"Kein Raum";
-  if(!currentRoom){playersEl.innerHTML='<div class="empty"><div><strong>Noch kein Spielraum geöffnet.</strong><br><br><button class="btn primary" id="openRooms">Verfügbare Räume</button></div></div>';document.getElementById("openRooms").onclick=showRooms;lastPlayerCount=0;lastLifeMap={};return}
-  if(!players.length){playersEl.innerHTML='<div class="empty">Spieler oben hinzufügen oder ein Profil laden.</div>';lastPlayerCount=0;lastLifeMap={};return}
-  players.forEach((p,i)=>{
-    const card=document.createElement("article");card.className="player"+(p.life===1?" state-swimmer":"")+(p.life===0?" state-over":"")+(i===addedIndex?" added":"");
-    card.innerHTML=`<div class="player-top"><div class="player-name"></div><button class="aaa-btn">AAA</button><button class="remove">✕</button></div><div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${stateLabel(p.life)}</div></div><button class="life-btn plus">+</button></div>`;
-    card.querySelector(".player-name").textContent=p.name;const key=p.name.toLowerCase();if(lastLifeMap[key]!==undefined&&lastLifeMap[key]!==p.life)card.querySelector(".life-main").classList.add("bump");
-    card.querySelector(".remove").onclick=async()=>{card.classList.add("removing");setTimeout(async()=>{const a=[...players];a.splice(i,1);await update(roomRef(),{players:a,updatedAt:Date.now()})},180)};
-    card.querySelector(".minus").onclick=async()=>{const a=players.map(x=>({...x}));a[i].life=Math.max(0,a[i].life-1);await update(roomRef(),{players:a,updatedAt:Date.now()})};
-    card.querySelector(".plus").onclick=async()=>{const a=players.map(x=>({...x}));a[i].life=Math.min(maxLives(),a[i].life+1);await update(roomRef(),{players:a,updatedAt:Date.now()})};
-    card.querySelector(".aaa-btn").onclick=async()=>{const a=players.map((x,idx)=>({...x,life:idx===i?x.life:Math.max(0,x.life-1)}));await update(roomRef(),{players:a,updatedAt:Date.now()})};
-    playersEl.appendChild(card)
-  });
-  lastPlayerCount=players.length;lastLifeMap=Object.fromEntries(players.map(p=>[p.name.toLowerCase(),p.life]))
+ updateHeader();modeSelect.value=String(maxLives());const list=playersEntries();playersEl.innerHTML="";
+ if(!currentRoom){playersEl.innerHTML='<div class="empty"><div><strong>Noch kein Spielraum geöffnet.</strong><br><br><button class="btn primary" id="openRoomsInline">Verfügbare Räume</button></div></div>';document.getElementById("openRoomsInline").onclick=showRooms;lastPlayers={};return}
+ if(!list.length){playersEl.innerHTML='<div class="empty">Noch keine Spieler im Raum.</div>';lastPlayers={};return}
+ for(const p of list){
+  const old=lastPlayers[p.key],card=document.createElement("article");card.dataset.key=p.key;card.style.setProperty("--pc",p.color||hashColor(p.name));card.className="player"+(p.life===1?" state-swimmer swimmer":"")+(p.life===0?" state-over":"")+(!old?" added":"");
+  card.innerHTML=`<div class="player-top"><span class="player-color"></span><div class="player-name">${esc(p.name)}${p.userId===roomData.ownerId?'<span class="player-host">♛</span>':""}</div><button class="aaa-btn">AAA</button><button class="remove">✕</button></div><div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${stateLabel(p.life)}</div></div><button class="life-btn plus">+</button></div>`;
+  if(old&&old.life!==p.life)card.querySelector(".life-main").classList.add("bump");
+  card.querySelector(".remove").onclick=()=>removePlayer(p.key,card);
+  card.querySelector(".minus").onclick=()=>changeLife(p.key,-1);
+  card.querySelector(".plus").onclick=()=>changeLife(p.key,1);
+  card.querySelector(".aaa-btn").onclick=()=>aaa(p.key);
+  playersEl.appendChild(card)
+ }
+ if(roomData.effect?.type==="aaa"&&roomData.effect.at>lastEffectAt){lastEffectAt=roomData.effect.at;requestAnimationFrame(()=>document.querySelectorAll(`.player:not([data-key="${CSS.escape(roomData.effect.sourceKey)}"])`).forEach(c=>{c.classList.add("aaa-hit");setTimeout(()=>c.classList.remove("aaa-hit"),520)}))}
+ lastPlayers=Object.fromEntries(list.map(p=>[p.key,p]))
 }
-function connectRoom(id){
-  currentRoom=id;if(unsubscribeRoom)unsubscribeRoom();
-  unsubscribeRoom=onValue(roomRef(),snap=>{const d=snap.val();if(!d){currentRoom="";localStorage.removeItem("knack_last_room");renderPlayers();return}
-    roomData={...d,mode:Number(d.mode||4),players:Array.isArray(d.players)?d.players:Object.values(d.players||{}),history:Array.isArray(d.history)?d.history:Object.values(d.history||{})};
-    renderPlayers()
-  });
-  localStorage.setItem("knack_last_room",id)
+async function commitPlayers(newPlayers,label,effect=null,extra={}){
+ const undo={players:roomData.players||{},history:roomData.history||[],mode:maxLives(),label,at:Date.now()};
+ await update(roomRef(),{undo,players:newPlayers,updatedAt:Date.now(),...(effect?{effect}:{}),...extra})
+}
+async function changeLife(key,delta){const p=roomData.players?.[key];if(!p)return;const np=structuredClone(roomData.players);np[key].life=Math.max(0,Math.min(maxLives(),p.life+delta));haptic(delta<0?35:18);await commitPlayers(np,delta<0?"Leben abgezogen":"Leben hinzugefügt")}
+async function removePlayer(key,card){card?.classList.add("removing");setTimeout(async()=>{const np=structuredClone(roomData.players);delete np[key];await commitPlayers(np,"Spieler entfernt")},160)}
+async function aaa(sourceKey){const np=structuredClone(roomData.players);for(const [k,p] of Object.entries(np))if(k!==sourceKey)p.life=Math.max(0,p.life-1);haptic([25,40,25]);await commitPlayers(np,"AAA",{type:"aaa",sourceKey,at:Date.now()})}
+async function undoLast(){if(!roomData.undo)return;haptic(18);await update(roomRef(),{players:roomData.undo.players||{},history:roomData.undo.history||[],mode:roomData.undo.mode||4,undo:null,updatedAt:Date.now()})}
+
+async function attachSelfToRoom(id){
+ if(!state.myName)return;
+ const pr=ref(db,`rooms/${id}/players/${userPlayerKey}`),snap=await get(pr);
+ if(!snap.exists()){
+  const all=(await get(ref(db,`rooms/${id}/players`))).val()||{};
+  const matching=Object.entries(all).find(([k,p])=>p?.name?.toLowerCase()===state.myName.toLowerCase()&&!p.userId);
+  if(matching){await update(ref(db,`rooms/${id}/players/${matching[0]}`),{userId:clientId});}
+  else await set(pr,{name:state.myName,life:Number((await get(ref(db,`rooms/${id}/mode`))).val()||4),color:hashColor(state.myName),userId:clientId,joinedAt:Date.now()})
+ }
+ const target=ref(db,`rooms/${id}/players/${userPlayerKey}`);disconnectOp=onDisconnect(target);await disconnectOp.remove()
+}
+async function connectRoom(id,join=true){
+ if(currentRoom&&currentRoom!==id)await leaveRoom(true);
+ currentRoom=id;localStorage.setItem("knack_last_room_v6",id);
+ const initial=await get(roomRef(id));if(!initial.exists()){currentRoom="";return}
+ let d=await migrateFirebaseRoom(id,initial.val());if(d.open===false){currentRoom="";return alert("Dieser Raum ist geschlossen.")}
+ if(join)await attachSelfToRoom(id);
+ if(unsub)unsub();unsub=onValue(roomRef(id),async snap=>{if(!snap.exists()){await leaveRoom(true);return}let d=await migrateFirebaseRoom(id,snap.val());if(d.open===false){alert("Der Raum wurde geschlossen.");await leaveRoom(true);return}roomData={...d,mode:Number(d.mode||4),players:d.players||{},history:Array.isArray(d.history)?d.history:Object.values(d.history||{})};renderPlayers()});
+}
+async function leaveRoom(silent=false){
+ if(!currentRoom)return;try{await disconnectOp?.cancel()}catch{};disconnectOp=null;
+ const own=ref(db,`rooms/${currentRoom}/players/${userPlayerKey}`);try{await remove(own)}catch{}
+ if(unsub)unsub();unsub=null;currentRoom="";roomData={players:{},history:[],mode:Number(modeSelect.value||4)};localStorage.removeItem("knack_last_room_v6");renderPlayers();closeDrawer();if(!silent)haptic(18)
+}
+async function cleanupStaleRooms(){
+ const snap=await get(ref(db,"rooms")),all=snap.val()||{},now=Date.now(),jobs=[];
+ for(const [id,r] of Object.entries(all))if(r?.open!==false&&now-(r.updatedAt||r.createdAt||0)>STALE_MS)jobs.push(update(roomRef(id),{open:false,autoClosedAt:now}));
+ await Promise.allSettled(jobs)
+}
+function timeAgo(ts){const m=Math.max(0,Math.floor((Date.now()-ts)/60000));if(m<1)return"gerade eben";if(m<60)return`vor ${m} Min.`;const h=Math.floor(m/60);return h<24?`vor ${h} Std.`:`vor ${Math.floor(h/24)} T.`}
+async function showRooms(){
+ closeDrawer();await cleanupStaleRooms();const snap=await get(ref(db,"rooms")),all=snap.val()||{};
+ const list=Object.entries(all).filter(([id,r])=>r&&r.open!==false&&Date.now()-(r.updatedAt||r.createdAt||0)<=STALE_MS).sort((a,b)=>(b[1].updatedAt||0)-(a[1].updatedAt||0));
+ roomsBody.innerHTML=list.length?list.map(([id,r])=>{const count=r.players?Object.keys(r.players).length:0,logo=r.groupLogo?`<img src="./${r.groupLogo}">`:`<span class="room-generic">${esc((r.name||"K").slice(0,2).toUpperCase())}</span>`;return `<div class="room-card"><div class="room-logo">${logo}</div><div><div class="room-name">${esc(r.name||"Spielraum")} ${r.ownerId===clientId?'<span class="host-crown">♛</span>':""}</div><div class="room-meta"><span>Host: ${esc(r.ownerName||"Unbekannt")}</span><span>${count} Spieler</span><span>${Number(r.mode||4)} Leben</span><span class="room-fresh">${timeAgo(r.updatedAt||r.createdAt)}</span></div></div><button class="btn primary" data-room="${id}">Beitreten</button></div>`}).join(""):'<div class="empty">Zurzeit sind keine offenen Räume verfügbar.</div>';
+ roomsBody.querySelectorAll("[data-room]").forEach(b=>b.onclick=async()=>{await connectRoom(b.dataset.room,true);closeModal("roomsModal")});openModal("roomsModal")
+}
+function fillRoomProfileSelect(){
+ roomProfileSelect.innerHTML='<option value="">Kein Profil</option>';for(const n of Object.keys(profiles()).sort()){const o=document.createElement("option");o.value=n;o.textContent=n;roomProfileSelect.appendChild(o)}
+}
+function updateRoomProfilePreview(){
+ const n=roomProfileSelect.value,p=profiles()[n];roomProfilePreview.innerHTML="";
+ if(!p)return;
+ roomNameInput.value=n;roomNameInput.disabled=true;
+ roomProfilePreview.innerHTML=`<div class="room-card"><div class="room-logo">${p.groupLogo?`<img src="./${p.groupLogo}">`:'<span class="room-generic">'+esc(n.slice(0,2).toUpperCase())+'</span>'}</div><div><div class="room-name">${esc(n)}</div><div class="room-meta">${(p.members||[]).length} gespeicherte Spieler</div></div></div>`
 }
 async function createRoom(){
-  const key=String(Date.now())+"-"+Math.random().toString(36).slice(2,8);
-  const name=creatorRoomName();const selected=selectedProfileName();
-  const initialPlayers=selected&&playerProfiles[selected]?playerProfiles[selected].map(n=>({name:n,life:Number(modeSelect.value||4)})):[];
-  await set(roomRef(key),{name,ownerId:clientId,ownerName:myName||"",createdAt:Date.now(),updatedAt:Date.now(),open:true,mode:Number(modeSelect.value||4),players:initialPlayers,history:[]});
-  connectRoom(key);closeModal("createRoomModal")
+ if(!state.myName){closeModal("createRoomModal");openModal("onboardingModal");return}
+ const profName=roomProfileSelect.value,p=profiles()[profName],name=profName||roomNameInput.value.trim()||`${state.myName}s Raum`,mode=Number(modeSelect.value||4),id=Date.now()+"-"+Math.random().toString(36).slice(2,8),players={};
+ if(p)for(const [i,n] of (p.members||[]).entries())players["p_"+i]={name:n,life:mode,color:hashColor(n),static:true};
+ const selfMatch=Object.entries(players).find(([k,x])=>x.name.toLowerCase()===state.myName.toLowerCase());
+ if(selfMatch)players[selfMatch[0]].userId=clientId;else players[userPlayerKey]={name:state.myName,life:mode,color:hashColor(state.myName),userId:clientId,joinedAt:Date.now()};
+ await set(roomRef(id),{schemaVersion:6,name,ownerId:clientId,ownerName:state.myName,groupLogo:p?.groupLogo||null,createdAt:Date.now(),updatedAt:Date.now(),open:true,mode,players,history:[]});
+ await connectRoom(id,true);closeModal("createRoomModal")
 }
-async function showRooms(){
-  closeDrawer();const snap=await get(ref(db,"rooms"));const all=snap.val()||{};
-  const rooms=Object.entries(all).filter(([id,r])=>r&&r.open!==false).sort((a,b)=>(b[1].createdAt||0)-(a[1].createdAt||0));
-  const body=document.getElementById("roomsBody");
-  body.innerHTML=rooms.length?rooms.map(([id,r])=>`<div class="room-card"><div><div class="room-name">${escapeHtml(r.name||"Spielraum")}</div><div class="room-meta">${(r.players?Object.keys(r.players).length:0)} Spieler · ${Number(r.mode||4)} Leben</div></div><button class="btn primary" data-room="${id}">Beitreten</button></div>`).join(""):'<div class="empty">Zurzeit sind keine offenen Räume verfügbar.</div>';
-  body.querySelectorAll("[data-room]").forEach(b=>b.onclick=()=>{connectRoom(b.dataset.room);closeModal("roomsModal")});
-  openModal("roomsModal")
+async function closeRoom(){if(!currentRoom)return;if(roomData.ownerId!==clientId)return alert("Nur der Host kann den Raum schließen.");if(!confirm("Raum wirklich schließen?"))return;await update(roomRef(),{open:false,closedAt:Date.now()});await leaveRoom(true)}
+async function addPlayer(){if(!currentRoom)return showRooms();const name=playerInput.value.trim();if(!name)return;const np=structuredClone(roomData.players);if(Object.values(np).some(p=>p.name.toLowerCase()===name.toLowerCase()))return alert("Spieler bereits vorhanden.");const key="m_"+Date.now();np[key]={name,life:maxLives(),color:hashColor(name),static:true};playerInput.value="";await commitPlayers(np,"Spieler hinzugefügt")}
+async function removeAllPlayers(){if(!currentRoom)return;if(!confirm("Alle Spieler entfernen?"))return;const keep={};if(roomData.players[userPlayerKey])keep[userPlayerKey]=roomData.players[userPlayerKey];await commitPlayers(keep,"Alle Spieler entfernt")}
+async function setMode(m){if(!currentRoom){roomData.mode=m;return}const np=structuredClone(roomData.players);for(const p of Object.values(np))p.life=m;const undo={players:roomData.players,history:roomData.history,mode:maxLives(),label:"Modus geändert",at:Date.now()};await update(roomRef(),{undo,players:np,mode:m,updatedAt:Date.now()})}
+async function newGame(){
+ if(!currentRoom)return;const list=playersEntries();if(!list.length)return;let hist=[...(roomData.history||[])],max=Math.max(...list.map(p=>p.life)),winners=list.filter(p=>p.life===max&&max>0).map(p=>p.name);
+ if(list.some(p=>p.life<maxLives()))hist.unshift({id:Date.now(),date:new Date().toISOString(),mode:maxLives(),winners,results:list.map(p=>({name:p.name,life:p.life,lost:maxLives()-Math.max(0,p.life)}))});
+ hist=hist.slice(0,60);const np=structuredClone(roomData.players);for(const p of Object.values(np))p.life=maxLives();await commitPlayers(np,"Neues Spiel",null,{history:hist})
 }
-async function closeCurrentRoom(){
-  if(!currentRoom)return;
-  if(roomData.ownerId!==clientId)return alert("Nur der Ersteller dieses Raums kann ihn schließen.");
-  if(!confirm("Raum wirklich schließen?"))return;
-  await update(roomRef(),{open:false,closedAt:Date.now()});currentRoom="";localStorage.removeItem("knack_last_room");closeModal("roomControlModal");renderPlayers()
+function renderHistory(){const h=roomData.history||[];historyBody.innerHTML=h.length?h.map((g,idx)=>`<div class="history-item"><div class="history-top"><strong>Spiel ${h.length-idx}</strong><span class="small">${new Date(g.date).toLocaleString("de-DE")}</span></div><div class="result-grid">${(g.results||[]).sort((a,b)=>a.lost-b.lost).map(r=>`<div>${esc(r.name)}${(g.winners||[]).includes(r.name)?" 🏆":""}</div><div style="text-align:right">${r.lost} verloren</div>`).join("")}</div></div>`).join(""):'<div class="empty">Noch keine Spiele gespeichert.</div>'}
+function rankingRows(mode){
+ const map=new Map();for(const g of roomData.history||[])for(const r of g.results||[]){const k=r.name.toLowerCase();if(!map.has(k))map.set(k,{name:r.name,lost:0,games:0,wins:0});const x=map.get(k);x.lost+=r.lost;x.games++;if((g.winners||[]).includes(r.name))x.wins++}
+ const a=[...map.values()];if(mode==="wins")a.sort((x,y)=>y.wins-x.wins||x.lost-y.lost);else if(mode==="avg")a.sort((x,y)=>(x.lost/x.games)-(y.lost/y.games));else a.sort((x,y)=>x.lost-y.lost||y.wins-x.wins);return a
 }
-async function setMode(mode){if(!currentRoom){roomData.mode=mode;return}const players=(roomData.players||[]).map(p=>({...p,life:mode}));await update(roomRef(),{mode,players,updatedAt:Date.now()})}
-async function addPlayer(){if(!currentRoom){showRooms();return}const name=playerInput.value.trim();if(!name)return;const a=[...(roomData.players||[])];if(a.some(p=>p.name.toLowerCase()===name.toLowerCase()))return alert("Spieler bereits vorhanden.");a.push({name,life:maxLives()});playerInput.value="";await update(roomRef(),{players:a,updatedAt:Date.now()})}
-async function removeAllPlayers(){if(!currentRoom||!(roomData.players||[]).length)return;if(!confirm("Alle Spieler entfernen?"))return;await update(roomRef(),{players:[],updatedAt:Date.now()})}
-async function newGame(){if(!currentRoom)return;const players=roomData.players||[];if(!players.length)return;let hist=[...(roomData.history||[])];if(players.some(p=>p.life<maxLives())){hist.unshift({id:Date.now(),date:new Date().toISOString(),mode:maxLives(),results:players.map(p=>({name:p.name,life:p.life,lost:maxLives()-Math.max(0,p.life)}))});hist=hist.slice(0,50)}await update(roomRef(),{players:players.map(p=>({...p,life:maxLives()})),history:hist,updatedAt:Date.now()})}
-function renderHistory(){const b=document.getElementById("historyBody"),h=roomData.history||[];if(!h.length){b.innerHTML='<div class="empty">Noch keine Spiele gespeichert.</div>';return}b.innerHTML=h.map((g,idx)=>`<div class="history-item"><div class="history-top"><strong>Spiel ${h.length-idx}</strong><span class="small">${new Date(g.date).toLocaleString("de-DE")}</span></div><div class="result-grid">${(g.results||[]).map(r=>`<div>${escapeHtml(r.name)}</div><div style="text-align:right">${r.lost} verloren</div>`).join("")}</div></div>`).join("")}
-function renderRanking(){const map=new Map();for(const g of roomData.history||[])for(const r of g.results||[]){const k=r.name.toLowerCase();if(!map.has(k))map.set(k,{name:r.name,lost:0});map.get(k).lost+=r.lost}const data=[...map.values()].sort((a,b)=>a.lost-b.lost||a.name.localeCompare(b.name,"de")),medals=["🥇","🥈","🥉"];document.getElementById("rankingBody").innerHTML=data.length?data.map((r,i)=>`<div class="rank-item"><div class="rank-pos">${i<3?`<span class="medal">${medals[i]}</span>`:i+1}</div><div class="rank-name">${escapeHtml(r.name)}</div><div class="rank-score">${r.lost}</div></div>`).join(""):'<div class="empty">Noch keine Ranglistendaten.</div>'}
+function renderRanking(){
+ const data=rankingRows(rankMode),medals=["🥇","🥈","🥉"];rankingBody.innerHTML=data.length?data.map((r,i)=>{const score=rankMode==="wins"?`${r.wins} Siege`:rankMode==="avg"?`${(r.lost/r.games).toFixed(2)} Ø`:r.lost;return `<div class="rank-item"><div class="rank-pos">${i<3?`<span class="medal">${medals[i]}</span>`:i+1}</div><div class="rank-name">${esc(r.name)}</div><div class="rank-score">${score}</div></div>`}).join(""):'<div class="empty">Noch keine Ranglistendaten.</div>'
+}
 function renderProfiles(){
-  const b=document.getElementById("profilesBody");b.innerHTML=`<button class="btn primary" id="saveProfileNow" style="width:100%;margin-bottom:10px">Aktuelle Spieler als Profil speichern</button>`+Object.keys(playerProfiles).map(n=>`<div class="profile-item"><div class="profile-row"><div><strong>${escapeHtml(n)}</strong><div class="small">${playerProfiles[n].map(escapeHtml).join(", ")}</div></div><div class="profile-actions"><button class="btn" data-load="${escapeHtml(n)}">Laden</button><button class="btn danger" data-del="${escapeHtml(n)}">Löschen</button></div></div></div>`).join("");
-  document.getElementById("saveProfileNow").onclick=()=>{if(!(roomData.players||[]).length)return alert("Keine Spieler vorhanden.");const n=prompt("Profilname:");if(!n)return;playerProfiles[n.trim()]=roomData.players.map(p=>p.name);localStorage.setItem("knack_player_profiles",JSON.stringify(playerProfiles));refreshProfiles();renderProfiles()};
-  b.querySelectorAll("[data-load]").forEach(x=>x.onclick=async()=>{if(!currentRoom)return;await update(roomRef(),{players:playerProfiles[x.dataset.load].map(n=>({name:n,life:maxLives()}))});closeModal("profilesModal")});
-  b.querySelectorAll("[data-del]").forEach(x=>x.onclick=()=>{delete playerProfiles[x.dataset.del];localStorage.setItem("knack_player_profiles",JSON.stringify(playerProfiles));refreshProfiles();renderProfiles()})
+ profilesBody.innerHTML=`<div class="profile-item group-profile"><img src="./piya-logo.png"><div><strong>PIYA-Knack</strong><div class="small">Vorgespeichertes Gruppenprofil</div></div></div><button class="btn primary" id="saveProfileNow" style="width:100%;margin:4px 0 10px">Aktuelle Spieler als Profil speichern</button>`+
+ Object.entries(profiles()).filter(([n])=>n!=="PIYA-Knack").map(([n,p])=>`<div class="profile-item"><div class="profile-row"><div><strong>${esc(n)}</strong><div class="small">${(p.members||[]).map(esc).join(", ")}</div></div><div class="profile-actions"><button class="btn" data-load="${esc(n)}">Laden</button><button class="btn danger" data-del="${esc(n)}">Löschen</button></div></div></div>`).join("");
+ document.getElementById("saveProfileNow").onclick=()=>{if(!currentRoom)return alert("Kein Raum geöffnet.");const n=prompt("Profilname:");if(!n)return;state.profiles[n.trim()]={members:playersEntries().map(p=>p.name)};persist();refreshProfiles();renderProfiles()};
+ profilesBody.querySelectorAll("[data-load]").forEach(b=>b.onclick=async()=>{const p=profiles()[b.dataset.load];if(!p||!currentRoom)return;const np={};(p.members||[]).forEach((n,i)=>np["p_"+i]={name:n,life:maxLives(),color:hashColor(n),static:true});if(state.myName&&!Object.values(np).some(x=>x.name.toLowerCase()===state.myName.toLowerCase()))np[userPlayerKey]={name:state.myName,life:maxLives(),color:hashColor(state.myName),userId:clientId};await commitPlayers(np,"Profil geladen");closeModal("profilesModal")});
+ profilesBody.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{delete state.profiles[b.dataset.del];persist();refreshProfiles();renderProfiles()})
 }
-async function resetStats(){if(!currentRoom)return alert("Kein Spielraum geöffnet.");if(!confirm("Letzte Spiele und Rangliste dieses Raums wirklich zurücksetzen?"))return;await update(roomRef(),{history:[],updatedAt:Date.now()});closeModal("settingsModal")}
+function setupSettings(){
+ themeSelect.innerHTML=Object.entries(THEMES).map(([k,t])=>`<option value="${k}">${t.name}</option>`).join("");themeSelect.value=state.theme;hapticToggle.classList.toggle("on",!!state.haptics)
+}
+async function resetStats(){if(!currentRoom)return alert("Kein Spielraum geöffnet.");if(!confirm("Statistiken wirklich zurücksetzen?"))return;await update(roomRef(),{history:[],undo:null,updatedAt:Date.now()});closeModal("settingsModal")}
 
-document.getElementById("menuBtn").onclick=openDrawer;document.getElementById("drawerClose").onclick=closeDrawer;document.getElementById("drawerOverlay").addEventListener("click",e=>{if(e.target.id==="drawerOverlay")closeDrawer()});
-document.getElementById("drawerCreateRoom").onclick=()=>{closeDrawer();document.getElementById("createRoomHint").textContent=`Raumname: ${creatorRoomName()}`;openModal("createRoomModal")};
-document.getElementById("drawerRooms").onclick=showRooms;document.getElementById("drawerHistory").onclick=()=>{closeDrawer();renderHistory();openModal("historyModal")};document.getElementById("drawerRanking").onclick=()=>{closeDrawer();renderRanking();openModal("rankingModal")};
-document.getElementById("drawerProfile").onclick=()=>{closeDrawer();document.getElementById("myNameInput").value=myName;openModal("myProfileModal")};
-document.getElementById("drawerSettings").onclick=()=>{closeDrawer();renderThemeGrid();openModal("settingsModal")};
-modeSelect.onchange=()=>setMode(Number(modeSelect.value));document.getElementById("createRoomBtn").onclick=createRoom;document.getElementById("addPlayerBtn").onclick=addPlayer;playerInput.addEventListener("keydown",e=>{if(e.key==="Enter")addPlayer()});document.getElementById("newGameBtn").onclick=newGame;document.getElementById("removeAllBtn").onclick=removeAllPlayers;
-document.getElementById("profileBtn").onclick=()=>{renderProfiles();openModal("profilesModal")};document.getElementById("loadProfileBtn").onclick=async()=>{if(!currentRoom)return;const n=profileSelect.value;if(!n||!playerProfiles[n])return;await update(roomRef(),{players:playerProfiles[n].map(x=>({name:x,life:maxLives()}))})};
-document.getElementById("saveMyNameBtn").onclick=()=>{myName=document.getElementById("myNameInput").value.trim();localStorage.setItem("knack_my_name",myName);closeModal("myProfileModal")};
-document.getElementById("resetStatsBtn").onclick=resetStats;document.getElementById("closeRoomBtn").onclick=closeCurrentRoom;
-document.getElementById("roomNameLine").onclick=()=>{if(!currentRoom)return;document.getElementById("roomControlInfo").innerHTML=`<div><div class="room-name">${escapeHtml(roomData.name||"Spielraum")}</div><div class="room-meta">${roomData.ownerId===clientId?"Du bist der Ersteller":"Erstellt von einem anderen Spieler"}</div></div>`;document.getElementById("closeRoomBtn").style.display=roomData.ownerId===clientId?"block":"none";openModal("roomControlModal")};
-document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));document.querySelectorAll(".modal-backdrop").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("open")}));
+menuBtn.onclick=openDrawer;drawerClose.onclick=closeDrawer;drawerOverlay.onclick=e=>{if(e.target===drawerOverlay)closeDrawer()};
+drawerCreateRoom.onclick=()=>{closeDrawer();fillRoomProfileSelect();roomNameInput.disabled=false;roomNameInput.value="";roomProfileSelect.value="";roomProfilePreview.innerHTML="";openModal("createRoomModal")};
+drawerRooms.onclick=showRooms;drawerHistory.onclick=()=>{closeDrawer();renderHistory();openModal("historyModal")};drawerRanking.onclick=()=>{closeDrawer();renderRanking();openModal("rankingModal")};
+drawerProfile.onclick=()=>{closeDrawer();myNameInput.value=state.myName;openModal("myProfileModal")};drawerLeave.onclick=()=>leaveRoom();drawerCloseRoom.onclick=closeRoom;drawerSettings.onclick=()=>{closeDrawer();setupSettings();openModal("settingsModal")};
+roomProfileSelect.onchange=()=>{roomNameInput.disabled=false;if(roomProfileSelect.value)updateRoomProfilePreview();else{roomProfilePreview.innerHTML="";roomNameInput.disabled=false;roomNameInput.value=""}};
+createRoomBtn.onclick=createRoom;addPlayerBtn.onclick=addPlayer;playerInput.onkeydown=e=>{if(e.key==="Enter")addPlayer()};removeAllBtn.onclick=removeAllPlayers;modeSelect.onchange=()=>setMode(Number(modeSelect.value));newGameBtn.onclick=newGame;undoBtn.onclick=undoLast;
+profileBtn.onclick=()=>{renderProfiles();openModal("profilesModal")};loadProfileBtn.onclick=async()=>{const n=profileSelect.value,p=profiles()[n];if(!p||!currentRoom)return;const np={};(p.members||[]).forEach((x,i)=>np["p_"+i]={name:x,life:maxLives(),color:hashColor(x),static:true});if(state.myName&&!Object.values(np).some(x=>x.name.toLowerCase()===state.myName.toLowerCase()))np[userPlayerKey]={name:state.myName,life:maxLives(),color:hashColor(state.myName),userId:clientId};await commitPlayers(np,"Profil geladen")};
+saveMyNameBtn.onclick=()=>{const n=myNameInput.value.trim();if(!n)return;state.myName=n;persist();closeModal("myProfileModal")};
+onboardingSave.onclick=()=>{const n=onboardingName.value.trim();if(!n)return;state.myName=n;persist();closeModal("onboardingModal")};
+themeSelect.onchange=()=>applyTheme(themeSelect.value);hapticToggle.onclick=()=>{state.haptics=!state.haptics;persist();hapticToggle.classList.toggle("on",state.haptics);haptic(20)};resetStatsBtn.onclick=resetStats;
+document.querySelectorAll(".rank-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".rank-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");rankMode=b.dataset.rank;renderRanking()});
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));document.querySelectorAll(".modal-backdrop:not(.onboarding)").forEach(m=>m.onclick=e=>{if(e.target===m)m.classList.remove("open")});
 
-refreshProfiles();renderPlayers();renderThemeGrid();
-if(isStandalone){const last=localStorage.getItem("knack_last_room");if(last)get(roomRef(last)).then(s=>{if(s.exists()&&s.val().open!==false)connectRoom(last)})}
+refreshProfiles();renderPlayers();setupSettings();cleanupStaleRooms();
+if(standalone){const last=localStorage.getItem("knack_last_room_v6");if(last)get(roomRef(last)).then(s=>{if(s.exists()&&s.val().open!==false)connectRoom(last,true)})}
 </script>
 </body></html>
