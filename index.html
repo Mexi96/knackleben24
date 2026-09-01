@@ -6,6 +6,9 @@
   <meta name="theme-color" content="#0b1020" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Knackleben24" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./icon-180.png" />
   <title>Knackleben24</title>
   <style>
     :root{
@@ -63,9 +66,43 @@
     @media(max-width:700px){.header{align-items:flex-start}.header-actions .btn{padding:7px 8px;font-size:.75rem}.toolbar{grid-template-columns:minmax(0,1fr) auto}.toolbar select{grid-column:1/2}}
     @media(max-height:720px){.game-app{gap:6px;padding-top:6px;padding-bottom:6px}.header{min-height:34px}.brand{font-size:1.2rem}.btn{padding:6px 8px;font-size:.73rem}.toolbar{padding:5px}input,select{padding:7px 8px;font-size:.82rem}.players{gap:6px}.player-top{padding:5px 7px 4px}.remove{width:25px;height:25px}.life-row{grid-template-columns:39px minmax(0,1fr) 39px}.life-main{font-size:clamp(1.7rem,7vh,2.8rem)}.state-swimmer .life-main{font-size:clamp(1rem,3.7vh,1.65rem)}.state-over .life-main{font-size:clamp(.95rem,3.4vh,1.5rem)}.life-sub{font-size:.58rem}}
     @media(min-width:760px){.players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}}
+
+    #installGate{min-height:100svh;display:grid;place-items:center;padding:18px}
+    #installGate.hidden{display:none}
+    .install-card{width:min(560px,100%);background:rgba(21,29,49,.97);border:1px solid var(--border);border-radius:24px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.35)}
+    .install-logo{width:72px;height:72px;border-radius:18px;background:var(--accent);color:#111827;display:grid;place-items:center;font-weight:950;font-size:25px;margin-bottom:14px}
+    .install-card h1{margin:0 0 6px;font-size:clamp(2rem,9vw,3rem)}
+    .install-card p{color:var(--muted);line-height:1.45}
+    .install-steps{display:grid;gap:10px;margin:18px 0}
+    .install-step{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:12px}
+    .install-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111827;display:grid;place-items:center;font-weight:900}
+    .install-step strong{display:block;margin-bottom:2px}
+    .install-hint{font-size:.84rem;color:var(--muted)}
+    .install-warning{margin-top:12px;padding:11px 12px;border-radius:12px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);font-size:.86rem;color:#fde68a}
+    body.browser-only > :not(#installGate){display:none!important}
   </style>
 </head>
 <body>
+<section id="installGate" style="display:none">
+  <div class="install-card">
+    <div class="install-logo">K24</div>
+    <h1>Knackleben24</h1>
+    <p>Knackleben24 funktioniert ausschließlich als Web‑App vom Home‑Bildschirm. Im normalen Browser ist der Lebenszähler gesperrt.</p>
+    <div class="install-steps ios-guide">
+      <div class="install-step"><div class="install-num">1</div><div><strong>In Safari öffnen</strong><div class="install-hint">Falls du über einen QR‑Code oder eine andere App hierher gekommen bist, öffne die Seite in Safari.</div></div></div>
+      <div class="install-step"><div class="install-num">2</div><div><strong>Auf Teilen tippen □↑</strong><div class="install-hint">Das Teilen‑Symbol befindet sich in Safari unten bzw. oben.</div></div></div>
+      <div class="install-step"><div class="install-num">3</div><div><strong>„Zum Home‑Bildschirm“ wählen</strong><div class="install-hint">Danach „Hinzufügen“ bzw. „Als Web‑App öffnen“ bestätigen.</div></div></div>
+      <div class="install-step"><div class="install-num">4</div><div><strong>Knackleben24 vom Home‑Bildschirm starten</strong><div class="install-hint">Dann wird die eigentliche App freigeschaltet.</div></div></div>
+    </div>
+    <div class="install-steps android-guide" style="display:none">
+      <div class="install-step"><div class="install-num">1</div><div><strong>Browsermenü öffnen</strong><div class="install-hint">In Chrome meist über ⋮.</div></div></div>
+      <div class="install-step"><div class="install-num">2</div><div><strong>„App installieren“ oder „Zum Startbildschirm hinzufügen“</strong></div></div>
+      <div class="install-step"><div class="install-num">3</div><div><strong>Knackleben24 vom Startbildschirm starten</strong></div></div>
+    </div>
+    <div class="install-warning">Die App kann absichtlich nicht direkt im Browser benutzt werden.</div>
+  </div>
+</section>
+
 <section class="screen active" id="homeScreen">
   <div class="landing">
     <div class="landing-card">
@@ -138,6 +175,22 @@
   </div>
 </div>
 
+<script>
+(function(){
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if(!standalone){
+    document.body.classList.add('browser-only');
+    const gate=document.getElementById('installGate');
+    gate.style.display='grid';
+    const ua=navigator.userAgent.toLowerCase();
+    if(ua.includes('android')){
+      document.querySelector('.ios-guide').style.display='none';
+      document.querySelector('.android-guide').style.display='grid';
+    }
+  }
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+})();
+</script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import { getDatabase, ref, set, get, onValue, update } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
