@@ -1,4 +1,4 @@
-const CACHE="knack-v7";
+const CACHE="knack-v8";
 const ASSETS=["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./knack-app-qr.png", "./logo-orange.png", "./logo-amber.png", "./logo-red.png", "./logo-dark.png", "./logo-blue.png", "./logo-cyan.png", "./logo-purple.png", "./logo-green.png", "./logo-ice.png", "./logo-pink.png", "./logo-light.png", "./logo-sand.png"];
 self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
 self.addEventListener("activate",e=>e.waitUntil(
