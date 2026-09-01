@@ -15,227 +15,158 @@
       --bg:#0b1020;--panel:#151d31;--panel2:#1d2942;--panel3:#24314d;
       --border:rgba(255,255,255,.10);--text:#f8fafc;--muted:#9aa7bd;
       --accent:#f59e0b;--accent2:#fbbf24;--danger:#ef4444;--ok:#22c55e;--blue:#38bdf8;
-      --overlay:rgba(2,6,23,.72);
+      --overlay:rgba(2,6,23,.72)
     }
     *{box-sizing:border-box}
     html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-    body{min-height:100svh;background:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--accent) 15%,transparent),transparent 34rem),var(--bg)}
-    button,input,select{font:inherit} button{cursor:pointer;touch-action:manipulation}
+    body{min-height:100svh;background:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 34rem),var(--bg)}
+    button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}
     .hidden{display:none!important}
 
-    /* Install Gate */
+    /* Browser install screen */
     #installGate{min-height:100svh;display:grid;place-items:center;padding:18px}
-    .install-card{
-      width:min(520px,100%);background:color-mix(in srgb,var(--panel) 96%,transparent);
-      border:1px solid var(--border);border-radius:24px;padding:22px;
-      box-shadow:0 25px 80px rgba(0,0,0,.35)
-    }
-    .install-logo{
-      width:72px;height:72px;border-radius:18px;background:var(--accent);color:#111827;
-      display:grid;place-items:center;font-weight:950;font-size:23px;margin-bottom:14px;
-      letter-spacing:-.05em
-    }
+    .install-card{width:min(520px,100%);background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.35)}
+    .install-logo{width:82px;height:82px;border-radius:20px;overflow:hidden;margin-bottom:14px}
+    .install-logo img{width:100%;height:100%;object-fit:cover;display:block}
     .install-card h1{margin:0 0 6px;font-size:clamp(2rem,9vw,3rem);letter-spacing:-.05em}
     .install-card>p{color:var(--muted);line-height:1.45;margin:0 0 16px}
     .steps{display:grid;gap:10px}
-    .step{
-      display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;
-      background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:12px
-    }
-    .num{
-      width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111827;
-      display:grid;place-items:center;font-weight:900
-    }
-    .step strong{display:block;margin-bottom:2px}
-    .hint{font-size:.84rem;color:var(--muted);line-height:1.35}
+    .step{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:12px}
+    .num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111827;display:grid;place-items:center;font-weight:900}
+    .step strong{display:block;margin-bottom:2px}.hint{font-size:.84rem;color:var(--muted);line-height:1.35}
 
-    /* App */
-    #appRoot{
-      width:min(980px,100%);height:100svh;margin:auto;display:grid;
-      grid-template-rows:auto auto 1fr;gap:8px;
-      padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));
+    /* Splash */
+    #splash{
+      position:fixed;inset:0;background:var(--bg);z-index:200;display:grid;place-items:center;
       overflow:hidden
     }
+    #splash.hide{animation:splashWipe .68s cubic-bezier(.7,0,.2,1) forwards}
+    .splash-word{font-weight:950;letter-spacing:.02em;font-size:clamp(4rem,20vw,9rem);color:var(--text)}
+    @keyframes splashWipe{
+      0%{clip-path:inset(0 0 0 0)}
+      100%{clip-path:inset(0 100% 0 0)}
+    }
+
+    /* App */
+    #appRoot{width:min(980px,100%);height:100svh;margin:auto;display:grid;grid-template-rows:auto auto auto 1fr;gap:8px;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));overflow:hidden}
     .header{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:42px}
     .header-left{display:flex;align-items:center;gap:8px;min-width:0}
-    .menu-btn{
-      width:38px;height:38px;padding:0;border-radius:11px;border:1px solid var(--border);
-      background:var(--panel2);color:var(--text);display:grid;place-items:center
-    }
-    .hamburger{width:18px;height:14px;display:grid;gap:3px}
-    .hamburger span{height:2px;background:currentColor;border-radius:2px}
-    .brand-wrap{min-width:0}
-    .brand{font-size:clamp(1.2rem,5vw,1.95rem);font-weight:950;letter-spacing:-.04em;line-height:1}
+    .menu-btn{width:38px;height:38px;padding:0;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);display:grid;place-items:center}
+    .hamburger{width:18px;height:14px;display:grid;gap:3px}.hamburger span{height:2px;background:currentColor;border-radius:2px}
+    .app-logo{width:36px;height:36px;border-radius:10px;overflow:hidden;flex:0 0 auto}
+    .app-logo img{width:100%;height:100%;object-fit:cover;display:block}
+    .brand-wrap{min-width:0}.brand{font-size:clamp(1.15rem,5vw,1.85rem);font-weight:950;letter-spacing:-.04em;line-height:1}
     .roomline{font-size:.72rem;color:var(--muted);margin-top:3px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .room-code{color:var(--accent2);font-weight:900;letter-spacing:.08em}
-    .online-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}
+    .room-code{color:var(--accent2);font-weight:900;letter-spacing:.08em}.online-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}
     .header-actions{display:flex;gap:6px;justify-content:flex-end}
-    .btn{
-      border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text);
-      padding:10px 12px;font-weight:800;transition:transform .14s ease,filter .14s ease,background .2s ease
-    }
-    .btn:active{transform:scale(.96)}
-    .btn.primary{background:var(--accent);color:#111827;border-color:transparent}
-    .btn.danger{background:rgba(239,68,68,.13);color:#fecaca}
-    input,select{
-      width:100%;min-width:0;border:1px solid var(--border);border-radius:11px;background:#0f172a;
-      color:var(--text);outline:none;padding:10px 11px
-    }
+    .btn{border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 12px;font-weight:800;transition:transform .14s ease,filter .14s ease}
+    .btn:active{transform:scale(.96)}.btn.primary{background:var(--accent);color:#111827;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}
+    input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius:11px;background:#0f172a;color:var(--text);outline:none;padding:10px 11px}
     input:focus,select:focus{border-color:var(--accent)}
-    .toolbar{
-      display:grid;grid-template-columns:minmax(0,1.3fr) auto minmax(120px,.85fr) auto auto;
-      gap:6px;background:color-mix(in srgb,var(--panel) 88%,transparent);
-      border:1px solid var(--border);border-radius:14px;padding:7px;backdrop-filter:blur(10px)
-    }
-    .players{
-      min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-      grid-template-rows:repeat(3,minmax(0,1fr));gap:8px;overflow:auto;scrollbar-width:none
-    }
+    .modebar{display:grid;grid-template-columns:auto repeat(3,1fr);align-items:center;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:7px}
+    .mode-label{font-size:.8rem;color:var(--muted);font-weight:800;padding:0 4px}
+    .mode-btn{border:1px solid var(--border);background:var(--panel2);color:var(--text);border-radius:10px;padding:8px 10px;font-weight:900}
+    .mode-btn.active{background:var(--accent);color:#111827;border-color:transparent}
+    .toolbar{display:grid;grid-template-columns:minmax(0,1.25fr) auto minmax(120px,.8fr) auto auto;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:7px}
+    .players{min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:8px;overflow:auto;scrollbar-width:none}
     .players::-webkit-scrollbar{display:none}
-    .player{
-      min-height:0;border:1px solid var(--border);border-radius:15px;
-      background:linear-gradient(180deg,color-mix(in srgb,var(--panel2) 95%,transparent),color-mix(in srgb,var(--panel) 95%,transparent));
-      display:grid;grid-template-rows:auto 1fr;overflow:hidden;
-      transition:transform .2s ease,opacity .2s ease,box-shadow .2s ease
-    }
-    .player.added{animation:playerIn .28s ease both}
-    .player.removing{animation:playerOut .22s ease both}
+    .player{min-height:0;border:1px solid var(--border);border-radius:15px;background:linear-gradient(180deg,var(--panel2),var(--panel));display:grid;grid-template-rows:auto 1fr;overflow:hidden;transition:transform .2s ease,opacity .2s ease}
+    .player.added{animation:playerIn .28s ease both}.player.removing{animation:playerOut .22s ease both}
     @keyframes playerIn{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:none}}
     @keyframes playerOut{to{opacity:0;transform:scale(.92) translateY(6px)}}
-    .player-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:center;padding:7px 8px 5px}
+    .player-top{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;align-items:center;padding:7px 8px 5px}
     .player-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(.92rem,3.5vw,1.08rem);font-weight:850}
-    .remove{width:28px;height:28px;padding:0;border-radius:8px;border:1px solid var(--border);background:rgba(239,68,68,.12);color:#fecaca}
+    .aaa-btn,.remove{height:28px;border-radius:8px;border:1px solid var(--border);font-weight:900}
+    .aaa-btn{padding:0 8px;background:color-mix(in srgb,var(--accent) 14%,var(--panel2));color:var(--accent2);font-size:.72rem}
+    .remove{width:28px;padding:0;background:rgba(239,68,68,.12);color:#fecaca}
     .life-row{min-height:0;display:grid;grid-template-columns:45px minmax(0,1fr) 45px;align-items:stretch;border-top:1px solid var(--border)}
     .life-btn{border:0;border-radius:0;background:rgba(255,255,255,.035);color:white;font-size:1.6rem;font-weight:900}
-    .life-display{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2px 4px}
+    .life-display{min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px 4px}
     .life-main{font-size:clamp(2rem,9vw,3.55rem);font-weight:950;line-height:.95;letter-spacing:-.06em}
-    .life-main.bump{animation:lifeBump .26s ease}
-    @keyframes lifeBump{0%{transform:scale(1)}45%{transform:scale(1.18)}100%{transform:scale(1)}}
-    .life-sub{margin-top:3px;font-size:.67rem;color:var(--muted)}
+    .life-main.bump{animation:lifeBump .26s ease}@keyframes lifeBump{0%{transform:scale(1)}45%{transform:scale(1.18)}100%{transform:scale(1)}}
     .state-swimmer .life-main{font-size:clamp(1.15rem,5vw,2rem);color:var(--blue);letter-spacing:-.02em}
     .state-over .life-main{font-size:clamp(1.05rem,4.7vw,1.85rem);color:#fca5a5;letter-spacing:-.02em}
     .empty{grid-column:1/-1;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border);border-radius:15px;color:var(--muted);text-align:center;padding:20px}
 
     /* Drawer */
-    .drawer-overlay{
-      position:fixed;inset:0;background:rgba(2,6,23,.55);opacity:0;pointer-events:none;
-      transition:opacity .22s ease;z-index:80
-    }
+    .drawer-overlay{position:fixed;inset:0;background:rgba(2,6,23,.55);opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:80}
     .drawer-overlay.open{opacity:1;pointer-events:auto}
-    .drawer{
-      position:absolute;left:0;top:0;bottom:0;width:min(330px,86vw);background:var(--panel);
-      border-right:1px solid var(--border);transform:translateX(-100%);transition:transform .24s ease;
-      padding:max(16px,env(safe-area-inset-top)) 14px 16px;box-shadow:20px 0 50px rgba(0,0,0,.25)
-    }
+    .drawer{position:absolute;left:0;top:0;bottom:0;width:min(330px,86vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:transform .24s ease;padding:max(16px,env(safe-area-inset-top)) 14px 16px;box-shadow:20px 0 50px rgba(0,0,0,.25)}
     .drawer-overlay.open .drawer{transform:translateX(0)}
-    .drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-    .drawer-title{font-size:1.2rem;font-weight:950}
+    .drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.drawer-title{font-size:1.2rem;font-weight:950}
     .drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
-    .drawer-nav{display:grid;gap:8px}
-    .drawer-item{
-      display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 13px;
-      border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800
-    }
-    .drawer-item:hover,.drawer-item:active{background:var(--panel2);border-color:var(--border)}
-    .drawer-icon{width:24px;text-align:center;font-size:1.1rem}
-    .drawer-spacer{height:1px;background:var(--border);margin:8px 0}
+    .drawer-nav{display:grid;gap:8px}.drawer-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800}
+    .drawer-item:active{background:var(--panel2);border-color:var(--border)}.drawer-icon{width:24px;text-align:center;font-size:1.1rem}.drawer-spacer{height:1px;background:var(--border);margin:8px 0}
 
     /* Modals */
-    .modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:14px;z-index:90}
-    .modal-backdrop.open{display:flex}
+    .modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:14px;z-index:90}.modal-backdrop.open{display:flex}
     .modal{width:min(680px,100%);max-height:min(82svh,740px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:18px;box-shadow:0 25px 80px rgba(0,0,0,.45)}
-    .modal-head{position:sticky;top:0;background:var(--panel);display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 15px;border-bottom:1px solid var(--border);z-index:2}
-    .modal-head h2{margin:0;font-size:1.15rem}.modal-body{padding:12px}
+    .modal-head{position:sticky;top:0;background:var(--panel);display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 15px;border-bottom:1px solid var(--border);z-index:2}.modal-head h2{margin:0;font-size:1.15rem}.modal-body{padding:12px}
     .close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:white}
     .history-item,.rank-item,.profile-item,.settings-section{border:1px solid var(--border);border-radius:12px;background:var(--panel2);padding:10px;margin-bottom:8px}
     .history-top,.rank-item,.profile-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
-    .result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 10px;margin-top:7px;font-size:.84rem}
-    .small{font-size:.78rem;color:var(--muted)}
-    .rank-pos{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--panel3);font-weight:900;flex:0 0 auto}
-    .rank-name{flex:1;min-width:0;font-weight:800;overflow:hidden;text-overflow:ellipsis}
-    .rank-score{font-weight:900;color:var(--accent2)}
-    .section-title{margin:4px 0 8px;font-size:.88rem;color:var(--muted);font-weight:800}
-    .profile-actions{display:flex;gap:6px}
+    .result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 10px;margin-top:7px;font-size:.84rem}.small{font-size:.78rem;color:var(--muted)}
+    .rank-pos{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--panel3);font-weight:900;flex:0 0 auto}
+    .rank-name{flex:1;min-width:0;font-weight:800;overflow:hidden;text-overflow:ellipsis}.rank-score{font-weight:900;color:var(--accent2)}
+    .medal{font-size:1.1rem}.profile-actions{display:flex;gap:6px}
     .theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-    .theme-card{
-      border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--panel3);
-      display:flex;align-items:center;justify-content:space-between;gap:10px
-    }
-    .theme-card.active{outline:2px solid var(--accent)}
-    .swatches{display:flex;gap:4px}
-    .swatch{width:15px;height:15px;border-radius:50%;border:1px solid rgba(255,255,255,.22)}
+    .theme-card{border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--panel3);display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--text)}
+    .theme-card.active{outline:2px solid var(--accent)}.swatches{display:flex;gap:4px}.swatch{width:15px;height:15px;border-radius:50%;border:1px solid rgba(255,255,255,.22)}
     .settings-section h3{margin:0 0 8px;font-size:1rem}
 
     @media(max-width:700px){
       .header-actions .btn{padding:7px 8px;font-size:.75rem}
       .toolbar{grid-template-columns:minmax(0,1fr) auto}.toolbar select{grid-column:1/2}
+      .modebar{grid-template-columns:auto repeat(3,1fr)}
     }
     @media(max-height:720px){
-      #appRoot{gap:6px;padding-top:6px;padding-bottom:6px}.header{min-height:34px}
-      .brand{font-size:1.15rem}.btn{padding:6px 8px;font-size:.73rem}.toolbar{padding:5px}
-      input,select{padding:7px 8px;font-size:.82rem}.players{gap:6px}.player-top{padding:5px 7px 4px}
-      .remove{width:25px;height:25px}.life-row{grid-template-columns:39px minmax(0,1fr) 39px}
-      .life-main{font-size:clamp(1.7rem,7vh,2.8rem)}.state-swimmer .life-main{font-size:clamp(1rem,3.7vh,1.65rem)}
-      .state-over .life-main{font-size:clamp(.95rem,3.4vh,1.5rem)}.life-sub{font-size:.58rem}
+      #appRoot{gap:6px;padding-top:6px;padding-bottom:6px}.header{min-height:34px}.brand{font-size:1.05rem}
+      .btn{padding:6px 8px;font-size:.73rem}.toolbar,.modebar{padding:5px}input,select{padding:7px 8px;font-size:.82rem}.players{gap:6px}
+      .player-top{padding:5px 7px 4px}.aaa-btn,.remove{height:25px}.remove{width:25px}.life-row{grid-template-columns:39px minmax(0,1fr) 39px}
+      .life-main{font-size:clamp(1.7rem,7vh,2.8rem)}.state-swimmer .life-main{font-size:clamp(1rem,3.7vh,1.65rem)}.state-over .life-main{font-size:clamp(.95rem,3.4vh,1.5rem)}
     }
-    @media(min-width:760px){
-      .players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
-    }
+    @media(min-width:760px){.players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}}
   </style>
 </head>
 <body>
 
 <section id="installGate">
   <div class="install-card">
-    <div class="install-logo">KT</div>
+    <div class="install-logo"><img src="./logo.png" alt=""></div>
     <h1>KnackTracker</h1>
     <p>Der KnackTracker funktioniert ausschließlich als Web‑App vom Home‑Bildschirm.</p>
-
     <div class="steps">
-      <div class="step">
-        <div class="num">1</div>
-        <div>
-          <strong>Auf Teilen tippen</strong>
-          <div class="hint">Öffne das Teilen-Menü in Safari über das Teilen-Symbol.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="num">2</div>
-        <div>
-          <strong>„Zum Home‑Bildschirm“ auswählen</strong>
-          <div class="hint">Bestätige anschließend das Hinzufügen der Web‑App.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="num">3</div>
-        <div>
-          <strong>KnackTracker vom Home‑Bildschirm starten</strong>
-          <div class="hint">Von dort öffnet sich der Lebenszähler als eigenständige Web‑App.</div>
-        </div>
-      </div>
+      <div class="step"><div class="num">1</div><div><strong>Auf Teilen tippen</strong><div class="hint">Öffne das Teilen-Menü in Safari über das Teilen-Symbol.</div></div></div>
+      <div class="step"><div class="num">2</div><div><strong>„Zum Home‑Bildschirm“ auswählen</strong><div class="hint">Bestätige anschließend das Hinzufügen der Web‑App.</div></div></div>
+      <div class="step"><div class="num">3</div><div><strong>KnackTracker vom Home‑Bildschirm starten</strong><div class="hint">Von dort öffnet sich der Lebenszähler als eigenständige Web‑App.</div></div></div>
     </div>
   </div>
 </section>
 
+<div id="splash" class="hidden"><div class="splash-word">KNACK</div></div>
+
 <section id="appRoot" class="hidden">
   <header class="header">
     <div class="header-left">
-      <button class="menu-btn" id="menuBtn" aria-label="Menü öffnen">
-        <span class="hamburger"><span></span><span></span><span></span></span>
-      </button>
+      <button class="menu-btn" id="menuBtn" aria-label="Menü öffnen"><span class="hamburger"><span></span><span></span><span></span></span></button>
+      <div class="app-logo"><img src="./logo.png" alt="KnackTracker"></div>
       <div class="brand-wrap">
         <div class="brand">KnackTracker</div>
-        <div class="roomline">
-          <span><span class="online-dot"></span> Live</span>
-          <span>Raum <span class="room-code" id="roomCodeLabel">–</span></span>
-        </div>
+        <div class="roomline"><span><span class="online-dot"></span> Live</span><span>Raum <span class="room-code" id="roomCodeLabel">–</span></span></div>
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn" id="copyRoomBtn">Code teilen</button>
+      <button class="btn" id="copyCodeBtn">Code kopieren</button>
       <button class="btn primary" id="newGameBtn">Neues Spiel</button>
     </div>
   </header>
+
+  <section class="modebar">
+    <div class="mode-label">Startleben</div>
+    <button class="mode-btn" data-mode="3">3</button>
+    <button class="mode-btn active" data-mode="4">4</button>
+    <button class="mode-btn" data-mode="5">5</button>
+  </section>
 
   <section class="toolbar">
     <input id="playerInput" maxlength="24" placeholder="Spielername eingeben" autocomplete="off">
@@ -248,31 +179,27 @@
   <section class="players" id="players"></section>
 </section>
 
-<!-- Drawer -->
 <div class="drawer-overlay" id="drawerOverlay">
   <aside class="drawer">
-    <div class="drawer-head">
-      <div class="drawer-title">KnackTracker</div>
-      <button class="drawer-close" id="drawerClose">✕</button>
-    </div>
+    <div class="drawer-head"><div class="drawer-title">KnackTracker</div><button class="drawer-close" id="drawerClose">✕</button></div>
     <nav class="drawer-nav">
       <button class="drawer-item" id="drawerRoom"><span class="drawer-icon">◫</span><span>Spielraum</span></button>
       <button class="drawer-item" id="drawerHistory"><span class="drawer-icon">↶</span><span>Letzte Spiele</span></button>
       <button class="drawer-item" id="drawerRanking"><span class="drawer-icon">🏆</span><span>Rangliste</span></button>
+      <button class="drawer-item" id="drawerRemoveAll"><span class="drawer-icon">✕</span><span>Alle Spieler entfernen</span></button>
       <div class="drawer-spacer"></div>
       <button class="drawer-item" id="drawerSettings"><span class="drawer-icon">⚙︎</span><span>Einstellungen</span></button>
     </nav>
   </aside>
 </div>
 
-<!-- Room modal -->
 <div class="modal-backdrop" id="roomModal">
   <div class="modal">
     <div class="modal-head"><h2>Spielraum</h2><button class="close" data-close="roomModal">✕</button></div>
     <div class="modal-body">
       <button class="btn primary" id="createRoomBtn" style="width:100%;margin-bottom:10px">Neues Spiel erstellen</button>
       <div style="display:grid;grid-template-columns:1fr auto;gap:8px">
-        <input id="roomInput" maxlength="6" placeholder="Raumcode">
+        <input id="roomInput" maxlength="4" placeholder="Raumcode">
         <button class="btn" id="joinRoomBtn">Beitreten</button>
       </div>
       <div id="roomError" class="small" style="color:#fca5a5;margin-top:8px"></div>
@@ -281,34 +208,22 @@
 </div>
 
 <div class="modal-backdrop" id="historyModal">
-  <div class="modal">
-    <div class="modal-head"><h2>Letzte Spiele</h2><button class="close" data-close="historyModal">✕</button></div>
-    <div class="modal-body" id="historyBody"></div>
-  </div>
+  <div class="modal"><div class="modal-head"><h2>Letzte Spiele</h2><button class="close" data-close="historyModal">✕</button></div><div class="modal-body" id="historyBody"></div></div>
 </div>
 
 <div class="modal-backdrop" id="rankingModal">
-  <div class="modal">
-    <div class="modal-head"><h2>Rangliste</h2><button class="close" data-close="rankingModal">✕</button></div>
-    <div class="modal-body" id="rankingBody"></div>
-  </div>
+  <div class="modal"><div class="modal-head"><h2>Rangliste</h2><button class="close" data-close="rankingModal">✕</button></div><div class="modal-body" id="rankingBody"></div></div>
 </div>
 
 <div class="modal-backdrop" id="profilesModal">
-  <div class="modal">
-    <div class="modal-head"><h2>Profile</h2><button class="close" data-close="profilesModal">✕</button></div>
-    <div class="modal-body" id="profilesBody"></div>
-  </div>
+  <div class="modal"><div class="modal-head"><h2>Profile</h2><button class="close" data-close="profilesModal">✕</button></div><div class="modal-body" id="profilesBody"></div></div>
 </div>
 
 <div class="modal-backdrop" id="settingsModal">
   <div class="modal">
     <div class="modal-head"><h2>Einstellungen</h2><button class="close" data-close="settingsModal">✕</button></div>
     <div class="modal-body">
-      <div class="settings-section">
-        <h3>App-Design</h3>
-        <div class="theme-grid" id="themeGrid"></div>
-      </div>
+      <div class="settings-section"><h3>App-Design</h3><div class="theme-grid" id="themeGrid"></div></div>
       <div class="settings-section">
         <h3>Statistiken</h3>
         <div class="small" style="margin-bottom:10px">Löscht die gespeicherten letzten Spiele und setzt die Rangliste dieses Raums zurück.</div>
@@ -322,12 +237,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import { getDatabase, ref, set, get, onValue, update } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
-const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
-const installGate=document.getElementById("installGate");
-const appRoot=document.getElementById("appRoot");
+const isStandalone=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
+const installGate=document.getElementById("installGate"),appRoot=document.getElementById("appRoot"),splash=document.getElementById("splash");
 
-if(isStandalone){installGate.classList.add("hidden");appRoot.classList.remove("hidden")}
-
+if(isStandalone){
+  installGate.classList.add("hidden");
+  splash.classList.remove("hidden");
+  setTimeout(()=>splash.classList.add("hide"),650);
+  setTimeout(()=>{splash.classList.add("hidden");appRoot.classList.remove("hidden")},1350);
+}
 if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(()=>{})}
 
 const firebaseConfig={
@@ -340,222 +258,174 @@ const firebaseConfig={
   appId:"1:1048228405783:web:a8af2cba896cb7cabff252",
   measurementId:"G-KVSXJYCWTY"
 };
-
-const fbApp=initializeApp(firebaseConfig);
-const db=getDatabase(fbApp);
+const fbApp=initializeApp(firebaseConfig),db=getDatabase(fbApp);
 
 const THEMES={
-  amber:{name:"Amber",vars:{"--bg":"#0b1020","--panel":"#151d31","--panel2":"#1d2942","--panel3":"#24314d","--accent":"#f59e0b","--accent2":"#fbbf24","--blue":"#38bdf8"}},
-  blue:{name:"Blau",vars:{"--bg":"#08111f","--panel":"#10223a","--panel2":"#17304d","--panel3":"#1f3d60","--accent":"#38bdf8","--accent2":"#7dd3fc","--blue":"#60a5fa"}},
-  green:{name:"Grün",vars:{"--bg":"#07140f","--panel":"#10241b","--panel2":"#183326","--panel3":"#204431","--accent":"#34d399","--accent2":"#6ee7b7","--blue":"#22d3ee"}},
-  purple:{name:"Violett",vars:{"--bg":"#120b1d","--panel":"#21142f","--panel2":"#2d1b40","--panel3":"#3b2453","--accent":"#a78bfa","--accent2":"#c4b5fd","--blue":"#818cf8"}}
+  amber:{name:"Amber",vars:{"--bg":"#0b1020","--panel":"#151d31","--panel2":"#1d2942","--panel3":"#24314d","--text":"#f8fafc","--muted":"#9aa7bd","--accent":"#f59e0b","--accent2":"#fbbf24","--blue":"#38bdf8"}},
+  blue:{name:"Blau",vars:{"--bg":"#08111f","--panel":"#10223a","--panel2":"#17304d","--panel3":"#1f3d60","--text":"#f8fafc","--muted":"#a8b7cc","--accent":"#38bdf8","--accent2":"#7dd3fc","--blue":"#60a5fa"}},
+  green:{name:"Grün",vars:{"--bg":"#07140f","--panel":"#10241b","--panel2":"#183326","--panel3":"#204431","--text":"#f5fff9","--muted":"#9dc3ae","--accent":"#34d399","--accent2":"#6ee7b7","--blue":"#22d3ee"}},
+  purple:{name:"Violett",vars:{"--bg":"#120b1d","--panel":"#21142f","--panel2":"#2d1b40","--panel3":"#3b2453","--text":"#fbf8ff","--muted":"#b8a5cd","--accent":"#a78bfa","--accent2":"#c4b5fd","--blue":"#818cf8"}},
+  red:{name:"Rot",vars:{"--bg":"#160909","--panel":"#281010","--panel2":"#3a1717","--panel3":"#4a1d1d","--text":"#fff7f7","--muted":"#c9aaaa","--accent":"#f87171","--accent2":"#fca5a5","--blue":"#fb7185"}},
+  cyan:{name:"Cyan",vars:{"--bg":"#061416","--panel":"#0d262a","--panel2":"#12373d","--panel3":"#184850","--text":"#f4ffff","--muted":"#9fc2c7","--accent":"#22d3ee","--accent2":"#67e8f9","--blue":"#06b6d4"}},
+  darkgold:{name:"Schwarz · Weiß · Gold",vars:{"--bg":"#050505","--panel":"#0c0c0c","--panel2":"#151515","--panel3":"#1f1f1f","--text":"#ffffff","--muted":"#a8a8a8","--accent":"#d4af37","--accent2":"#f4d66b","--blue":"#ffffff"}}
 };
 
-let currentRoom="";
-let roomData={players:[],history:[]};
-let unsubscribeRoom=null;
+let currentTheme=localStorage.getItem("knacktracker_theme")||"darkgold";
 let profiles=JSON.parse(localStorage.getItem("knacktracker_profiles")||"{}");
-let currentTheme=localStorage.getItem("knacktracker_theme")||"amber";
-let lastPlayerCount=0;
-let lastLifeMap={};
+let currentRoom="",roomData={players:[],history:[],mode:4},unsubscribeRoom=null,lastPlayerCount=0,lastLifeMap={};
 
-const playersEl=document.getElementById("players");
-const playerInput=document.getElementById("playerInput");
-const profileSelect=document.getElementById("profileSelect");
+const playersEl=document.getElementById("players"),playerInput=document.getElementById("playerInput"),profileSelect=document.getElementById("profileSelect");
 
 function applyTheme(key){
-  const t=THEMES[key]||THEMES.amber;
+  const t=THEMES[key]||THEMES.darkgold;
   Object.entries(t.vars).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
-  currentTheme=key;localStorage.setItem("knacktracker_theme",key);
-  renderThemeGrid();
+  currentTheme=key;localStorage.setItem("knacktracker_theme",key);renderThemeGrid()
 }
 applyTheme(currentTheme);
 
 function renderThemeGrid(){
-  const grid=document.getElementById("themeGrid"); if(!grid)return;
-  grid.innerHTML=Object.entries(THEMES).map(([key,t])=>{
-    const vals=t.vars;
-    return `<button class="theme-card ${key===currentTheme?"active":""}" data-theme="${key}">
-      <span><strong>${t.name}</strong></span>
-      <span class="swatches">
-        <span class="swatch" style="background:${vals["--bg"]}"></span>
-        <span class="swatch" style="background:${vals["--panel2"]}"></span>
-        <span class="swatch" style="background:${vals["--accent"]}"></span>
-      </span>
-    </button>`;
-  }).join("");
-  grid.querySelectorAll("[data-theme]").forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme));
+  const grid=document.getElementById("themeGrid");if(!grid)return;
+  grid.innerHTML=Object.entries(THEMES).map(([key,t])=>`<button class="theme-card ${key===currentTheme?"active":""}" data-theme="${key}"><strong>${t.name}</strong><span class="swatches"><span class="swatch" style="background:${t.vars["--bg"]}"></span><span class="swatch" style="background:${t.vars["--panel2"]}"></span><span class="swatch" style="background:${t.vars["--accent"]}"></span></span></button>`).join("");
+  grid.querySelectorAll("[data-theme]").forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme))
 }
 
-function normalizeRoom(code){return String(code||"").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,6)}
-function makeRoomCode(){const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let s="";for(let i=0;i<6;i++)s+=chars[Math.floor(Math.random()*chars.length)];return s}
-function stateLabel(l){return l===4?"4":l===3?"3":l===2?"2":l===1?"Schwimmer":"Game Over"}
-function lostLives(l){return 4-Math.max(0,Math.min(4,l))}
+function normalizeRoom(c){return String(c||"").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,4)}
+function makeRoomCode(){const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let s="";for(let i=0;i<4;i++)s+=chars[Math.floor(Math.random()*chars.length)];return s}
+function maxLives(){return Number(roomData.mode||4)}
+function stateLabel(l){if(l<=0)return"Game Over";if(l===1)return"Schwimmer";return String(l)}
+function lostLives(l){return maxLives()-Math.max(0,Math.min(maxLives(),l))}
 function roomRef(){return ref(db,"rooms/"+currentRoom)}
 function escapeHtml(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
 function openModal(id){document.getElementById(id).classList.add("open")}
 function closeModal(id){document.getElementById(id).classList.remove("open")}
-
 function openDrawer(){document.getElementById("drawerOverlay").classList.add("open")}
 function closeDrawer(){document.getElementById("drawerOverlay").classList.remove("open")}
 
+function refreshModeButtons(){
+  document.querySelectorAll(".mode-btn").forEach(b=>b.classList.toggle("active",Number(b.dataset.mode)===maxLives()))
+}
+
 function renderPlayers(){
-  const players=roomData.players||[];
-  const addedIndex=players.length>lastPlayerCount?players.length-1:-1;
+  const players=roomData.players||[],addedIndex=players.length>lastPlayerCount?players.length-1:-1;
   playersEl.innerHTML="";
+  refreshModeButtons();
 
   if(!currentRoom){
     playersEl.innerHTML='<div class="empty"><div><strong>Noch kein Spielraum geöffnet.</strong><br><br><button class="btn primary" id="openRoomSetup">Spiel erstellen / beitreten</button></div></div>';
-    document.getElementById("openRoomSetup").onclick=()=>openModal("roomModal");
-    lastPlayerCount=0;lastLifeMap={};return;
+    document.getElementById("openRoomSetup").onclick=()=>openModal("roomModal");lastPlayerCount=0;lastLifeMap={};return
   }
-  if(!players.length){
-    playersEl.innerHTML='<div class="empty">Spieler oben hinzufügen oder ein Profil laden.</div>';
-    lastPlayerCount=0;lastLifeMap={};return;
-  }
+  if(!players.length){playersEl.innerHTML='<div class="empty">Spieler oben hinzufügen oder ein Profil laden.</div>';lastPlayerCount=0;lastLifeMap={};return}
 
   players.forEach((p,i)=>{
     const card=document.createElement("article");
     card.className="player"+(p.life===1?" state-swimmer":"")+(p.life===0?" state-over":"")+(i===addedIndex?" added":"");
-    card.innerHTML=`<div class="player-top"><div class="player-name"></div><button class="remove">✕</button></div>
-      <div class="life-row"><button class="life-btn minus">−</button>
-      <div class="life-display"><div class="life-main">${stateLabel(p.life)}</div><div class="life-sub">${lostLives(p.life)} Leben verloren</div></div>
-      <button class="life-btn plus">+</button></div>`;
+    card.innerHTML=`<div class="player-top"><div class="player-name"></div><button class="aaa-btn">AAA</button><button class="remove">✕</button></div>
+      <div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${stateLabel(p.life)}</div></div><button class="life-btn plus">+</button></div>`;
     card.querySelector(".player-name").textContent=p.name;
+    const key=p.name.toLowerCase();if(lastLifeMap[key]!==undefined&&lastLifeMap[key]!==p.life)card.querySelector(".life-main").classList.add("bump");
 
-    const key=p.name.toLowerCase();
-    if(lastLifeMap[key]!==undefined && lastLifeMap[key]!==p.life){
-      card.querySelector(".life-main").classList.add("bump");
-    }
-
-    card.querySelector(".remove").onclick=async()=>{
-      card.classList.add("removing");
-      setTimeout(async()=>{const a=[...players];a.splice(i,1);await update(roomRef(),{players:a,updatedAt:Date.now()})},180);
-    };
+    card.querySelector(".remove").onclick=async()=>{card.classList.add("removing");setTimeout(async()=>{const a=[...players];a.splice(i,1);await update(roomRef(),{players:a,updatedAt:Date.now()})},180)};
     card.querySelector(".minus").onclick=async()=>{const a=players.map(x=>({...x}));a[i].life=Math.max(0,a[i].life-1);await update(roomRef(),{players:a,updatedAt:Date.now()})};
-    card.querySelector(".plus").onclick=async()=>{const a=players.map(x=>({...x}));a[i].life=Math.min(4,a[i].life+1);await update(roomRef(),{players:a,updatedAt:Date.now()})};
-    playersEl.appendChild(card);
+    card.querySelector(".plus").onclick=async()=>{const a=players.map(x=>({...x}));a[i].life=Math.min(maxLives(),a[i].life+1);await update(roomRef(),{players:a,updatedAt:Date.now()})};
+    card.querySelector(".aaa-btn").onclick=async()=>{
+      const a=players.map((x,idx)=>({...x,life:idx===i?x.life:Math.max(0,x.life-1)}));
+      await update(roomRef(),{players:a,updatedAt:Date.now()})
+    };
+    playersEl.appendChild(card)
   });
 
-  lastPlayerCount=players.length;
-  lastLifeMap=Object.fromEntries(players.map(p=>[p.name.toLowerCase(),p.life]));
+  lastPlayerCount=players.length;lastLifeMap=Object.fromEntries(players.map(p=>[p.name.toLowerCase(),p.life]))
 }
 
 function connectRoom(){
   if(unsubscribeRoom)unsubscribeRoom();
   unsubscribeRoom=onValue(roomRef(),snap=>{
     const d=snap.val();if(!d)return;
-    roomData={...d,players:Array.isArray(d.players)?d.players:Object.values(d.players||{}),history:Array.isArray(d.history)?d.history:Object.values(d.history||{})};
-    document.getElementById("roomCodeLabel").textContent=currentRoom;
-    renderPlayers();
+    roomData={...d,mode:Number(d.mode||4),players:Array.isArray(d.players)?d.players:Object.values(d.players||{}),history:Array.isArray(d.history)?d.history:Object.values(d.history||{})};
+    document.getElementById("roomCodeLabel").textContent=currentRoom;renderPlayers()
   })
 }
 
 async function createRoom(){
   const code=makeRoomCode();currentRoom=code;
-  await set(roomRef(),{createdAt:Date.now(),updatedAt:Date.now(),players:[],history:[]});
+  await set(roomRef(),{createdAt:Date.now(),updatedAt:Date.now(),players:[],history:[],mode:4});
   localStorage.setItem("knacktracker_last_room",code);connectRoom();closeModal("roomModal")
 }
-
 async function joinRoom(){
   const code=normalizeRoom(document.getElementById("roomInput").value);
-  if(code.length!==6){document.getElementById("roomError").textContent="Bitte 6-stelligen Raumcode eingeben.";return}
+  if(code.length!==4){document.getElementById("roomError").textContent="Bitte 4-stelligen Raumcode eingeben.";return}
   const snap=await get(ref(db,"rooms/"+code));
   if(!snap.exists()){document.getElementById("roomError").textContent="Raum nicht gefunden.";return}
   currentRoom=code;localStorage.setItem("knacktracker_last_room",code);connectRoom();closeModal("roomModal")
 }
-
+async function setMode(mode){
+  if(!currentRoom){roomData.mode=mode;refreshModeButtons();return}
+  const players=(roomData.players||[]).map(p=>({...p,life:mode}));
+  await update(roomRef(),{mode,players,updatedAt:Date.now()})
+}
 async function addPlayer(){
   if(!currentRoom){openModal("roomModal");return}
   const name=playerInput.value.trim();if(!name)return;
   const a=[...(roomData.players||[])];
   if(a.some(p=>p.name.toLowerCase()===name.toLowerCase()))return alert("Spieler bereits vorhanden.");
-  a.push({name,life:4});playerInput.value="";
-  await update(roomRef(),{players:a,updatedAt:Date.now()})
+  a.push({name,life:maxLives()});playerInput.value="";await update(roomRef(),{players:a,updatedAt:Date.now()})
 }
-
+async function removeAllPlayers(){
+  if(!currentRoom||!(roomData.players||[]).length)return;
+  if(!confirm("Alle Spieler entfernen?"))return;
+  await update(roomRef(),{players:[],updatedAt:Date.now()});closeDrawer()
+}
 async function newGame(){
   if(!currentRoom)return;
   const players=roomData.players||[];if(!players.length)return;
   let hist=[...(roomData.history||[])];
-  if(players.some(p=>p.life<4)){
-    hist.unshift({id:Date.now(),date:new Date().toISOString(),results:players.map(p=>({name:p.name,life:p.life,lost:lostLives(p.life)}))});
+  if(players.some(p=>p.life<maxLives())){
+    hist.unshift({id:Date.now(),date:new Date().toISOString(),mode:maxLives(),results:players.map(p=>({name:p.name,life:p.life,lost:maxLives()-Math.max(0,p.life)}))});
     hist=hist.slice(0,50)
   }
-  await update(roomRef(),{players:players.map(p=>({...p,life:4})),history:hist,updatedAt:Date.now()})
+  await update(roomRef(),{players:players.map(p=>({...p,life:maxLives()})),history:hist,updatedAt:Date.now()})
 }
-
 function renderHistory(){
   const b=document.getElementById("historyBody"),h=roomData.history||[];
   if(!h.length){b.innerHTML='<div class="empty">Noch keine Spiele gespeichert.</div>';return}
   b.innerHTML=h.map((g,idx)=>`<div class="history-item"><div class="history-top"><strong>Spiel ${h.length-idx}</strong><span class="small">${new Date(g.date).toLocaleString("de-DE")}</span></div><div class="result-grid">${(g.results||[]).map(r=>`<div>${escapeHtml(r.name)}</div><div style="text-align:right">${r.lost} verloren</div>`).join("")}</div></div>`).join("")
 }
-
 function renderRanking(){
   const map=new Map();
-  for(const g of roomData.history||[])for(const r of g.results||[]){
-    const k=r.name.toLowerCase();if(!map.has(k))map.set(k,{name:r.name,lost:0});map.get(k).lost+=r.lost
-  }
+  for(const g of roomData.history||[])for(const r of g.results||[]){const k=r.name.toLowerCase();if(!map.has(k))map.set(k,{name:r.name,lost:0});map.get(k).lost+=r.lost}
   const data=[...map.values()].sort((a,b)=>a.lost-b.lost||a.name.localeCompare(b.name,"de"));
-  document.getElementById("rankingBody").innerHTML=data.length?
-    data.map((r,i)=>`<div class="rank-item"><div class="rank-pos">${i+1}</div><div class="rank-name">${escapeHtml(r.name)}</div><div class="rank-score">${r.lost}</div></div>`).join(""):
-    '<div class="empty">Noch keine Ranglistendaten.</div>'
+  const medals=["🥇","🥈","🥉"];
+  document.getElementById("rankingBody").innerHTML=data.length?data.map((r,i)=>`<div class="rank-item"><div class="rank-pos">${i<3?`<span class="medal">${medals[i]}</span>`:i+1}</div><div class="rank-name">${escapeHtml(r.name)}</div><div class="rank-score">${r.lost}</div></div>`).join(""):'<div class="empty">Noch keine Ranglistendaten.</div>'
 }
-
 function refreshProfiles(){
   profileSelect.innerHTML='<option value="">Profil auswählen</option>';
   Object.keys(profiles).sort().forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;profileSelect.appendChild(o)})
 }
-
 function renderProfiles(){
   const b=document.getElementById("profilesBody");
   b.innerHTML=`<button class="btn primary" id="saveProfileNow" style="width:100%;margin-bottom:10px">Aktuelle Spieler als Profil speichern</button>`+
   Object.keys(profiles).map(n=>`<div class="profile-item"><div class="profile-row"><div><strong>${escapeHtml(n)}</strong><div class="small">${profiles[n].map(escapeHtml).join(", ")}</div></div><div class="profile-actions"><button class="btn" data-load="${escapeHtml(n)}">Laden</button><button class="btn danger" data-del="${escapeHtml(n)}">Löschen</button></div></div></div>`).join("");
-  document.getElementById("saveProfileNow").onclick=()=>{
-    if(!(roomData.players||[]).length)return alert("Keine Spieler vorhanden.");
-    const n=prompt("Profilname:");if(!n)return;
-    profiles[n.trim()]=roomData.players.map(p=>p.name);
-    localStorage.setItem("knacktracker_profiles",JSON.stringify(profiles));refreshProfiles();renderProfiles()
-  };
-  b.querySelectorAll("[data-load]").forEach(x=>x.onclick=async()=>{
-    if(!currentRoom)return;await update(roomRef(),{players:profiles[x.dataset.load].map(n=>({name:n,life:4}))});closeModal("profilesModal")
-  });
-  b.querySelectorAll("[data-del]").forEach(x=>x.onclick=()=>{
-    delete profiles[x.dataset.del];localStorage.setItem("knacktracker_profiles",JSON.stringify(profiles));refreshProfiles();renderProfiles()
-  })
+  document.getElementById("saveProfileNow").onclick=()=>{if(!(roomData.players||[]).length)return alert("Keine Spieler vorhanden.");const n=prompt("Profilname:");if(!n)return;profiles[n.trim()]=roomData.players.map(p=>p.name);localStorage.setItem("knacktracker_profiles",JSON.stringify(profiles));refreshProfiles();renderProfiles()};
+  b.querySelectorAll("[data-load]").forEach(x=>x.onclick=async()=>{if(!currentRoom)return;await update(roomRef(),{players:profiles[x.dataset.load].map(n=>({name:n,life:maxLives()}))});closeModal("profilesModal")});
+  b.querySelectorAll("[data-del]").forEach(x=>x.onclick=()=>{delete profiles[x.dataset.del];localStorage.setItem("knacktracker_profiles",JSON.stringify(profiles));refreshProfiles();renderProfiles()})
 }
+async function resetStats(){if(!currentRoom)return alert("Kein Spielraum geöffnet.");if(!confirm("Letzte Spiele und Rangliste dieses Raums wirklich zurücksetzen?"))return;await update(roomRef(),{history:[],updatedAt:Date.now()});closeModal("settingsModal")}
 
-async function resetStats(){
-  if(!currentRoom)return alert("Kein Spielraum geöffnet.");
-  if(!confirm("Letzte Spiele und Rangliste dieses Raums wirklich zurücksetzen?"))return;
-  await update(roomRef(),{history:[],updatedAt:Date.now()});
-  closeModal("settingsModal")
-}
-
-document.getElementById("menuBtn").onclick=openDrawer;
-document.getElementById("drawerClose").onclick=closeDrawer;
+document.getElementById("menuBtn").onclick=openDrawer;document.getElementById("drawerClose").onclick=closeDrawer;
 document.getElementById("drawerOverlay").addEventListener("click",e=>{if(e.target.id==="drawerOverlay")closeDrawer()});
 document.getElementById("drawerRoom").onclick=()=>{closeDrawer();openModal("roomModal")};
 document.getElementById("drawerHistory").onclick=()=>{closeDrawer();renderHistory();openModal("historyModal")};
 document.getElementById("drawerRanking").onclick=()=>{closeDrawer();renderRanking();openModal("rankingModal")};
+document.getElementById("drawerRemoveAll").onclick=removeAllPlayers;
 document.getElementById("drawerSettings").onclick=()=>{closeDrawer();renderThemeGrid();openModal("settingsModal")};
 
-document.getElementById("createRoomBtn").onclick=createRoom;
-document.getElementById("joinRoomBtn").onclick=joinRoom;
-document.getElementById("addPlayerBtn").onclick=addPlayer;
-playerInput.addEventListener("keydown",e=>{if(e.key==="Enter")addPlayer()});
+document.querySelectorAll(".mode-btn").forEach(b=>b.onclick=()=>setMode(Number(b.dataset.mode)));
+document.getElementById("createRoomBtn").onclick=createRoom;document.getElementById("joinRoomBtn").onclick=joinRoom;
+document.getElementById("addPlayerBtn").onclick=addPlayer;playerInput.addEventListener("keydown",e=>{if(e.key==="Enter")addPlayer()});
 document.getElementById("newGameBtn").onclick=newGame;
 document.getElementById("profileBtn").onclick=()=>{renderProfiles();openModal("profilesModal")};
-document.getElementById("loadProfileBtn").onclick=async()=>{
-  if(!currentRoom)return openModal("roomModal");
-  const n=profileSelect.value;if(!n||!profiles[n])return;
-  await update(roomRef(),{players:profiles[n].map(x=>({name:x,life:4}))})
-};
-document.getElementById("copyRoomBtn").onclick=async()=>{
-  if(!currentRoom)return openModal("roomModal");
-  const text=`KnackTracker Raum: ${currentRoom}`;
-  try{if(navigator.share)await navigator.share({title:"KnackTracker",text});else await navigator.clipboard.writeText(currentRoom)}catch{}
-};
+document.getElementById("loadProfileBtn").onclick=async()=>{if(!currentRoom)return openModal("roomModal");const n=profileSelect.value;if(!n||!profiles[n])return;await update(roomRef(),{players:profiles[n].map(x=>({name:x,life:maxLives()}))})};
+document.getElementById("copyCodeBtn").onclick=async()=>{if(!currentRoom)return openModal("roomModal");try{await navigator.clipboard.writeText(currentRoom);const b=document.getElementById("copyCodeBtn"),old=b.textContent;b.textContent="Kopiert ✓";setTimeout(()=>b.textContent=old,1200)}catch{alert("Code: "+currentRoom)}};
 document.getElementById("resetStatsBtn").onclick=resetStats;
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
 document.querySelectorAll(".modal-backdrop").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("open")}));
