@@ -3,762 +3,337 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#111827" />
+  <meta name="theme-color" content="#0b1020" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Knackleben24</title>
   <style>
     :root{
-      --bg:#0b1020;
-      --panel:#151d31;
-      --panel2:#1d2942;
-      --border:rgba(255,255,255,.10);
-      --text:#f8fafc;
-      --muted:#9aa7bd;
-      --accent:#f59e0b;
-      --accent2:#fbbf24;
-      --danger:#ef4444;
-      --ok:#22c55e;
-      --blue:#38bdf8;
+      --bg:#0b1020; --panel:#151d31; --panel2:#1d2942; --border:rgba(255,255,255,.1);
+      --text:#f8fafc; --muted:#9aa7bd; --accent:#f59e0b; --accent2:#fbbf24;
+      --danger:#ef4444; --ok:#22c55e; --blue:#38bdf8;
     }
     *{box-sizing:border-box}
     html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-    body{
-      min-height:100svh;
-      background:
-        radial-gradient(circle at 50% -10%, rgba(245,158,11,.16), transparent 34rem),
-        var(--bg);
-      overflow:hidden;
-    }
+    body{min-height:100svh;background:radial-gradient(circle at 50% -10%,rgba(245,158,11,.15),transparent 34rem),var(--bg)}
     button,input,select{font:inherit}
     button{cursor:pointer;touch-action:manipulation}
-    .app{
-      width:min(980px,100%);
-      height:100svh;
-      margin:auto;
-      display:grid;
-      grid-template-rows:auto auto 1fr;
-      gap:8px;
-      padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));
-      overflow:hidden;
-    }
-    .header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:8px;
-      min-height:42px;
-    }
-    h1{
-      margin:0;
-      font-size:clamp(1.35rem,5vw,2rem);
-      line-height:1;
-      letter-spacing:-.03em;
-    }
-    .header-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-    .btn{
-      border:1px solid var(--border);
-      border-radius:11px;
-      background:var(--panel2);
-      color:var(--text);
-      padding:8px 10px;
-      font-size:.86rem;
-      font-weight:750;
-    }
-    .btn.primary{background:var(--accent);color:#171717;border-color:transparent}
-    .btn.danger{background:rgba(239,68,68,.14);color:#fecaca}
-    .toolbar{
-      display:grid;
-      grid-template-columns:minmax(0,1.3fr) auto minmax(120px,.85fr) auto;
-      gap:6px;
-      background:rgba(21,29,49,.86);
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:7px;
-      backdrop-filter:blur(10px);
-    }
-    input,select{
-      width:100%;
-      min-width:0;
-      border:1px solid var(--border);
-      border-radius:10px;
-      background:#0f172a;
-      color:var(--text);
-      outline:none;
-      padding:9px 10px;
-      font-size:.9rem;
-    }
+    .screen{display:none}.screen.active{display:block}
+    .landing{min-height:100svh;display:grid;place-items:center;padding:18px}
+    .landing-card{width:min(520px,100%);background:rgba(21,29,49,.94);border:1px solid var(--border);border-radius:22px;padding:20px;box-shadow:0 25px 80px rgba(0,0,0,.35)}
+    h1{margin:0 0 5px;font-size:clamp(2rem,10vw,3.4rem);letter-spacing:-.05em}.tag{color:var(--muted);margin:0 0 22px}
+    .landing-grid{display:grid;gap:12px}.join-row{display:grid;grid-template-columns:1fr auto;gap:8px}
+    .btn{border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 12px;font-weight:800}
+    .btn.primary{background:var(--accent);color:#171717;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}
+    input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius:11px;background:#0f172a;color:var(--text);outline:none;padding:10px 11px}
     input:focus,select:focus{border-color:rgba(245,158,11,.75)}
-    .players{
-      min-height:0;
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      grid-template-rows:repeat(3,minmax(0,1fr));
-      gap:8px;
-      overflow:auto;
-      scrollbar-width:none;
-      padding-bottom:1px;
-    }
+    .small{font-size:.78rem;color:var(--muted);line-height:1.35}.error{color:#fca5a5;font-size:.82rem;min-height:1em}
+    .game-app{width:min(980px,100%);height:100svh;margin:auto;display:grid;grid-template-rows:auto auto 1fr;gap:8px;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));overflow:hidden}
+    .header{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:42px}
+    .brand-wrap{min-width:0}.brand{font-size:clamp(1.25rem,5vw,2rem);font-weight:950;letter-spacing:-.04em;line-height:1}
+    .roomline{font-size:.75rem;color:var(--muted);margin-top:3px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .room-code{color:var(--accent2);font-weight:900;letter-spacing:.08em}.online-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}
+    .header-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+    .toolbar{display:grid;grid-template-columns:minmax(0,1.3fr) auto minmax(120px,.85fr) auto auto;gap:6px;background:rgba(21,29,49,.86);border:1px solid var(--border);border-radius:14px;padding:7px;backdrop-filter:blur(10px)}
+    .players{min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:8px;overflow:auto;scrollbar-width:none}
     .players::-webkit-scrollbar{display:none}
-    .player{
-      min-height:0;
-      border:1px solid var(--border);
-      border-radius:15px;
-      background:linear-gradient(180deg,rgba(29,41,66,.95),rgba(21,29,49,.95));
-      display:grid;
-      grid-template-rows:auto 1fr;
-      overflow:hidden;
-      box-shadow:0 8px 22px rgba(0,0,0,.14);
-    }
-    .player-top{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) auto;
-      gap:6px;
-      align-items:center;
-      padding:7px 8px 5px;
-    }
-    .player-name{
-      min-width:0;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      font-size:clamp(.92rem,3.5vw,1.08rem);
-      font-weight:850;
-    }
-    .remove{
-      width:28px;height:28px;padding:0;
-      border-radius:8px;
-      border:1px solid var(--border);
-      background:rgba(239,68,68,.12);
-      color:#fecaca;
-      font-size:1rem;
-      line-height:1;
-    }
-    .life-row{
-      min-height:0;
-      display:grid;
-      grid-template-columns:45px minmax(0,1fr) 45px;
-      align-items:stretch;
-      border-top:1px solid var(--border);
-    }
-    .life-btn{
-      border:0;
-      border-radius:0;
-      background:rgba(255,255,255,.035);
-      color:white;
-      font-size:1.6rem;
-      font-weight:900;
-    }
-    .life-btn:active{background:rgba(255,255,255,.10)}
-    .life-display{
-      min-width:0;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:2px 4px;
-    }
-    .life-main{
-      font-size:clamp(2rem,9vw,3.55rem);
-      font-weight:950;
-      line-height:.95;
-      letter-spacing:-.06em;
-    }
-    .life-sub{
-      margin-top:3px;
-      font-size:.67rem;
-      color:var(--muted);
-    }
+    .player{min-height:0;border:1px solid var(--border);border-radius:15px;background:linear-gradient(180deg,rgba(29,41,66,.95),rgba(21,29,49,.95));display:grid;grid-template-rows:auto 1fr;overflow:hidden}
+    .player-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:center;padding:7px 8px 5px}
+    .player-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(.92rem,3.5vw,1.08rem);font-weight:850}
+    .remove{width:28px;height:28px;padding:0;border-radius:8px;border:1px solid var(--border);background:rgba(239,68,68,.12);color:#fecaca}
+    .life-row{min-height:0;display:grid;grid-template-columns:45px minmax(0,1fr) 45px;align-items:stretch;border-top:1px solid var(--border)}
+    .life-btn{border:0;border-radius:0;background:rgba(255,255,255,.035);color:white;font-size:1.6rem;font-weight:900}
+    .life-btn:active{background:rgba(255,255,255,.1)}
+    .life-display{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2px 4px}
+    .life-main{font-size:clamp(2rem,9vw,3.55rem);font-weight:950;line-height:.95;letter-spacing:-.06em}
+    .life-sub{margin-top:3px;font-size:.67rem;color:var(--muted)}
     .state-swimmer .life-main{font-size:clamp(1.15rem,5vw,2rem);color:var(--blue);letter-spacing:-.02em}
     .state-over .life-main{font-size:clamp(1.05rem,4.7vw,1.85rem);color:#fca5a5;letter-spacing:-.02em}
-    .empty{
-      grid-column:1/-1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border:1px dashed var(--border);
-      border-radius:15px;
-      color:var(--muted);
-      text-align:center;
-      padding:20px;
-    }
-
-    .modal-backdrop{
-      position:fixed;
-      inset:0;
-      background:rgba(2,6,23,.72);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:14px;
-      z-index:50;
-    }
-    .modal-backdrop.open{display:flex}
-    .modal{
-      width:min(680px,100%);
-      max-height:min(78svh,720px);
-      overflow:auto;
-      background:#111a2d;
-      border:1px solid var(--border);
-      border-radius:18px;
-      box-shadow:0 25px 80px rgba(0,0,0,.45);
-    }
-    .modal-head{
-      position:sticky;
-      top:0;
-      background:#111a2d;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      padding:14px 15px;
-      border-bottom:1px solid var(--border);
-      z-index:2;
-    }
-    .modal-head h2{margin:0;font-size:1.15rem}
-    .modal-body{padding:12px}
-    .close{
-      width:34px;height:34px;
-      border-radius:10px;border:1px solid var(--border);
-      background:var(--panel2);color:white;font-size:1.1rem
-    }
-    .history-item,.rank-item,.profile-item{
-      border:1px solid var(--border);
-      border-radius:12px;
-      background:var(--panel);
-      padding:10px;
-      margin-bottom:8px;
-    }
-    .history-top,.rank-item,.profile-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-    }
-    .small{font-size:.78rem;color:var(--muted)}
-    .result-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:5px 10px;
-      margin-top:7px;
-      font-size:.84rem;
-    }
-    .rank-pos{
-      width:28px;height:28px;border-radius:50%;
-      display:grid;place-items:center;
-      background:var(--panel2);
-      font-weight:900;
-      flex:0 0 auto;
-    }
-    .rank-name{flex:1;min-width:0;font-weight:800;overflow:hidden;text-overflow:ellipsis}
-    .rank-score{font-weight:900;color:var(--accent2)}
-    .profile-actions{display:flex;gap:6px}
-    .profile-actions button{padding:7px 9px}
-    .section-title{margin:4px 0 8px;font-size:.88rem;color:var(--muted);font-weight:800}
-    .note{font-size:.78rem;color:var(--muted);line-height:1.35;margin-top:6px}
-
-    @media (max-width:700px){
-      .header{align-items:flex-start}
-      .header-actions .btn{padding:7px 8px;font-size:.77rem}
-      .toolbar{
-        grid-template-columns:minmax(0,1fr) auto;
-      }
-      .toolbar select{grid-column:1/2}
-      .toolbar .load-profile{grid-column:2/3}
-    }
-
-    @media (max-height:720px){
-      .app{gap:6px;padding-top:6px;padding-bottom:6px}
-      .header{min-height:34px}
-      h1{font-size:1.25rem}
-      .btn{padding:6px 8px;font-size:.75rem}
-      .toolbar{padding:5px}
-      input,select{padding:7px 8px;font-size:.82rem}
-      .players{gap:6px}
-      .player-top{padding:5px 7px 4px}
-      .remove{width:25px;height:25px}
-      .life-row{grid-template-columns:39px minmax(0,1fr) 39px}
-      .life-main{font-size:clamp(1.7rem,7vh,2.8rem)}
-      .state-swimmer .life-main{font-size:clamp(1rem,3.7vh,1.65rem)}
-      .state-over .life-main{font-size:clamp(.95rem,3.4vh,1.5rem)}
-      .life-sub{font-size:.58rem}
-    }
-
-    @media (min-width:760px){
-      .players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
-    }
+    .empty{grid-column:1/-1;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border);border-radius:15px;color:var(--muted);text-align:center;padding:20px}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.72);display:none;align-items:center;justify-content:center;padding:14px;z-index:50}.modal-backdrop.open{display:flex}
+    .modal{width:min(680px,100%);max-height:min(78svh,720px);overflow:auto;background:#111a2d;border:1px solid var(--border);border-radius:18px;box-shadow:0 25px 80px rgba(0,0,0,.45)}
+    .modal-head{position:sticky;top:0;background:#111a2d;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 15px;border-bottom:1px solid var(--border);z-index:2}
+    .modal-head h2{margin:0;font-size:1.15rem}.modal-body{padding:12px}.close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:white;font-size:1.1rem}
+    .history-item,.rank-item,.profile-item{border:1px solid var(--border);border-radius:12px;background:var(--panel);padding:10px;margin-bottom:8px}
+    .history-top,.rank-item,.profile-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 10px;margin-top:7px;font-size:.84rem}
+    .rank-pos{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--panel2);font-weight:900;flex:0 0 auto}
+    .rank-name{flex:1;min-width:0;font-weight:800;overflow:hidden;text-overflow:ellipsis}.rank-score{font-weight:900;color:var(--accent2)}
+    .section-title{margin:4px 0 8px;font-size:.88rem;color:var(--muted);font-weight:800}.profile-actions{display:flex;gap:6px}
+    @media(max-width:700px){.header{align-items:flex-start}.header-actions .btn{padding:7px 8px;font-size:.75rem}.toolbar{grid-template-columns:minmax(0,1fr) auto}.toolbar select{grid-column:1/2}}
+    @media(max-height:720px){.game-app{gap:6px;padding-top:6px;padding-bottom:6px}.header{min-height:34px}.brand{font-size:1.2rem}.btn{padding:6px 8px;font-size:.73rem}.toolbar{padding:5px}input,select{padding:7px 8px;font-size:.82rem}.players{gap:6px}.player-top{padding:5px 7px 4px}.remove{width:25px;height:25px}.life-row{grid-template-columns:39px minmax(0,1fr) 39px}.life-main{font-size:clamp(1.7rem,7vh,2.8rem)}.state-swimmer .life-main{font-size:clamp(1rem,3.7vh,1.65rem)}.state-over .life-main{font-size:clamp(.95rem,3.4vh,1.5rem)}.life-sub{font-size:.58rem}}
+    @media(min-width:760px){.players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}}
   </style>
 </head>
 <body>
-<div class="app">
-  <header class="header">
-    <h1>Knackleben24</h1>
-    <div class="header-actions">
-      <button class="btn" id="historyBtn">Letzte Spiele</button>
-      <button class="btn" id="rankingBtn">Rangliste</button>
-      <button class="btn primary" id="newGameBtn">Neues Spiel</button>
+<section class="screen active" id="homeScreen">
+  <div class="landing">
+    <div class="landing-card">
+      <h1>Knackleben24</h1>
+      <p class="tag">Gemeinsam spielen. Auf allen Handys gleichzeitig.</p>
+      <div class="landing-grid">
+        <button class="btn primary" id="createRoomBtn">Neues Spiel erstellen</button>
+        <div>
+          <div class="small" style="margin-bottom:5px">Oder einem bestehenden Spiel beitreten:</div>
+          <div class="join-row">
+            <input id="roomInput" maxlength="6" placeholder="Raumcode" autocapitalize="characters" />
+            <button class="btn" id="joinRoomBtn">Beitreten</button>
+          </div>
+        </div>
+        <div class="error" id="homeError"></div>
+        <div class="small">Der Raumcode kann einfach an Freunde geschickt oder später als QR-Code verwendet werden.</div>
+      </div>
     </div>
-  </header>
+  </div>
+</section>
 
-  <section class="toolbar">
-    <input id="playerInput" type="text" maxlength="24" placeholder="Spielername eingeben" autocomplete="off" />
-    <button class="btn primary" id="addPlayerBtn">+ Spieler</button>
-    <select id="profileSelect" aria-label="Profil auswählen">
-      <option value="">Profil auswählen</option>
-    </select>
-    <button class="btn load-profile" id="loadProfileBtn">Laden</button>
-  </section>
+<section class="screen" id="gameScreen">
+  <div class="game-app">
+    <header class="header">
+      <div class="brand-wrap">
+        <div class="brand">Knackleben24</div>
+        <div class="roomline">
+          <span><span class="online-dot"></span> Live</span>
+          <span>Raum <span class="room-code" id="roomCodeLabel"></span></span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn" id="copyRoomBtn">Code teilen</button>
+        <button class="btn" id="historyBtn">Letzte Spiele</button>
+        <button class="btn" id="rankingBtn">Rangliste</button>
+        <button class="btn primary" id="newGameBtn">Neues Spiel</button>
+      </div>
+    </header>
 
-  <section class="players" id="players"></section>
-</div>
+    <section class="toolbar">
+      <input id="playerInput" maxlength="24" placeholder="Spielername eingeben" autocomplete="off" />
+      <button class="btn primary" id="addPlayerBtn">+ Spieler</button>
+      <select id="profileSelect"><option value="">Profil auswählen</option></select>
+      <button class="btn" id="loadProfileBtn">Laden</button>
+      <button class="btn" id="profileBtn">Profil +</button>
+    </section>
+
+    <section class="players" id="players"></section>
+  </div>
+</section>
 
 <div class="modal-backdrop" id="historyModal">
   <div class="modal">
-    <div class="modal-head">
-      <h2>Letzte Spiele</h2>
-      <button class="close" data-close="historyModal">✕</button>
-    </div>
+    <div class="modal-head"><h2>Letzte Spiele</h2><button class="close" data-close="historyModal">✕</button></div>
     <div class="modal-body" id="historyBody"></div>
   </div>
 </div>
 
 <div class="modal-backdrop" id="rankingModal">
   <div class="modal">
-    <div class="modal-head">
-      <h2>Rangliste</h2>
-      <button class="close" data-close="rankingModal">✕</button>
-    </div>
+    <div class="modal-head"><h2>Rangliste</h2><button class="close" data-close="rankingModal">✕</button></div>
     <div class="modal-body" id="rankingBody"></div>
   </div>
 </div>
 
 <div class="modal-backdrop" id="profilesModal">
   <div class="modal">
-    <div class="modal-head">
-      <h2>Profile verwalten</h2>
-      <button class="close" data-close="profilesModal">✕</button>
-    </div>
+    <div class="modal-head"><h2>Profile</h2><button class="close" data-close="profilesModal">✕</button></div>
     <div class="modal-body" id="profilesBody"></div>
   </div>
 </div>
 
-<script>
-(() => {
-  const STORAGE = {
-    players: "knackleben24_players_v2",
-    profiles: "knackleben24_profiles_v2",
-    history: "knackleben24_history_v2"
-  };
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getDatabase, ref, set, get, onValue, update } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
-  let players = load(STORAGE.players, []);
-  let profiles = load(STORAGE.profiles, {});
-  let history = load(STORAGE.history, []);
+const firebaseConfig = {
+  apiKey: "AIzaSyDboBSOJdzZCCMbtPh-X0tF7_xYQpRvc6o",
+  authDomain: "knackleben24.firebaseapp.com",
+  databaseURL: "https://knackleben24-default-rtdb.europe-west1.firebasedatabase.app/",
+  projectId: "knackleben24",
+  storageBucket: "knackleben24.firebasestorage.app",
+  messagingSenderId: "1048228405783",
+  appId: "1:1048228405783:web:a8af2cba896cb7cabff252",
+  measurementId: "G-KVSXJYCWTY"
+};
 
-  const playersEl = document.getElementById("players");
-  const playerInput = document.getElementById("playerInput");
-  const profileSelect = document.getElementById("profileSelect");
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-  function load(key, fallback){
-    try{
-      const value = JSON.parse(localStorage.getItem(key));
-      return value ?? fallback;
-    }catch{
-      return fallback;
-    }
+const localProfilesKey = "knackleben24_profiles_multiplayer_v1";
+let profiles = loadLocal(localProfilesKey, {});
+let currentRoom = "";
+let roomData = { players: [], history: [] };
+let unsubscribeRoom = null;
+
+const homeScreen = document.getElementById("homeScreen");
+const gameScreen = document.getElementById("gameScreen");
+const roomInput = document.getElementById("roomInput");
+const homeError = document.getElementById("homeError");
+const playersEl = document.getElementById("players");
+const playerInput = document.getElementById("playerInput");
+const profileSelect = document.getElementById("profileSelect");
+
+function loadLocal(key, fallback){ try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
+function saveProfiles(){ localStorage.setItem(localProfilesKey, JSON.stringify(profiles)); }
+function normalizeRoom(code){ return code.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,6); }
+function makeRoomCode(){ const alphabet="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let code=""; for(let i=0;i<6;i++) code+=alphabet[Math.floor(Math.random()*alphabet.length)]; return code; }
+function stateLabel(life){ return life===4?"4":life===3?"3":life===2?"2":life===1?"Schwimmer":"Game Over"; }
+function lostLives(life){ return 4-Math.max(0,Math.min(4,life)); }
+function roomRef(path=""){ return ref(db,"rooms/"+currentRoom+(path?"/"+path:"")); }
+function showGame(){ homeScreen.classList.remove("active"); gameScreen.classList.add("active"); document.getElementById("roomCodeLabel").textContent=currentRoom; }
+function setError(msg){ homeError.textContent=msg||""; }
+
+async function createRoom(){
+  setError("");
+  let code="";
+  for(let tries=0;tries<6;tries++){
+    code=makeRoomCode();
+    const snap=await get(ref(db,"rooms/"+code));
+    if(!snap.exists()) break;
   }
+  currentRoom=code;
+  await set(roomRef(),{createdAt:Date.now(),updatedAt:Date.now(),players:[],history:[]});
+  connectToRoom(); showGame();
+  history.replaceState(null,"",location.pathname+"?room="+currentRoom);
+}
 
-  function saveAll(){
-    localStorage.setItem(STORAGE.players, JSON.stringify(players));
-    localStorage.setItem(STORAGE.profiles, JSON.stringify(profiles));
-    localStorage.setItem(STORAGE.history, JSON.stringify(history));
-  }
+async function joinRoom(code){
+  setError(""); code=normalizeRoom(code);
+  if(code.length!==6){ setError("Bitte einen 6-stelligen Raumcode eingeben."); return; }
+  const snap=await get(ref(db,"rooms/"+code));
+  if(!snap.exists()){ setError("Dieser Raum wurde nicht gefunden."); return; }
+  currentRoom=code; connectToRoom(); showGame();
+  history.replaceState(null,"",location.pathname+"?room="+currentRoom);
+}
 
-  function stateLabel(life){
-    if(life === 4) return "4";
-    if(life === 3) return "3";
-    if(life === 2) return "2";
-    if(life === 1) return "Schwimmer";
-    return "Game Over";
-  }
-
-  function lostLives(life){
-    return 4 - Math.max(0, Math.min(4, life));
-  }
-
-  function renderPlayers(){
-    playersEl.innerHTML = "";
-
-    if(players.length === 0){
-      playersEl.innerHTML = '<div class="empty">Spieler oben eingeben oder ein gespeichertes Profil laden.</div>';
-      return;
-    }
-
-    players.forEach((p, i) => {
-      const card = document.createElement("article");
-      card.className = "player" + (p.life === 1 ? " state-swimmer" : "") + (p.life === 0 ? " state-over" : "");
-
-      const top = document.createElement("div");
-      top.className = "player-top";
-
-      const name = document.createElement("div");
-      name.className = "player-name";
-      name.textContent = p.name;
-
-      const remove = document.createElement("button");
-      remove.className = "remove";
-      remove.textContent = "✕";
-      remove.title = "Spieler entfernen";
-      remove.onclick = () => {
-        players.splice(i, 1);
-        saveAll();
-        renderPlayers();
-      };
-
-      top.append(name, remove);
-
-      const row = document.createElement("div");
-      row.className = "life-row";
-
-      const minus = document.createElement("button");
-      minus.className = "life-btn";
-      minus.textContent = "−";
-      minus.onclick = () => {
-        players[i].life = Math.max(0, players[i].life - 1);
-        saveAll();
-        renderPlayers();
-      };
-
-      const display = document.createElement("div");
-      display.className = "life-display";
-
-      const main = document.createElement("div");
-      main.className = "life-main";
-      main.textContent = stateLabel(p.life);
-
-      const sub = document.createElement("div");
-      sub.className = "life-sub";
-      sub.textContent = lostLives(p.life) + " Leben verloren";
-
-      display.append(main, sub);
-
-      const plus = document.createElement("button");
-      plus.className = "life-btn";
-      plus.textContent = "+";
-      plus.onclick = () => {
-        players[i].life = Math.min(4, players[i].life + 1);
-        saveAll();
-        renderPlayers();
-      };
-
-      row.append(minus, display, plus);
-      card.append(top, row);
-      playersEl.appendChild(card);
-    });
-  }
-
-  function addPlayer(){
-    const name = playerInput.value.trim();
-    if(!name) return;
-
-    const exists = players.some(p => p.name.toLowerCase() === name.toLowerCase());
-    if(exists){
-      alert("Dieser Spieler ist bereits dabei.");
-      return;
-    }
-
-    players.push({ name, life: 4 });
-    playerInput.value = "";
-    saveAll();
+function connectToRoom(){
+  if(unsubscribeRoom) unsubscribeRoom();
+  unsubscribeRoom=onValue(roomRef(),snap=>{
+    const data=snap.val();
+    if(!data){ alert("Dieser Spielraum existiert nicht mehr."); location.href=location.pathname; return; }
+    roomData={...data,players:Array.isArray(data.players)?data.players:Object.values(data.players||{}),history:Array.isArray(data.history)?data.history:Object.values(data.history||{})};
     renderPlayers();
-    playerInput.focus();
-  }
+  },err=>alert("Firebase-Fehler: "+err.message));
+}
 
-  function currentRoundHasProgress(){
-    return players.some(p => p.life < 4);
-  }
+async function writePlayers(players){ await update(roomRef(),{players,updatedAt:Date.now()}); }
 
-  function saveCurrentRoundToHistory(){
-    if(players.length === 0) return false;
-    if(!currentRoundHasProgress()) return false;
-
-    const game = {
-      id: Date.now(),
-      date: new Date().toISOString(),
-      results: players.map(p => ({
-        name: p.name,
-        life: p.life,
-        lost: lostLives(p.life)
-      }))
-    };
-
-    history.unshift(game);
-    history = history.slice(0, 50);
-    return true;
-  }
-
-  function newGame(){
-    if(players.length === 0) return;
-
-    if(currentRoundHasProgress()){
-      saveCurrentRoundToHistory();
-    }
-
-    players = players.map(p => ({...p, life: 4}));
-    saveAll();
-    renderPlayers();
-  }
-
-  function formatDate(iso){
-    const d = new Date(iso);
-    return d.toLocaleString("de-DE", {
-      day:"2-digit", month:"2-digit", year:"2-digit",
-      hour:"2-digit", minute:"2-digit"
-    });
-  }
-
-  function renderHistory(){
-    const body = document.getElementById("historyBody");
-    if(history.length === 0){
-      body.innerHTML = '<div class="empty">Noch keine abgeschlossenen Spiele gespeichert.</div>';
-      return;
-    }
-
-    body.innerHTML = history.map((game, idx) => {
-      const sorted = [...game.results].sort((a,b) => a.lost - b.lost || a.name.localeCompare(b.name));
-      return `
-        <div class="history-item">
-          <div class="history-top">
-            <strong>Spiel ${history.length - idx}</strong>
-            <span class="small">${formatDate(game.date)}</span>
-          </div>
-          <div class="result-grid">
-            ${sorted.map(r => `<div>${escapeHtml(r.name)}</div><div style="text-align:right">${r.lost} verloren · ${escapeHtml(stateLabel(r.life))}</div>`).join("")}
-          </div>
-        </div>
-      `;
-    }).join("");
-  }
-
-  function rankingData(){
-    const map = new Map();
-
-    for(const game of history){
-      for(const r of game.results){
-        const key = r.name.trim().toLowerCase();
-        if(!map.has(key)){
-          map.set(key, { name:r.name, lost:0, games:0 });
-        }
-        const item = map.get(key);
-        item.lost += r.lost;
-        item.games += 1;
-      }
-    }
-
-    // Aktuelle laufende Runde zusätzlich berücksichtigen.
-    for(const p of players){
-      const currentLost = lostLives(p.life);
-      if(currentLost <= 0) continue;
-      const key = p.name.trim().toLowerCase();
-      if(!map.has(key)){
-        map.set(key, { name:p.name, lost:0, games:0 });
-      }
-      map.get(key).lost += currentLost;
-    }
-
-    return [...map.values()].sort((a,b) =>
-      a.lost - b.lost ||
-      a.games - b.games ||
-      a.name.localeCompare(b.name, "de")
-    );
-  }
-
-  function renderRanking(){
-    const body = document.getElementById("rankingBody");
-    const ranking = rankingData();
-
-    if(ranking.length === 0){
-      body.innerHTML = '<div class="empty">Sobald Leben verloren wurden, erscheint hier die Rangliste.</div>';
-      return;
-    }
-
-    body.innerHTML = `
-      <div class="section-title">Weniger verlorene Leben = bessere Platzierung</div>
-      ${ranking.map((r,i) => `
-        <div class="rank-item">
-          <div class="rank-pos">${i+1}</div>
-          <div class="rank-name">${escapeHtml(r.name)}</div>
-          <div class="rank-score">${r.lost}</div>
-        </div>
-      `).join("")}
-      <div class="note">Gezählt werden alle gespeicherten Spiele sowie aktuell bereits verlorene Leben der laufenden Runde.</div>
-    `;
-  }
-
-  function refreshProfiles(){
-    const current = profileSelect.value;
-    profileSelect.innerHTML = '<option value="">Profil auswählen</option>';
-
-    Object.keys(profiles)
-      .sort((a,b) => a.localeCompare(b, "de"))
-      .forEach(name => {
-        const opt = document.createElement("option");
-        opt.value = name;
-        opt.textContent = name;
-        profileSelect.appendChild(opt);
-      });
-
-    if(profiles[current]) profileSelect.value = current;
-  }
-
-  function saveProfile(){
-    if(players.length === 0){
-      alert("Füge zuerst Spieler hinzu.");
-      return;
-    }
-
-    const name = prompt("Name für das Profil:");
-    if(!name || !name.trim()) return;
-
-    const cleanName = name.trim();
-    profiles[cleanName] = players.map(p => p.name);
-    saveAll();
-    refreshProfiles();
-    profileSelect.value = cleanName;
-  }
-
-  function loadProfile(){
-    const name = profileSelect.value;
-    if(!name || !profiles[name]){
-      alert("Bitte zuerst ein Profil auswählen.");
-      return;
-    }
-
-    players = profiles[name].map(playerName => ({name: playerName, life:4}));
-    saveAll();
-    renderPlayers();
-  }
-
-  function renderProfiles(){
-    const body = document.getElementById("profilesBody");
-    const names = Object.keys(profiles).sort((a,b)=>a.localeCompare(b,"de"));
-
-    let html = `
-      <button class="btn primary" id="saveProfileInside" style="width:100%;margin-bottom:10px">
-        Aktuelle Spieler als Profil speichern
-      </button>
-    `;
-
-    if(names.length === 0){
-      html += '<div class="empty">Noch keine Profile gespeichert.</div>';
-    }else{
-      html += names.map(name => `
-        <div class="profile-item">
-          <div class="profile-row">
-            <div>
-              <strong>${escapeHtml(name)}</strong>
-              <div class="small">${profiles[name].map(escapeHtml).join(", ")}</div>
-            </div>
-            <div class="profile-actions">
-              <button class="btn" data-load-profile="${escapeAttr(name)}">Laden</button>
-              <button class="btn danger" data-delete-profile="${escapeAttr(name)}">Löschen</button>
-            </div>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    body.innerHTML = html;
-
-    document.getElementById("saveProfileInside").onclick = () => {
-      saveProfile();
-      renderProfiles();
-    };
-
-    body.querySelectorAll("[data-load-profile]").forEach(btn => {
-      btn.onclick = () => {
-        profileSelect.value = btn.dataset.loadProfile;
-        loadProfile();
-        closeModal("profilesModal");
-      };
-    });
-
-    body.querySelectorAll("[data-delete-profile]").forEach(btn => {
-      btn.onclick = () => {
-        const name = btn.dataset.deleteProfile;
-        if(confirm(`Profil "${name}" löschen?`)){
-          delete profiles[name];
-          saveAll();
-          refreshProfiles();
-          renderProfiles();
-        }
-      };
-    });
-  }
-
-  function openModal(id){
-    if(id === "historyModal") renderHistory();
-    if(id === "rankingModal") renderRanking();
-    if(id === "profilesModal") renderProfiles();
-    document.getElementById(id).classList.add("open");
-  }
-
-  function closeModal(id){
-    document.getElementById(id).classList.remove("open");
-  }
-
-  function escapeHtml(value){
-    return String(value)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  function escapeAttr(value){
-    return escapeHtml(value);
-  }
-
-  document.getElementById("addPlayerBtn").onclick = addPlayer;
-  playerInput.addEventListener("keydown", e => {
-    if(e.key === "Enter") addPlayer();
+function renderPlayers(){
+  const players=roomData.players||[]; playersEl.innerHTML="";
+  if(players.length===0){ playersEl.innerHTML='<div class="empty">Spieler oben hinzufügen oder ein gespeichertes Profil laden.</div>'; return; }
+  players.forEach((p,i)=>{
+    const card=document.createElement("article");
+    card.className="player"+(p.life===1?" state-swimmer":"")+(p.life===0?" state-over":"");
+    card.innerHTML=`<div class="player-top"><div class="player-name"></div><button class="remove" title="Spieler entfernen">✕</button></div>
+      <div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${stateLabel(p.life)}</div><div class="life-sub">${lostLives(p.life)} Leben verloren</div></div><button class="life-btn plus">+</button></div>`;
+    card.querySelector(".player-name").textContent=p.name;
+    card.querySelector(".remove").onclick=async()=>{ const arr=[...(roomData.players||[])]; arr.splice(i,1); await writePlayers(arr); };
+    card.querySelector(".minus").onclick=async()=>{ const arr=[...(roomData.players||[])].map(x=>({...x})); arr[i].life=Math.max(0,arr[i].life-1); await writePlayers(arr); };
+    card.querySelector(".plus").onclick=async()=>{ const arr=[...(roomData.players||[])].map(x=>({...x})); arr[i].life=Math.min(4,arr[i].life+1); await writePlayers(arr); };
+    playersEl.appendChild(card);
   });
+}
 
-  document.getElementById("newGameBtn").onclick = newGame;
-  document.getElementById("historyBtn").onclick = () => openModal("historyModal");
-  document.getElementById("rankingBtn").onclick = () => openModal("rankingModal");
-  document.getElementById("loadProfileBtn").onclick = loadProfile;
+async function addPlayer(){
+  const name=playerInput.value.trim(); if(!name)return;
+  const players=[...(roomData.players||[])];
+  if(players.some(p=>p.name.toLowerCase()===name.toLowerCase())){ alert("Dieser Spieler ist bereits dabei."); return; }
+  players.push({name,life:4}); playerInput.value=""; await writePlayers(players); playerInput.focus();
+}
 
-  // Long press / double-click on profile dropdown area is unnecessary:
-  // click the dropdown label area via context menu? Better: double click profile select -> manage.
-  profileSelect.addEventListener("dblclick", () => openModal("profilesModal"));
-  profileSelect.addEventListener("contextmenu", e => {
-    e.preventDefault();
-    openModal("profilesModal");
-  });
+function currentRoundHasProgress(){ return (roomData.players||[]).some(p=>p.life<4); }
 
-  // Add an extra profile management button next to select dynamically.
-  const manageBtn = document.createElement("button");
-  manageBtn.className = "btn";
-  manageBtn.textContent = "Profil +";
-  manageBtn.title = "Profile speichern/verwalten";
-  manageBtn.onclick = () => openModal("profilesModal");
-  document.querySelector(".toolbar").appendChild(manageBtn);
+async function newGame(){
+  const players=roomData.players||[]; if(!players.length)return;
+  let hist=[...(roomData.history||[])];
+  if(currentRoundHasProgress()){
+    hist.unshift({id:Date.now(),date:new Date().toISOString(),results:players.map(p=>({name:p.name,life:p.life,lost:lostLives(p.life)}))});
+    hist=hist.slice(0,50);
+  }
+  await update(roomRef(),{players:players.map(p=>({...p,life:4})),history:hist,updatedAt:Date.now()});
+}
 
-  document.querySelectorAll("[data-close]").forEach(btn => {
-    btn.onclick = () => closeModal(btn.dataset.close);
-  });
+function formatDate(iso){ return new Date(iso).toLocaleString("de-DE",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"}); }
+function escapeHtml(v){ return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
 
-  document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
-    backdrop.addEventListener("click", e => {
-      if(e.target === backdrop) backdrop.classList.remove("open");
-    });
-  });
+function renderHistory(){
+  const body=document.getElementById("historyBody"),hist=roomData.history||[];
+  if(!hist.length){ body.innerHTML='<div class="empty">Noch keine abgeschlossenen Spiele gespeichert.</div>'; return; }
+  body.innerHTML=hist.map((game,idx)=>{
+    const sorted=[...(game.results||[])].sort((a,b)=>a.lost-b.lost||a.name.localeCompare(b.name));
+    return `<div class="history-item"><div class="history-top"><strong>Spiel ${hist.length-idx}</strong><span class="small">${formatDate(game.date)}</span></div>
+      <div class="result-grid">${sorted.map(r=>`<div>${escapeHtml(r.name)}</div><div style="text-align:right">${r.lost} verloren · ${escapeHtml(stateLabel(r.life))}</div>`).join("")}</div></div>`;
+  }).join("");
+}
 
-  refreshProfiles();
-  renderPlayers();
-})();
+function rankingData(){
+  const map=new Map();
+  for(const game of (roomData.history||[])) for(const r of (game.results||[])){
+    const key=r.name.trim().toLowerCase(); if(!map.has(key))map.set(key,{name:r.name,lost:0}); map.get(key).lost+=r.lost;
+  }
+  for(const p of (roomData.players||[])){ const lost=lostLives(p.life); if(lost<=0)continue; const key=p.name.trim().toLowerCase(); if(!map.has(key))map.set(key,{name:p.name,lost:0}); map.get(key).lost+=lost; }
+  return [...map.values()].sort((a,b)=>a.lost-b.lost||a.name.localeCompare(b.name,"de"));
+}
+
+function renderRanking(){
+  const body=document.getElementById("rankingBody"),data=rankingData();
+  if(!data.length){ body.innerHTML='<div class="empty">Sobald Leben verloren wurden, erscheint hier die Rangliste.</div>'; return; }
+  body.innerHTML=`<div class="section-title">Weniger verlorene Leben = bessere Platzierung</div>`+data.map((r,i)=>`<div class="rank-item"><div class="rank-pos">${i+1}</div><div class="rank-name">${escapeHtml(r.name)}</div><div class="rank-score">${r.lost}</div></div>`).join("");
+}
+
+function refreshProfiles(){
+  const current=profileSelect.value; profileSelect.innerHTML='<option value="">Profil auswählen</option>';
+  Object.keys(profiles).sort((a,b)=>a.localeCompare(b,"de")).forEach(name=>{ const opt=document.createElement("option"); opt.value=name; opt.textContent=name; profileSelect.appendChild(opt); });
+  if(profiles[current])profileSelect.value=current;
+}
+
+function saveProfilePrompt(){
+  const players=roomData.players||[]; if(!players.length){alert("Füge zuerst Spieler hinzu.");return;}
+  const name=prompt("Name für das Profil:"); if(!name||!name.trim())return;
+  profiles[name.trim()]=players.map(p=>p.name); saveProfiles(); refreshProfiles();
+}
+
+async function loadProfile(){
+  const name=profileSelect.value; if(!name||!profiles[name]){alert("Bitte zuerst ein Profil auswählen.");return;}
+  await writePlayers(profiles[name].map(n=>({name:n,life:4})));
+}
+
+function renderProfiles(){
+  const body=document.getElementById("profilesBody");
+  const names=Object.keys(profiles).sort((a,b)=>a.localeCompare(b,"de"));
+  body.innerHTML=`<button class="btn primary" id="saveProfileInside" style="width:100%;margin-bottom:10px">Aktuelle Spieler als Profil speichern</button>`+
+    (names.length?names.map(name=>`<div class="profile-item"><div class="profile-row"><div><strong>${escapeHtml(name)}</strong><div class="small">${profiles[name].map(escapeHtml).join(", ")}</div></div><div class="profile-actions"><button class="btn" data-load="${escapeHtml(name)}">Laden</button><button class="btn danger" data-del="${escapeHtml(name)}">Löschen</button></div></div></div>`).join(""):'<div class="empty">Noch keine Profile gespeichert.</div>');
+  document.getElementById("saveProfileInside").onclick=()=>{saveProfilePrompt();renderProfiles();};
+  body.querySelectorAll("[data-load]").forEach(b=>b.onclick=async()=>{profileSelect.value=b.dataset.load;await loadProfile();closeModal("profilesModal");});
+  body.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{if(confirm(`Profil "${b.dataset.del}" löschen?`)){delete profiles[b.dataset.del];saveProfiles();refreshProfiles();renderProfiles();}});
+}
+
+function openModal(id){ if(id==="historyModal")renderHistory(); if(id==="rankingModal")renderRanking(); if(id==="profilesModal")renderProfiles(); document.getElementById(id).classList.add("open"); }
+function closeModal(id){document.getElementById(id).classList.remove("open");}
+
+async function shareRoom(){
+  const url=location.origin+location.pathname+"?room="+currentRoom;
+  try{
+    if(navigator.share) await navigator.share({title:"Knackleben24",text:`Knackleben24 – Raum ${currentRoom}`,url});
+    else { await navigator.clipboard.writeText(url); alert("Spiel-Link kopiert."); }
+  }catch{}
+}
+
+document.getElementById("createRoomBtn").onclick=()=>createRoom().catch(e=>setError(e.message));
+document.getElementById("joinRoomBtn").onclick=()=>joinRoom(roomInput.value).catch(e=>setError(e.message));
+roomInput.addEventListener("input",()=>roomInput.value=normalizeRoom(roomInput.value));
+roomInput.addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("joinRoomBtn").click();});
+document.getElementById("addPlayerBtn").onclick=()=>addPlayer().catch(e=>alert(e.message));
+playerInput.addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("addPlayerBtn").click();});
+document.getElementById("newGameBtn").onclick=()=>newGame().catch(e=>alert(e.message));
+document.getElementById("copyRoomBtn").onclick=shareRoom;
+document.getElementById("historyBtn").onclick=()=>openModal("historyModal");
+document.getElementById("rankingBtn").onclick=()=>openModal("rankingModal");
+document.getElementById("profileBtn").onclick=()=>openModal("profilesModal");
+document.getElementById("loadProfileBtn").onclick=()=>loadProfile().catch(e=>alert(e.message));
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
+document.querySelectorAll(".modal-backdrop").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("open");}));
+refreshProfiles();
+
+const urlRoom=normalizeRoom(new URLSearchParams(location.search).get("room")||"");
+if(urlRoom.length===6){ roomInput.value=urlRoom; joinRoom(urlRoom).catch(()=>{}); }
 </script>
 </body>
 </html>
