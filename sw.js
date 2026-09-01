@@ -1,5 +1,5 @@
-const CACHE="knack-v6";
-const ASSETS=["./", "./index.html", "./manifest.webmanifest", "./piya-logo.png", "./knack-app-qr.png", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./logo-dark.png", "./logo-light.png", "./logo-amber.png", "./logo-blue.png", "./logo-green.png", "./logo-purple.png", "./logo-red.png", "./logo-cyan.png", "./logo-orange.png", "./logo-pink.png", "./logo-ice.png", "./logo-sand.png"];
+const CACHE="knack-v7";
+const ASSETS=["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./knack-app-qr.png", "./logo-orange.png", "./logo-amber.png", "./logo-red.png", "./logo-dark.png", "./logo-blue.png", "./logo-cyan.png", "./logo-purple.png", "./logo-green.png", "./logo-ice.png", "./logo-pink.png", "./logo-light.png", "./logo-sand.png"];
 self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
 self.addEventListener("activate",e=>e.waitUntil(
   caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))

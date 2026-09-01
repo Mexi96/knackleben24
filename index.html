@@ -13,388 +13,233 @@
 <style>
 :root{
  --bg:#050505;--panel:#0c0c0c;--panel2:#151515;--panel3:#1f1f1f;
- --border:rgba(255,255,255,.12);--text:#fff;--muted:#aaa;
- --accent:#d4af37;--accent2:#f4d66b;--danger:#ef4444;--ok:#22c55e;--blue:#fff;--overlay:rgba(0,0,0,.78)
+ --border:rgba(255,255,255,.12);--text:#fff;--muted:#aaa;--accent:#d4af37;--accent2:#f4d66b;
+ --danger:#ef4444;--ok:#22c55e;--blue:#fff;--overlay:rgba(0,0,0,.78)
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;overscroll-behavior:none;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 body{min-height:100dvh;background:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 34rem),var(--bg)}
 button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}.hidden{display:none!important}
 
-/* install */
 #installGate{height:100dvh;overflow:auto;display:grid;place-items:center;padding:max(18px,env(safe-area-inset-top)) 18px max(18px,env(safe-area-inset-bottom))}
-.install-card{width:min(520px,100%);background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.35)}
+.install-card{width:min(520px,100%);background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:22px}
 .install-logo{width:86px;height:86px;border-radius:20px;overflow:hidden;margin-bottom:14px}.install-logo img,.app-logo img{width:100%;height:100%;object-fit:cover;display:block}
-.install-card h1{margin:0 0 6px;font-size:clamp(2rem,9vw,3rem);letter-spacing:-.05em}.install-card>p{color:var(--muted);line-height:1.45;margin:0 0 16px}
-.steps{display:grid;gap:10px}.step{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:12px}
-.num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111;display:grid;place-items:center;font-weight:900}.step strong{display:block;margin-bottom:2px}.hint{font-size:.84rem;color:var(--muted);line-height:1.35}
+.install-card h1{margin:0 0 6px;font-size:clamp(2rem,9vw,3rem)}.install-card>p{color:var(--muted)}
+.steps{display:grid;gap:10px}.step{display:grid;grid-template-columns:34px 1fr;gap:10px;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:12px}.num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111;display:grid;place-items:center;font-weight:900}.hint{font-size:.84rem;color:var(--muted)}
 
-/* splash */
-#splash{position:fixed;inset:0;background:var(--bg);z-index:250;overflow:hidden;display:grid;place-items:center}
+#splash{position:fixed;inset:0;background:var(--bg);z-index:250;display:grid;place-items:center;overflow:hidden}
 #splash.wipe{animation:splashWipe .92s cubic-bezier(.72,0,.22,1) forwards}
-.splash-stack{display:grid;place-items:center;gap:16px}
-.splash-logo{width:112px;height:112px;border-radius:25px;overflow:hidden;opacity:0;transform:scale(.75);animation:logoBuild .42s .08s cubic-bezier(.2,.8,.3,1.18) forwards}
-.splash-logo img{width:100%;height:100%;object-fit:cover}
-.splash-word{display:flex;gap:.01em;font-size:clamp(4rem,20vw,9rem);font-weight:950;letter-spacing:-.06em;color:var(--text)}
-.splash-word span{opacity:0;transform:translateY(20px) scale(.68);animation:letterBuild .18s cubic-bezier(.2,.8,.3,1.25) forwards}
+.splash-stack{display:grid;place-items:center;gap:16px}.splash-logo{width:112px;height:112px;border-radius:25px;overflow:hidden;opacity:0;transform:scale(.75);animation:logoBuild .42s .08s forwards}.splash-logo img{width:100%;height:100%}
+.splash-word{display:flex;font-size:clamp(4rem,20vw,9rem);font-weight:950;letter-spacing:-.06em}.splash-word span{opacity:0;transform:translateY(20px) scale(.68);animation:letterBuild .18s forwards}
 .splash-word span:nth-child(1){animation-delay:.38s}.splash-word span:nth-child(2){animation-delay:.50s}.splash-word span:nth-child(3){animation-delay:.62s}.splash-word span:nth-child(4){animation-delay:.74s}.splash-word span:nth-child(5){animation-delay:.86s}
-@keyframes logoBuild{to{opacity:1;transform:none}}@keyframes letterBuild{to{opacity:1;transform:none}}@keyframes splashWipe{from{clip-path:inset(0 0 0 0)}to{clip-path:inset(0 100% 0 0)}}
+@keyframes logoBuild{to{opacity:1;transform:none}}@keyframes letterBuild{to{opacity:1;transform:none}}@keyframes splashWipe{to{clip-path:inset(0 100% 0 0)}}
 
-/* main */
 #appRoot{width:min(980px,100%);height:100dvh;margin:auto;display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));overflow:hidden}
 .header{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:42px}.header-left{display:flex;align-items:center;gap:8px;min-width:0}
-.menu-btn{width:38px;height:38px;padding:0;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);display:grid;place-items:center}.hamburger{width:18px;height:14px;display:grid;gap:3px}.hamburger span{height:2px;background:currentColor;border-radius:2px}
-.app-logo{width:38px;height:38px;border-radius:10px;overflow:hidden;flex:0 0 auto}.brand-wrap{min-width:0}.brand{font-size:clamp(1.2rem,5vw,1.9rem);font-weight:950;letter-spacing:-.04em;line-height:1}
-.roomline{font-size:.72rem;color:var(--muted);margin-top:3px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}.live-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}.host-crown{color:var(--accent2);font-size:.9rem}
-.header-actions{display:flex;gap:6px}.btn{border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 12px;font-weight:800;transition:transform .14s ease,filter .14s ease}.btn:active{transform:scale(.96)}
-.btn.primary{background:var(--accent);color:#111;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}.btn.ghost{background:transparent}
-input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius:11px;background:color-mix(in srgb,var(--panel2) 84%,#000);color:var(--text);outline:none;padding:10px 11px}
-input:focus,select:focus{border-color:var(--accent)}
-.toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:7px}
-.toolbar-row2{grid-column:1/-1;display:grid;grid-template-columns:minmax(108px,.7fr) minmax(130px,1fr) auto auto auto;gap:6px}
+.menu-btn{width:38px;height:38px;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);display:grid;place-items:center}.hamburger{width:18px;height:14px;display:grid;gap:3px}.hamburger span{height:2px;background:currentColor;border-radius:2px}
+.app-logo{width:38px;height:38px;border-radius:10px;overflow:hidden;flex:0 0 auto}.brand{font-size:clamp(1.2rem,5vw,1.9rem);font-weight:950}.roomline{font-size:.72rem;color:var(--muted);margin-top:3px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}.live-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}.offline-dot{width:8px;height:8px;border-radius:50%;background:#9ca3af;display:inline-block}.host-crown{color:var(--accent2)}
+.btn{border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 12px;font-weight:800}.btn.primary{background:var(--accent);color:#111;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}.btn:active{transform:scale(.97)}
+input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius:11px;background:color-mix(in srgb,var(--panel2) 84%,#000);color:var(--text);padding:10px 11px}
+.toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:7px}.toolbar-row2{grid-column:1/-1;display:grid;grid-template-columns:minmax(108px,.7fr) minmax(130px,1fr) auto auto auto;gap:6px}
+
 .players{min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:8px;overflow:auto;scrollbar-width:none}.players::-webkit-scrollbar{display:none}
-.player{--pc:#60a5fa;min-height:0;border:1px solid color-mix(in srgb,var(--pc) 72%,var(--border));border-left:4px solid var(--pc);border-radius:15px;background:linear-gradient(180deg,color-mix(in srgb,var(--pc) 7%,var(--panel2)),var(--panel));display:grid;grid-template-rows:auto 1fr;overflow:hidden;transition:transform .2s ease,opacity .2s ease,box-shadow .2s ease}
-.player.added{animation:playerIn .28s ease both}.player.removing{animation:playerOut .22s ease both}.player.aaa-hit{animation:aaaHit .5s ease}.player.swimmer{box-shadow:0 0 0 2px color-mix(in srgb,var(--blue) 65%,transparent),0 0 22px color-mix(in srgb,var(--blue) 24%,transparent);animation:swimmerPulse 1.55s ease-in-out infinite}
-@keyframes playerIn{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:none}}@keyframes playerOut{to{opacity:0;transform:scale(.92) translateY(6px)}}@keyframes aaaHit{0%{transform:none}35%{transform:translateX(-5px) scale(.98);filter:brightness(1.5)}70%{transform:translateX(3px)}100%{transform:none}}@keyframes swimmerPulse{50%{box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 85%,transparent),0 0 30px color-mix(in srgb,var(--blue) 35%,transparent)}}
-.player-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:6px;align-items:center;padding:7px 8px 5px}
-.player-color{width:11px;height:11px;border-radius:50%;background:var(--pc);box-shadow:0 0 8px color-mix(in srgb,var(--pc) 45%,transparent)}
-.player-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(.92rem,3.5vw,1.08rem);font-weight:850}.player-host{color:var(--accent2);margin-left:3px}
+.player{--pc:#60a5fa;min-height:0;border:1px solid color-mix(in srgb,var(--pc) 72%,var(--border));border-left:4px solid var(--pc);border-radius:15px;background:linear-gradient(180deg,color-mix(in srgb,var(--pc) 7%,var(--panel2)),var(--panel));display:grid;grid-template-rows:auto 1fr;overflow:hidden}
+.player.added{animation:playerIn .26s ease both}.player.removing{animation:playerOut .2s ease both}.player.aaa-hit{animation:aaaHit .5s ease}.player.swimmer{box-shadow:0 0 0 2px color-mix(in srgb,var(--blue) 65%,transparent),0 0 22px color-mix(in srgb,var(--blue) 24%,transparent);animation:swimmerPulse 1.55s ease-in-out infinite}
+@keyframes playerIn{from{opacity:0;transform:scale(.92) translateY(12px)}to{opacity:1;transform:none}}@keyframes playerOut{to{opacity:0;transform:scale(.92)}}@keyframes aaaHit{35%{transform:translateX(-5px);filter:brightness(1.5)}70%{transform:translateX(3px)}}@keyframes swimmerPulse{50%{box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 85%,transparent),0 0 30px color-mix(in srgb,var(--blue) 35%,transparent)}}
+.player-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:6px;align-items:center;padding:7px 8px 5px}.player-color{width:11px;height:11px;border-radius:50%;background:var(--pc)}.player-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:850}
 .aaa-btn,.remove{height:28px;border-radius:8px;border:1px solid var(--border);font-weight:900}.aaa-btn{padding:0 8px;background:color-mix(in srgb,var(--pc) 13%,var(--panel2));color:var(--pc);font-size:.72rem}.remove{width:28px;padding:0;background:rgba(239,68,68,.12);color:#fecaca}
-.life-row{min-height:0;display:grid;grid-template-columns:45px minmax(0,1fr) 45px;align-items:stretch;border-top:1px solid var(--border)}.life-btn{border:0;border-radius:0;background:rgba(255,255,255,.035);color:var(--text);font-size:1.6rem;font-weight:900}
-.life-display{min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px 4px}.life-main{font-size:clamp(2rem,9vw,3.55rem);font-weight:950;line-height:.95;letter-spacing:-.06em}.life-main.bump{animation:lifeBump .26s ease}@keyframes lifeBump{45%{transform:scale(1.18)}}
-.state-swimmer .life-main{font-size:clamp(1.15rem,5vw,2rem);color:var(--blue);letter-spacing:-.02em}.state-swimmer .life-main::before{content:"≋ ";font-size:.8em}.state-over .life-main{font-size:clamp(1.05rem,4.7vw,1.85rem);color:#fca5a5;letter-spacing:-.02em}
-.empty{grid-column:1/-1;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border);border-radius:15px;color:var(--muted);text-align:center;padding:20px}
-.undo-bar{display:flex;justify-content:center;pointer-events:none}.undo-btn{pointer-events:auto;opacity:.72;padding:8px 14px;border-radius:999px;font-size:.8rem;display:flex;gap:6px;align-items:center}.undo-btn:disabled{opacity:.28}
+.life-row{display:grid;grid-template-columns:45px 1fr 45px;min-height:0;border-top:1px solid var(--border)}.life-btn{border:0;background:rgba(255,255,255,.035);color:var(--text);font-size:1.6rem;font-weight:900}.life-display{display:flex;align-items:center;justify-content:center}.life-main{font-size:clamp(2rem,9vw,3.55rem);font-weight:950}.life-main.bump{animation:lifeBump .26s ease}@keyframes lifeBump{45%{transform:scale(1.18)}}.state-swimmer .life-main{font-size:clamp(1.15rem,5vw,2rem);color:var(--blue)}.state-swimmer .life-main::before{content:"≋ "}.state-over .life-main{font-size:clamp(1.05rem,4.7vw,1.85rem);color:#fca5a5}
+.empty{grid-column:1/-1;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border);border-radius:15px;color:var(--muted);text-align:center;padding:20px}.empty-actions{display:grid;gap:8px;margin-top:14px}
+.undo-bar{display:flex;justify-content:center}.undo-btn{opacity:.72;padding:8px 14px;border-radius:999px;font-size:.8rem}.undo-btn:disabled{opacity:.28}
 
-/* drawer */
-.drawer-overlay{position:fixed;inset:0;background:rgba(2,6,23,.55);opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:80}.drawer-overlay.open{opacity:1;pointer-events:auto}
-.drawer{position:absolute;left:0;top:0;bottom:0;width:min(340px,88vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:transform .24s ease;padding:max(16px,env(safe-area-inset-top)) 14px max(16px,env(safe-area-inset-bottom));box-shadow:20px 0 50px rgba(0,0,0,.25);display:flex;flex-direction:column}
-.drawer-overlay.open .drawer{transform:translateX(0)}.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.drawer-title{font-size:1.2rem;font-weight:950}.drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
-.drawer-nav{display:grid;gap:8px}.drawer-bottom{margin-top:auto}.drawer-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800}.drawer-item:active{background:var(--panel2);border-color:var(--border)}
-.drawer-svg{width:26px;height:26px;display:grid;place-items:center;color:var(--accent2)}.drawer-svg svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}.drawer-svg.settings svg{width:28px;height:28px}.drawer-spacer{height:1px;background:var(--border);margin:8px 0}
+.drawer-overlay{position:fixed;inset:0;background:rgba(2,6,23,.55);opacity:0;pointer-events:none;transition:.22s;z-index:80}.drawer-overlay.open{opacity:1;pointer-events:auto}.drawer{position:absolute;left:0;top:0;bottom:0;width:min(340px,88vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:.24s;padding:max(16px,env(safe-area-inset-top)) 14px max(16px,env(safe-area-inset-bottom));display:flex;flex-direction:column}.drawer-overlay.open .drawer{transform:none}.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.drawer-title{font-weight:950;font-size:1.2rem}.drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}.drawer-nav{display:grid;gap:8px}.drawer-bottom{margin-top:auto}.drawer-item{display:flex;align-items:center;gap:12px;width:100%;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800;text-align:left}.drawer-item:active{background:var(--panel2)}.drawer-svg{width:26px;height:26px;display:grid;place-items:center;color:var(--accent2)}.drawer-svg svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}.drawer-svg.settings svg{width:28px;height:28px}.drawer-spacer{height:1px;background:var(--border);margin:8px 0}
 
-/* modals */
-.modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:14px;z-index:90}.modal-backdrop.open{display:flex}
-.modal{width:min(680px,100%);max-height:min(84dvh,760px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:18px;box-shadow:0 25px 80px rgba(0,0,0,.45)}
-.modal-head{position:sticky;top:0;background:var(--panel);display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 15px;border-bottom:1px solid var(--border);z-index:2}.modal-head h2{margin:0;font-size:1.15rem}.modal-body{padding:12px}
-.close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
-.room-card,.history-item,.rank-item,.profile-item,.settings-section{border:1px solid var(--border);border-radius:13px;background:var(--panel2);padding:11px;margin-bottom:8px}
-.room-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}.room-logo{width:44px;height:44px;border-radius:12px;background:var(--panel3);overflow:hidden;display:grid;place-items:center}.room-logo img{width:100%;height:100%;object-fit:cover}.room-generic{font-weight:950;color:var(--accent2)}
-.room-name{font-weight:900}.room-meta{font-size:.76rem;color:var(--muted);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}.room-fresh{color:var(--ok)}
+.modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:14px;z-index:90}.modal-backdrop.open{display:flex}.modal{width:min(680px,100%);max-height:min(84dvh,760px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:18px}.modal-head{position:sticky;top:0;background:var(--panel);display:flex;justify-content:space-between;align-items:center;padding:14px 15px;border-bottom:1px solid var(--border);z-index:2}.modal-head h2{margin:0;font-size:1.15rem}.modal-body{padding:12px}.close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
+.room-card,.history-item,.rank-item,.profile-item,.settings-section{border:1px solid var(--border);border-radius:13px;background:var(--panel2);padding:11px;margin-bottom:8px}.room-card{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}.room-logo{width:44px;height:44px;border-radius:12px;background:var(--panel3);overflow:hidden;display:grid;place-items:center}.room-logo img{width:100%;height:100%;object-fit:cover}.room-name{font-weight:900}.room-meta{font-size:.76rem;color:var(--muted);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}.room-fresh{color:var(--ok)}
 .history-top,.rank-item,.profile-row{display:flex;justify-content:space-between;align-items:center;gap:10px}.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 10px;margin-top:7px;font-size:.84rem}.small{font-size:.78rem;color:var(--muted)}
-.rank-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}.rank-tab{padding:8px 5px;border-radius:10px;border:1px solid var(--border);background:var(--panel3);color:var(--text);font-size:.76rem;font-weight:800}.rank-tab.active{background:var(--accent);color:#111}
-.rank-pos{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--panel3);font-weight:900;flex:0 0 auto}.rank-name{flex:1;min-width:0;font-weight:800;overflow:hidden;text-overflow:ellipsis}.rank-score{font-weight:900;color:var(--accent2)}.medal{font-size:1.1rem}
-.profile-actions{display:flex;gap:6px}.group-profile{display:grid;grid-template-columns:58px 1fr;gap:12px;align-items:center}.group-profile img{width:58px;height:58px;border-radius:50%}
+.rank-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}.rank-tab{padding:8px 5px;border-radius:10px;border:1px solid var(--border);background:var(--panel3);color:var(--text);font-size:.76rem;font-weight:800}.rank-tab.active{background:var(--accent);color:#111}.rank-pos{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--panel3);font-weight:900}.rank-name{flex:1;font-weight:800}.rank-score{font-weight:900;color:var(--accent2)}
 .settings-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}.settings-row:last-child{border-bottom:0}.toggle{width:48px;height:28px;border-radius:999px;background:var(--panel3);border:1px solid var(--border);padding:3px}.toggle-dot{width:20px;height:20px;border-radius:50%;background:var(--muted);transition:.2s}.toggle.on{background:color-mix(in srgb,var(--accent) 40%,var(--panel3))}.toggle.on .toggle-dot{transform:translateX(18px);background:var(--accent2)}
-.qr-box{text-align:center}.qr-box img{width:min(290px,80vw);background:white;border-radius:16px;padding:8px}.qr-url{font-size:.72rem;color:var(--muted);word-break:break-all;margin-top:7px}
-.onboarding .modal-head{display:none}.onboarding .modal-body{padding:20px}.welcome-icon{font-size:2.8rem;text-align:center;margin-bottom:8px}.welcome-title{text-align:center;font-size:1.35rem;font-weight:950;margin-bottom:5px}.welcome-sub{text-align:center;color:var(--muted);font-size:.86rem;margin-bottom:16px}
+.qr-box{text-align:center}.qr-box img{width:min(290px,80vw);background:#fff;border-radius:16px;padding:8px}
+.profile-logo-preview{width:72px;height:72px;border-radius:16px;background:var(--panel3);overflow:hidden;display:grid;place-items:center;margin-bottom:10px}.profile-logo-preview img{width:100%;height:100%;object-fit:cover}.profile-member-row{display:grid;grid-template-columns:1fr auto;gap:6px;margin-bottom:6px}
+.onboarding .modal-head{display:none}.welcome-title{text-align:center;font-size:1.35rem;font-weight:950}.welcome-sub{text-align:center;color:var(--muted);font-size:.86rem;margin:6px 0 16px}
 
-@media(max-width:760px){
- .header-actions .btn{padding:7px 8px;font-size:.74rem}.toolbar-row2{grid-template-columns:minmax(96px,.7fr) minmax(108px,1fr) auto;grid-auto-rows:auto}.toolbar-row2 .profile-save{grid-column:1/2}.toolbar-row2 .remove-all{grid-column:2/4}
- .rank-tabs{grid-template-columns:1fr}.room-card{grid-template-columns:42px 1fr auto}
-}
-@media(max-height:720px){#appRoot{gap:6px;padding-top:6px;padding-bottom:6px}.header{min-height:34px}.brand{font-size:1.05rem}.app-logo{width:32px;height:32px}.btn{padding:6px 8px;font-size:.72rem}.toolbar{padding:5px}input,select{padding:7px 8px;font-size:.8rem}.players{gap:6px}.player-top{padding:5px 7px 4px}.aaa-btn,.remove{height:25px}.remove{width:25px}.life-row{grid-template-columns:39px minmax(0,1fr) 39px}.life-main{font-size:clamp(1.7rem,7vh,2.8rem)}}
+@media(max-width:760px){.toolbar-row2{grid-template-columns:minmax(96px,.7fr) minmax(108px,1fr) auto;grid-auto-rows:auto}.toolbar-row2 .profile-save{grid-column:1/2}.toolbar-row2 .remove-all{grid-column:2/4}.rank-tabs{grid-template-columns:1fr}.room-card{grid-template-columns:42px 1fr auto}}
 @media(min-width:760px){.players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
-<section id="installGate">
- <div class="install-card">
-  <div class="install-logo"><img id="installLogo" src="./logo-dark.png" alt=""></div>
-  <h1>Knack</h1><p>Knack funktioniert ausschließlich als Web‑App vom Home‑Bildschirm.</p>
-  <div class="steps">
-   <div class="step"><div class="num">1</div><div><strong>Auf Teilen tippen</strong><div class="hint">Öffne das Teilen-Menü in Safari.</div></div></div>
-   <div class="step"><div class="num">2</div><div><strong>„Zum Home‑Bildschirm“ auswählen</strong><div class="hint">Bestätige das Hinzufügen der Web‑App.</div></div></div>
-   <div class="step"><div class="num">3</div><div><strong>Knack vom Home‑Bildschirm starten</strong><div class="hint">Danach öffnet sich die App im Vollbildmodus.</div></div></div>
-  </div>
- </div>
-</section>
+<section id="installGate"><div class="install-card"><div class="install-logo"><img id="installLogo" src="./logo-dark.png"></div><h1>Knack</h1><p>Knack funktioniert ausschließlich als Web‑App vom Home‑Bildschirm.</p><div class="steps"><div class="step"><div class="num">1</div><div><strong>Auf Teilen tippen</strong><div class="hint">Öffne das Teilen-Menü in Safari.</div></div></div><div class="step"><div class="num">2</div><div><strong>„Zum Home‑Bildschirm“ auswählen</strong><div class="hint">Bestätige das Hinzufügen.</div></div></div><div class="step"><div class="num">3</div><div><strong>Knack starten</strong><div class="hint">Danach öffnet sich die App im Vollbild.</div></div></div></div></div></section>
 
 <section id="appRoot" class="hidden">
-<header class="header">
- <div class="header-left">
-  <button class="menu-btn" id="menuBtn"><span class="hamburger"><span></span><span></span><span></span></span></button>
-  <div class="app-logo"><img id="appLogo" src="./logo-dark.png" alt="Knack"></div>
-  <div class="brand-wrap"><div class="brand">Knack</div><div class="roomline"><span id="liveStatus"><span class="live-dot"></span> Live</span><span id="roomNameLine">Kein Raum</span><span id="hostBadge" class="host-crown hidden">♛ Host</span></div></div>
- </div>
- <div class="header-actions"><button class="btn primary" id="newGameBtn">Neues Spiel</button></div>
-</header>
-<section class="toolbar">
- <input id="playerInput" maxlength="24" placeholder="Spielername eingeben" autocomplete="off">
- <button class="btn primary" id="addPlayerBtn">+ Spieler</button>
- <div class="toolbar-row2">
-  <select id="modeSelect"><option value="3">3 Leben</option><option value="4" selected>4 Leben</option><option value="5">5 Leben</option></select>
-  <select id="profileSelect"><option value="">Profil auswählen</option></select>
-  <button class="btn" id="loadProfileBtn">Laden</button>
-  <button class="btn profile-save" id="profileBtn">Profil +</button>
-  <button class="btn danger remove-all" id="removeAllBtn">Alle entfernen</button>
- </div>
-</section>
+<header class="header"><div class="header-left"><button class="menu-btn" id="menuBtn"><span class="hamburger"><span></span><span></span><span></span></span></button><div class="app-logo"><img id="appLogo" src="./logo-dark.png"></div><div><div class="brand">Knack</div><div class="roomline"><span id="statusLabel"><span class="offline-dot"></span> Offline</span><span id="roomNameLine">Offline Spiel</span><span id="hostBadge" class="host-crown hidden">♛ Host</span></div></div></div><button class="btn primary" id="newGameBtn">Neues Spiel</button></header>
+<section class="toolbar"><input id="playerInput" maxlength="24" placeholder="Spielername eingeben"><button class="btn primary" id="addPlayerBtn">+ Spieler</button><div class="toolbar-row2"><select id="modeSelect"><option value="3">3 Leben</option><option value="4" selected>4 Leben</option><option value="5">5 Leben</option></select><select id="profileSelect"><option value="">Profil auswählen</option></select><button class="btn" id="loadProfileBtn">Laden</button><button class="btn profile-save" id="profileBtn">Profil +</button><button class="btn danger remove-all" id="removeAllBtn">Alle entfernen</button></div></section>
 <section class="players" id="players"></section>
-<div class="undo-bar"><button class="btn undo-btn" id="undoBtn" disabled>↶ <span>Rückgängig</span></button></div>
+<div class="undo-bar"><button class="btn undo-btn" id="undoBtn" disabled>↶ Rückgängig</button></div>
 </section>
 
 <div id="splash" class="hidden"><div class="splash-stack"><div class="splash-logo"><img id="splashLogo" src="./logo-dark.png"></div><div class="splash-word"><span>K</span><span>N</span><span>A</span><span>C</span><span>K</span></div></div></div>
 
-<div class="drawer-overlay" id="drawerOverlay"><aside class="drawer">
- <div class="drawer-head"><div class="drawer-title">Knack</div><button class="drawer-close" id="drawerClose">✕</button></div>
- <nav class="drawer-nav">
-  <button class="drawer-item" id="drawerCreateRoom"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span>Spielraum erstellen</span></button>
-  <button class="drawer-item" id="drawerRooms"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M4 9.5 12 3l8 6.5V20H4Z"/><path d="M9 20v-6h6v6"/></svg></span><span>Verfügbare Räume</span></button>
-  <button class="drawer-item" id="drawerHistory"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg></span><span>Letzte Spiele</span></button>
-  <button class="drawer-item" id="drawerRanking"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0Z"/><path d="M12 12v5M8 21h8M10 17h4"/><path d="M8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4"/></svg></span><span>Rangliste</span></button>
-  <div class="drawer-spacer"></div>
-  <button class="drawer-item" id="drawerProfile"><span class="drawer-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span>Profil</span></button>
-  <button class="drawer-item hidden" id="drawerLeave"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M10 5H5v14h5"/><path d="m14 8 4 4-4 4M18 12H9"/></svg></span><span>Raum verlassen</span></button>
-  <button class="drawer-item hidden" id="drawerCloseRoom"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></svg></span><span>Raum schließen</span></button>
- </nav>
- <div class="drawer-bottom"><button class="drawer-item" id="drawerSettings"><span class="drawer-svg settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1L7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1H21v4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg></span><span>Einstellungen</span></button></div>
-</aside></div>
+<div class="drawer-overlay" id="drawerOverlay"><aside class="drawer"><div class="drawer-head"><div class="drawer-title">Knack</div><button class="drawer-close" id="drawerClose">✕</button></div><nav class="drawer-nav">
+<button class="drawer-item" id="drawerCreateRoom"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Spielraum erstellen</button>
+<button class="drawer-item" id="drawerRooms"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M4 9.5 12 3l8 6.5V20H4Z"/><path d="M9 20v-6h6v6"/></svg></span>Verfügbare Räume</button>
+<button class="drawer-item" id="drawerHistory"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg></span>Letzte Spiele</button>
+<button class="drawer-item" id="drawerRanking"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0Z"/><path d="M12 12v5M8 21h8M10 17h4"/></svg></span>Rangliste</button>
+<div class="drawer-spacer"></div>
+<button class="drawer-item" id="drawerMyProfile"><span class="drawer-svg"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>Profil</button>
+<button class="drawer-item" id="drawerProfiles"><span class="drawer-svg"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></span>Profile</button>
+<button class="drawer-item hidden" id="drawerLeave"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M10 5H5v14h5"/><path d="m14 8 4 4-4 4M18 12H9"/></svg></span>Raum verlassen</button>
+<button class="drawer-item hidden" id="drawerCloseRoom"><span class="drawer-svg"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></svg></span>Raum schließen</button>
+</nav><div class="drawer-bottom"><button class="drawer-item" id="drawerSettings"><span class="drawer-svg settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1L7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1H21v4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg></span>Einstellungen</button></div></aside></div>
 
 <div class="modal-backdrop" id="roomsModal"><div class="modal"><div class="modal-head"><h2>Verfügbare Räume</h2><button class="close" data-close="roomsModal">✕</button></div><div class="modal-body" id="roomsBody"></div></div></div>
-<div class="modal-backdrop" id="createRoomModal"><div class="modal"><div class="modal-head"><h2>Spielraum erstellen</h2><button class="close" data-close="createRoomModal">✕</button></div><div class="modal-body">
- <div class="small" style="margin-bottom:6px">Raumname</div><input id="roomNameInput" maxlength="28" placeholder="z. B. Freitagabend">
- <div class="small" style="margin:12px 0 6px">oder Profil auswählen</div><select id="roomProfileSelect"><option value="">Kein Profil</option></select>
- <div id="roomProfilePreview" style="margin:10px 0"></div>
- <button class="btn primary" id="createRoomBtn" style="width:100%;margin-top:5px">Raum erstellen</button>
-</div></div></div>
-
+<div class="modal-backdrop" id="createRoomModal"><div class="modal"><div class="modal-head"><h2>Spielraum erstellen</h2><button class="close" data-close="createRoomModal">✕</button></div><div class="modal-body"><div class="small">Raumname</div><input id="roomNameInput" maxlength="28" placeholder="z. B. Freitagabend"><div class="small" style="margin:12px 0 6px">oder Profil als Raumname</div><select id="roomProfileSelect"><option value="">Kein Profil</option></select><button class="btn primary" id="createRoomBtn" style="width:100%;margin-top:12px">Raum erstellen</button></div></div></div>
 <div class="modal-backdrop" id="historyModal"><div class="modal"><div class="modal-head"><h2>Letzte Spiele</h2><button class="close" data-close="historyModal">✕</button></div><div class="modal-body" id="historyBody"></div></div></div>
 <div class="modal-backdrop" id="rankingModal"><div class="modal"><div class="modal-head"><h2>Rangliste</h2><button class="close" data-close="rankingModal">✕</button></div><div class="modal-body"><div class="rank-tabs"><button class="rank-tab active" data-rank="lost">Wenigste verlorene Leben</button><button class="rank-tab" data-rank="wins">Meiste Siege</button><button class="rank-tab" data-rank="avg">Beste Ø-Wertung</button></div><div id="rankingBody"></div></div></div>
-<div class="modal-backdrop" id="profilesModal"><div class="modal"><div class="modal-head"><h2>Spielerprofile</h2><button class="close" data-close="profilesModal">✕</button></div><div class="modal-body" id="profilesBody"></div></div></div>
-
-<div class="modal-backdrop" id="myProfileModal"><div class="modal"><div class="modal-head"><h2>Profil</h2><button class="close" data-close="myProfileModal">✕</button></div><div class="modal-body">
- <div class="small" style="margin-bottom:7px">Dein Name</div><input id="myNameInput" maxlength="24" placeholder="Dein Name"><button class="btn primary" id="saveMyNameBtn" style="width:100%;margin-top:8px">Speichern</button>
- <div class="group-profile room-card" style="margin-top:14px"><div class="room-logo"><img src="./piya-logo.png"></div><div><div class="room-name">PIYA-Knack</div><div class="room-meta">Vorgespeichertes Gruppenprofil</div></div><span class="host-crown">★</span></div>
-</div></div></div>
-
-<div class="modal-backdrop" id="settingsModal"><div class="modal"><div class="modal-head"><h2>Einstellungen</h2><button class="close" data-close="settingsModal">✕</button></div><div class="modal-body">
- <div class="settings-section"><div class="settings-row"><div><strong>Design</strong><div class="small">Farbschema und passendes Logo</div></div><select id="themeSelect" style="width:155px"></select></div>
- <div class="settings-row"><div><strong>Haptisches Feedback</strong><div class="small">Vibration auf unterstützten Geräten</div></div><button class="toggle" id="hapticToggle"><span class="toggle-dot"></span></button></div></div>
- <div class="settings-section"><h3>QR-Code zur Web-App</h3><div class="qr-box"><img src="./knack-app-qr.png"><div class="qr-url">https://mexi96.github.io/knackleben24/</div></div></div>
- <div class="settings-section"><h3>Statistiken</h3><button class="btn danger" id="resetStatsBtn" style="width:100%">Statistiken zurücksetzen</button></div>
-</div></div></div>
-
-<div class="modal-backdrop onboarding" id="onboardingModal"><div class="modal"><div class="modal-body">
- <div class="welcome-icon">👤</div><div class="welcome-title">Willkommen bei Knack!</div><div class="welcome-sub">Gib einmal deinen Namen ein. Er wird beim Beitreten zu Räumen automatisch verwendet.</div>
- <input id="onboardingName" maxlength="24" placeholder="Dein Name"><button class="btn primary" id="onboardingSave" style="width:100%;margin-top:9px">Speichern</button>
-</div></div></div>
+<div class="modal-backdrop" id="myProfileModal"><div class="modal"><div class="modal-head"><h2>Profil</h2><button class="close" data-close="myProfileModal">✕</button></div><div class="modal-body"><div class="small">Dein Name</div><input id="myNameInput" maxlength="24"><button class="btn primary" id="saveMyNameBtn" style="width:100%;margin-top:8px">Speichern</button></div></div></div>
+<div class="modal-backdrop" id="profilesModal"><div class="modal"><div class="modal-head"><h2>Profile</h2><button class="close" data-close="profilesModal">✕</button></div><div class="modal-body"><button class="btn primary" id="newProfileBtn" style="width:100%;margin-bottom:10px">+ Neues Profil</button><div id="profilesBody"></div></div></div>
+<div class="modal-backdrop" id="profileEditModal"><div class="modal"><div class="modal-head"><h2>Profil bearbeiten</h2><button class="close" data-close="profileEditModal">✕</button></div><div class="modal-body"><div class="profile-logo-preview" id="profileLogoPreview">Logo</div><input type="file" id="profileLogoInput" accept="image/*"><div class="small" style="margin:10px 0 5px">Profilname</div><input id="editProfileName" maxlength="28"><div class="small" style="margin:10px 0 5px">Spieler</div><div id="editProfileMembers"></div><button class="btn" id="addProfileMemberBtn" style="width:100%">+ Spielername</button><button class="btn primary" id="saveProfileEditBtn" style="width:100%;margin-top:12px">Profil speichern</button></div></div></div>
+<div class="modal-backdrop" id="settingsModal"><div class="modal"><div class="modal-head"><h2>Einstellungen</h2><button class="close" data-close="settingsModal">✕</button></div><div class="modal-body"><div class="settings-section"><div class="settings-row"><div><strong>Design</strong></div><select id="themeSelect" style="width:150px"></select></div><div class="settings-row"><div><strong>Haptisches Feedback</strong></div><button class="toggle" id="hapticToggle"><span class="toggle-dot"></span></button></div></div><div class="settings-section"><h3>QR-Code zur Web-App</h3><div class="qr-box"><img src="./knack-app-qr.png"></div></div><div class="settings-section"><button class="btn danger" id="resetStatsBtn" style="width:100%">Statistiken zurücksetzen</button></div></div></div></div>
+<div class="modal-backdrop onboarding" id="onboardingModal"><div class="modal"><div class="modal-body"><div class="welcome-title">Willkommen bei Knack!</div><div class="welcome-sub">Bitte gib deinen Namen ein.</div><input id="onboardingName" maxlength="24" placeholder="Dein Name"><button class="btn primary" id="onboardingSave" style="width:100%;margin-top:8px">Speichern</button></div></div></div>
+<div class="modal-backdrop" id="confirmNewGameModal"><div class="modal"><div class="modal-head"><h2>Neues Spiel?</h2><button class="close" data-close="confirmNewGameModal">✕</button></div><div class="modal-body"><div style="margin-bottom:12px">Aktuelle Runde speichern und alle Leben zurücksetzen?</div><button class="btn primary" id="confirmNewGameBtn" style="width:100%">Neues Spiel starten</button></div></div></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import { getDatabase, ref, set, get, onValue, update, remove, onDisconnect } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
-const APP_VERSION=6, STALE_MS=24*60*60*1000;
-function migrateLocalData(){
- let state=null;try{state=JSON.parse(localStorage.getItem("knack_state_v6")||"null")}catch{}
- if(state&&state.version===APP_VERSION)return state;
+const $=id=>document.getElementById(id);
+const VERSION=7, STALE=24*60*60*1000;
+
+function loadState(){
+ let s;try{s=JSON.parse(localStorage.getItem("knack_v7_state")||"null")}catch{}
+ if(s?.version===VERSION)return s;
  let profiles={};
- for(const key of ["knack_player_profiles","knacktracker_profiles","knackleben24_profiles_multiplayer_v1","knackleben24_profiles_v2"]){
-  try{const old=JSON.parse(localStorage.getItem(key)||"{}");for(const [name,val] of Object.entries(old||{})){profiles[name]=Array.isArray(val)?{members:val}:val?.members?val:{members:[]}}}catch{}
+ for(const k of ["knack_state_v6","knack_player_profiles","knacktracker_profiles"]){
+  try{const v=JSON.parse(localStorage.getItem(k)||"null");if(v?.profiles)for(const [n,p] of Object.entries(v.profiles))if(n!=="PIYA-Knack")profiles[n]={members:p.members||[],logo:p.logo||null};else if(v&&typeof v==="object"&&!Array.isArray(v))for(const [n,p] of Object.entries(v))if(n!=="PIYA-Knack")profiles[n]=Array.isArray(p)?{members:p,logo:null}:p}catch{}
  }
- profiles["PIYA-Knack"]={members:profiles["PIYA-Knack"]?.members||[],groupLogo:"piya-logo.png",preset:true};
- const myName=localStorage.getItem("knack_my_name")||localStorage.getItem("knacktracker_my_name")||"";
- const theme=localStorage.getItem("knack_theme")||localStorage.getItem("knacktracker_theme")||"dark";
- state={version:APP_VERSION,myName,theme,haptics:true,profiles};
- localStorage.setItem("knack_state_v6",JSON.stringify(state));return state
+ const oldOffline=JSON.parse(localStorage.getItem("knack_offline_v7")||"null")||{players:{},history:[],mode:4,undo:null};
+ s={version:VERSION,myName:localStorage.getItem("knack_my_name")||"",theme:"dark",haptics:true,profiles,offline:oldOffline};
+ localStorage.setItem("knack_v7_state",JSON.stringify(s));return s
 }
-let state=migrateLocalData();
-function persist(){localStorage.setItem("knack_state_v6",JSON.stringify(state))}
-let clientId=localStorage.getItem("knack_client_id_v6");if(!clientId){clientId=(crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random()).replace(/[.#$[\]/]/g,"_");localStorage.setItem("knack_client_id_v6",clientId)}
-const userPlayerKey="u_"+clientId;
+let state=loadState();
+const persist=()=>localStorage.setItem("knack_v7_state",JSON.stringify(state));
+let clientId=localStorage.getItem("knack_client_v7");if(!clientId){clientId=(crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random()).replace(/[.#$[\]/]/g,"_");localStorage.setItem("knack_client_v7",clientId)}
+const selfKey="u_"+clientId;
 
-const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
-const installGate=document.getElementById("installGate"),appRoot=document.getElementById("appRoot"),splash=document.getElementById("splash");
-if(standalone){installGate.classList.add("hidden");appRoot.classList.remove("hidden");splash.classList.remove("hidden");setTimeout(()=>splash.classList.add("wipe"),1950);setTimeout(()=>{splash.classList.add("hidden");if(!state.myName)openModal("onboardingModal")},2900)}
-if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
-
-const firebaseConfig={apiKey:"AIzaSyDboBSOJdzZCCMbtPh-X0tF7_xYQpRvc6o",authDomain:"knackleben24.firebaseapp.com",databaseURL:"https://knackleben24-default-rtdb.europe-west1.firebasedatabase.app/",projectId:"knackleben24",storageBucket:"knackleben24.firebasestorage.app",messagingSenderId:"1048228405783",appId:"1:1048228405783:web:a8af2cba896cb7cabff252",measurementId:"G-KVSXJYCWTY"};
+const firebaseConfig={apiKey:"AIzaSyDboBSOJdzZCCMbtPh-X0tF7_xYQpRvc6o",authDomain:"knackleben24.firebaseapp.com",databaseURL:"https://knackleben24-default-rtdb.europe-west1.firebasedatabase.app/",projectId:"knackleben24",storageBucket:"knackleben24.firebasestorage.app",messagingSenderId:"1048228405783",appId:"1:1048228405783:web:a8af2cba896cb7cabff252"};
 const db=getDatabase(initializeApp(firebaseConfig));
 
-const THEMES={
- dark:{name:"Dunkel",v:["#050505","#0c0c0c","#151515","#1f1f1f","#ffffff","#aaaaaa","#d4af37","#f4d66b","#ffffff"]},
- light:{name:"Hell",v:["#f3f4f6","#ffffff","#eceff3","#dfe4ea","#111827","#687386","#c79a18","#a87900","#2563eb"]},
- amber:{name:"Amber",v:["#0b1020","#151d31","#1d2942","#24314d","#f8fafc","#9aa7bd","#f59e0b","#fbbf24","#38bdf8"]},
- blue:{name:"Blau",v:["#08111f","#10223a","#17304d","#1f3d60","#f8fafc","#a8b7cc","#38bdf8","#7dd3fc","#60a5fa"]},
- green:{name:"Grün",v:["#07140f","#10241b","#183326","#204431","#f5fff9","#9dc3ae","#34d399","#6ee7b7","#22d3ee"]},
- purple:{name:"Violett",v:["#120b1d","#21142f","#2d1b40","#3b2453","#fbf8ff","#b8a5cd","#a78bfa","#c4b5fd","#818cf8"]},
- red:{name:"Rot",v:["#160909","#281010","#3a1717","#4a1d1d","#fff7f7","#c9aaaa","#f87171","#fca5a5","#fb7185"]},
- cyan:{name:"Cyan",v:["#061416","#0d262a","#12373d","#184850","#f4ffff","#9fc2c7","#22d3ee","#67e8f9","#06b6d4"]},
- orange:{name:"Orange",v:["#160c05","#271508","#3b200c","#4d2b12","#fff8f2","#cdb7a4","#ff8a2a","#ffb56d","#ffd2ac"]},
- pink:{name:"Pink",v:["#170713","#2a1024","#3b1733","#4e2043","#fff7fd","#c8a6be","#ff66c7","#ff9add","#eab8ff"]},
- ice:{name:"Eis",v:["#071116","#0e2029","#15303c","#1c414f","#f5fcff","#a7c4d0","#bdeaff","#e1f7ff","#7dd3fc"]},
- sand:{name:"Sand",v:["#17130d","#292116","#3b3021","#4d402d","#fffaf1","#cbbda7","#d8b36d","#ead09a","#e8d7bb"]}
-};
-function applyTheme(key){
- const t=THEMES[key]||THEMES.dark,[bg,p,p2,p3,text,muted,a,a2,blue]=t.v,r=document.documentElement.style;
- [["--bg",bg],["--panel",p],["--panel2",p2],["--panel3",p3],["--text",text],["--muted",muted],["--accent",a],["--accent2",a2],["--blue",blue]].forEach(([k,v])=>r.setProperty(k,v));
- state.theme=key;persist();["appLogo","installLogo","splashLogo"].forEach(id=>document.getElementById(id).src=`./logo-${key}.png`);document.querySelector('meta[name="theme-color"]').content=bg;
-}
+const THEMES={dark:["Dunkel","#050505","#0c0c0c","#151515","#1f1f1f","#fff","#aaa","#d4af37","#f4d66b","#fff"],light:["Hell","#f3f4f6","#fff","#eceff3","#dfe4ea","#111827","#687386","#c79a18","#a87900","#2563eb"],amber:["Amber","#0b1020","#151d31","#1d2942","#24314d","#f8fafc","#9aa7bd","#f59e0b","#fbbf24","#38bdf8"],blue:["Blau","#08111f","#10223a","#17304d","#1f3d60","#f8fafc","#a8b7cc","#38bdf8","#7dd3fc","#60a5fa"],green:["Grün","#07140f","#10241b","#183326","#204431","#f5fff9","#9dc3ae","#34d399","#6ee7b7","#22d3ee"],purple:["Violett","#120b1d","#21142f","#2d1b40","#3b2453","#fbf8ff","#b8a5cd","#a78bfa","#c4b5fd","#818cf8"],red:["Rot","#160909","#281010","#3a1717","#4a1d1d","#fff7f7","#c9aaaa","#f87171","#fca5a5","#fb7185"],cyan:["Cyan","#061416","#0d262a","#12373d","#184850","#f4ffff","#9fc2c7","#22d3ee","#67e8f9","#06b6d4"],orange:["Orange","#160c05","#271508","#3b200c","#4d2b12","#fff8f2","#cdb7a4","#ff8a2a","#ffb56d","#ffd2ac"],pink:["Pink","#170713","#2a1024","#3b1733","#4e2043","#fff7fd","#c8a6be","#ff66c7","#ff9add","#eab8ff"],ice:["Eis","#071116","#0e2029","#15303c","#1c414f","#f5fcff","#a7c4d0","#bdeaff","#e1f7ff","#7dd3fc"],sand:["Sand","#17130d","#292116","#3b3021","#4d402d","#fffaf1","#cbbda7","#d8b36d","#ead09a","#e8d7bb"]};
+function applyTheme(k){const t=THEMES[k]||THEMES.dark,[n,bg,p,p2,p3,tx,mu,a,a2,bl]=t,r=document.documentElement.style;[["--bg",bg],["--panel",p],["--panel2",p2],["--panel3",p3],["--text",tx],["--muted",mu],["--accent",a],["--accent2",a2],["--blue",bl]].forEach(([x,v])=>r.setProperty(x,v));state.theme=k;persist();["appLogo","installLogo","splashLogo"].forEach(id=>$(id).src=`./logo-${k}.png`);document.querySelector('meta[name="theme-color"]').content=bg}
 applyTheme(state.theme);
 
-let currentRoom="",roomData={players:{},history:[],mode:4},unsub=null,disconnectOp=null,lastPlayers={},lastEffectAt=0,rankMode="lost";
-const playersEl=document.getElementById("players"),playerInput=document.getElementById("playerInput"),profileSelect=document.getElementById("profileSelect"),modeSelect=document.getElementById("modeSelect");
-const roomNameLine=document.getElementById("roomNameLine"),hostBadge=document.getElementById("hostBadge"),drawerLeave=document.getElementById("drawerLeave"),drawerCloseRoom=document.getElementById("drawerCloseRoom"),undoBtn=document.getElementById("undoBtn");
-const drawerOverlay=document.getElementById("drawerOverlay"),menuBtn=document.getElementById("menuBtn"),drawerClose=document.getElementById("drawerClose"),drawerCreateRoom=document.getElementById("drawerCreateRoom"),drawerRooms=document.getElementById("drawerRooms"),drawerHistory=document.getElementById("drawerHistory"),drawerRanking=document.getElementById("drawerRanking"),drawerProfile=document.getElementById("drawerProfile"),drawerSettings=document.getElementById("drawerSettings");
-const roomsBody=document.getElementById("roomsBody"),roomNameInput=document.getElementById("roomNameInput"),roomProfileSelect=document.getElementById("roomProfileSelect"),roomProfilePreview=document.getElementById("roomProfilePreview"),createRoomBtn=document.getElementById("createRoomBtn");
-const historyBody=document.getElementById("historyBody"),rankingBody=document.getElementById("rankingBody"),profilesBody=document.getElementById("profilesBody"),myNameInput=document.getElementById("myNameInput"),saveMyNameBtn=document.getElementById("saveMyNameBtn");
-const themeSelect=document.getElementById("themeSelect"),hapticToggle=document.getElementById("hapticToggle"),resetStatsBtn=document.getElementById("resetStatsBtn"),onboardingName=document.getElementById("onboardingName"),onboardingSave=document.getElementById("onboardingSave");
-const addPlayerBtn=document.getElementById("addPlayerBtn"),removeAllBtn=document.getElementById("removeAllBtn"),newGameBtn=document.getElementById("newGameBtn"),profileBtn=document.getElementById("profileBtn"),loadProfileBtn=document.getElementById("loadProfileBtn");
+const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+if(standalone){$("installGate").classList.add("hidden");$("appRoot").classList.remove("hidden");$("splash").classList.remove("hidden");setTimeout(()=>$("splash").classList.add("wipe"),1950);setTimeout(()=>{$("splash").classList.add("hidden");if(!state.myName)$("onboardingModal").classList.add("open")},2900)}
+if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
 
-const COLORS=["#60a5fa","#34d399","#f59e0b","#a78bfa","#f87171","#22d3ee","#f472b6","#84cc16","#fb923c","#e879f9"];
-function hashColor(name){let h=0;for(const c of name)h=(h*31+c.charCodeAt(0))>>>0;return COLORS[h%COLORS.length]}
-function roomRef(id=currentRoom){return ref(db,"rooms/"+id)}
-function maxLives(){return Number(roomData.mode||4)}
-function stateLabel(l){if(l<=0)return"Game Over";if(l===1)return"Schwimmer";return String(l)}
-function esc(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-function openModal(id){document.getElementById(id).classList.add("open")}function closeModal(id){document.getElementById(id).classList.remove("open")}
-function openDrawer(){drawerOverlay.classList.add("open")}function closeDrawer(){drawerOverlay.classList.remove("open")}
-function haptic(ms=25){if(!state.haptics)return;try{navigator.vibrate?.(ms)}catch{}}
-function profiles(){return state.profiles||{}}
-function refreshProfiles(){
- profileSelect.innerHTML='<option value="">Profil auswählen</option>';roomProfileSelect.innerHTML='<option value="">Kein Profil</option>';
- for(const n of Object.keys(profiles()).sort()){for(const sel of [profileSelect,roomProfileSelect]){const o=document.createElement("option");o.value=n;o.textContent=n;sel.appendChild(o)}}
+let currentRoom=null, roomData=null, unsub=null, disconnectOp=null, forceAnimateAll=false, rankMode="lost", editingProfile=null, wasSelfPresent=false;
+const colors=["#60a5fa","#34d399","#f59e0b","#a78bfa","#f87171","#22d3ee","#f472b6","#84cc16","#fb923c","#e879f9"];
+function colorFor(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))>>>0;return colors[h%colors.length]}
+function online(){return !!currentRoom}
+function data(){return online()?roomData:state.offline}
+function maxLives(){return Number(data().mode||4)}
+function entries(){return Object.entries(data().players||{}).map(([key,p])=>({key,...p}))}
+function openModal(id){$(id).classList.add("open")}function closeModal(id){$(id).classList.remove("open")}function roomRef(id=currentRoom){return ref(db,"rooms/"+id)}
+function esc(s){return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
+function haptic(v=20){if(state.haptics)try{navigator.vibrate?.(v)}catch{}}
+function saveOffline(){persist()}
+function statusUI(){
+ $("statusLabel").innerHTML=online()?'<span class="live-dot"></span> Live':'<span class="offline-dot"></span> Offline';
+ $("roomNameLine").textContent=online()?(roomData?.name||"Spielraum"):"Offline Spiel";
+ $("hostBadge").classList.toggle("hidden",!online()||roomData?.ownerId!==clientId);
+ $("drawerLeave").classList.toggle("hidden",!online());
+ $("drawerCloseRoom").classList.toggle("hidden",!online()||roomData?.ownerId!==clientId);
+ $("undoBtn").disabled=!data().undo;
 }
-refreshProfiles();
+function render(){
+ statusUI();$("modeSelect").value=String(maxLives());const list=entries(),box=$("players");box.innerHTML="";
+ if(list.length===0){
+  box.innerHTML=`<div class="empty"><div><strong>${online()?"Noch keine Spieler im Raum.":"Kein Raum – Offline Spiel"}</strong><div class="empty-actions"><button class="btn primary" id="inlineCreate">+ Spielraum erstellen</button><button class="btn" id="inlineRooms">Verfügbare Räume</button></div></div></div>`;
+  $("inlineCreate").onclick=openCreateRoom;$("inlineRooms").onclick=showRooms;return
+ }
+ list.forEach((p,i)=>{
+  const c=document.createElement("article");c.className="player"+(p.life===1?" state-swimmer swimmer":"")+(p.life<=0?" state-over":"")+" added";c.style.setProperty("--pc",p.color||colorFor(p.name));if(forceAnimateAll)c.style.animationDelay=`${i*45}ms`;
+  const canRemove=!online()||!p.userId||roomData.ownerId===clientId;
+  c.innerHTML=`<div class="player-top"><span class="player-color"></span><div class="player-name">${esc(p.name)}${online()&&p.userId===roomData.ownerId?' <span class="host-crown">♛</span>':""}</div><button class="aaa-btn">AAA</button>${canRemove?'<button class="remove">✕</button>':''}</div><div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${p.life<=0?"Game Over":p.life===1?"Schwimmer":p.life}</div></div><button class="life-btn plus">+</button></div>`;
+  c.querySelector(".minus").onclick=()=>changeLife(p.key,-1);c.querySelector(".plus").onclick=()=>changeLife(p.key,1);c.querySelector(".aaa-btn").onclick=()=>aaa(p.key);const r=c.querySelector(".remove");if(r)r.onclick=()=>removePlayer(p.key,c);
+  box.appendChild(c)
+ });forceAnimateAll=false
+}
+async function write(next,label){
+ if(online()){const undo={players:roomData.players,history:roomData.history||[],mode:roomData.mode,label};await update(roomRef(),{undo,players:next,updatedAt:Date.now()})}
+ else{state.offline.undo={players:structuredClone(state.offline.players),history:structuredClone(state.offline.history||[]),mode:state.offline.mode,label};state.offline.players=next;saveOffline();render()}
+}
+async function changeLife(k,dv){const next=structuredClone(data().players);next[k].life=Math.max(0,Math.min(maxLives(),next[k].life+dv));haptic(dv<0?35:18);await write(next,dv<0?"Leben abgezogen":"Leben hinzugefügt")}
+async function aaa(src){const next=structuredClone(data().players);Object.entries(next).forEach(([k,p])=>{if(k!==src)p.life=Math.max(0,p.life-1)});haptic([20,40,20]);await write(next,"AAA")}
+async function removePlayer(k,card){card.classList.add("removing");setTimeout(async()=>{if(online()&&data().players[k]?.userId){if(roomData.ownerId!==clientId)return;await update(roomRef(),{[`kicks/${data().players[k].userId}`]:Date.now()});await remove(ref(db,`rooms/${currentRoom}/players/${k}`))}else{const next=structuredClone(data().players);delete next[k];await write(next,"Spieler entfernt")}},170)}
+async function addPlayer(){
+ const n=$("playerInput").value.trim();if(!n)return;
+ const next=structuredClone(data().players||{});if(Object.values(next).some(p=>p.name.toLowerCase()===n.toLowerCase()))return alert("Spieler bereits vorhanden.");
+ next["m_"+Date.now()]={name:n,life:maxLives(),color:colorFor(n),static:true};$("playerInput").value="";await write(next,"Spieler hinzugefügt");forceAnimateAll=true;render()
+}
+async function setMode(m){if(online()){const next=structuredClone(roomData.players);Object.values(next).forEach(p=>p.life=m);const undo={players:roomData.players,history:roomData.history||[],mode:roomData.mode,label:"Modus"};await update(roomRef(),{undo,players:next,mode:m,updatedAt:Date.now()})}else{state.offline.undo={players:structuredClone(state.offline.players),history:structuredClone(state.offline.history),mode:state.offline.mode};state.offline.mode=m;Object.values(state.offline.players).forEach(p=>p.life=m);saveOffline();render()}}
+async function undo(){const u=data().undo;if(!u)return;if(online())await update(roomRef(),{players:u.players||{},history:u.history||[],mode:u.mode||4,undo:null,updatedAt:Date.now()});else{state.offline.players=u.players||{};state.offline.history=u.history||[];state.offline.mode=u.mode||4;state.offline.undo=null;saveOffline();render()}}
+function confirmNewGame(){openModal("confirmNewGameModal")}
+async function doNewGame(){
+ const d=data(),list=entries();let hist=[...(d.history||[])];if(list.some(p=>p.life<maxLives())){const best=Math.max(...list.map(p=>p.life));const winners=list.filter(p=>p.life===best&&best>0).map(p=>p.name);hist.unshift({date:new Date().toISOString(),winners,results:list.map(p=>({name:p.name,lost:maxLives()-Math.max(0,p.life)}))})}
+ const next=structuredClone(d.players);Object.values(next).forEach(p=>p.life=maxLives());forceAnimateAll=true;
+ if(online())await update(roomRef(),{undo:{players:d.players,history:d.history||[],mode:d.mode},players:next,history:hist.slice(0,60),updatedAt:Date.now()});else{state.offline.undo={players:structuredClone(d.players),history:structuredClone(d.history||[]),mode:d.mode};state.offline.players=next;state.offline.history=hist.slice(0,60);saveOffline();render()}
+ closeModal("confirmNewGameModal");haptic(25)
+}
+async function removeAll(){if(!confirm("Alle Spieler entfernen?"))return;const next={};if(online()&&roomData.players[selfKey])next[selfKey]=roomData.players[selfKey];await write(next,"Alle Spieler entfernt")}
 
-async function migrateFirebaseRoom(id,d){
- if(Array.isArray(d.players)){
-  const obj={};d.players.forEach((p,i)=>obj["legacy_"+i]={...p,color:p.color||hashColor(p.name||String(i)),static:true});
-  await update(roomRef(id),{players:obj,schemaVersion:6});d.players=obj
- }
- return d
+async function connectRoom(id){
+ if(currentRoom&&currentRoom!==id)await leaveRoom(true);currentRoom=id;localStorage.setItem("knack_last_room_v7",id);
+ if(!state.myName){openModal("onboardingModal");return}
+ const snap=await get(roomRef(id));if(!snap.exists()||snap.val().open===false){currentRoom=null;return}
+ const pr=ref(db,`rooms/${id}/players/${selfKey}`);if(!(await get(pr)).exists())await set(pr,{name:state.myName,life:Number(snap.val().mode||4),color:colorFor(state.myName),userId:clientId,joinedAt:Date.now()});
+ disconnectOp=onDisconnect(pr);await disconnectOp.remove();wasSelfPresent=true;
+ if(unsub)unsub();unsub=onValue(roomRef(id),async s=>{if(!s.exists()||s.val().open===false){await leaveRoom(true);alert("Der Raum wurde geschlossen.");return}roomData=s.val();if(roomData.kicks?.[clientId]){await leaveRoom(true);alert("Der Host hat dich aus dem Raum entfernt.");return}const selfPresent=!!roomData.players?.[selfKey];if(wasSelfPresent&&!selfPresent){await leaveRoom(true);alert("Du wurdest aus dem Raum entfernt.");return}wasSelfPresent=selfPresent;render()})
 }
-function playersEntries(){return Object.entries(roomData.players||{}).map(([key,p])=>({key,...p}))}
-function updateHeader(){
- roomNameLine.textContent=currentRoom?(roomData.name||"Spielraum"):"Kein Raum";
- hostBadge.classList.toggle("hidden",!currentRoom||roomData.ownerId!==clientId);
- drawerLeave.classList.toggle("hidden",!currentRoom);
- drawerCloseRoom.classList.toggle("hidden",!currentRoom||roomData.ownerId!==clientId);
- undoBtn.disabled=!currentRoom||!roomData.undo
-}
-function renderPlayers(){
- updateHeader();modeSelect.value=String(maxLives());const list=playersEntries();playersEl.innerHTML="";
- if(!currentRoom){playersEl.innerHTML='<div class="empty"><div><strong>Noch kein Spielraum geöffnet.</strong><br><br><button class="btn primary" id="openRoomsInline">Verfügbare Räume</button></div></div>';document.getElementById("openRoomsInline").onclick=showRooms;lastPlayers={};return}
- if(!list.length){playersEl.innerHTML='<div class="empty">Noch keine Spieler im Raum.</div>';lastPlayers={};return}
- for(const p of list){
-  const old=lastPlayers[p.key],card=document.createElement("article");card.dataset.key=p.key;card.style.setProperty("--pc",p.color||hashColor(p.name));card.className="player"+(p.life===1?" state-swimmer swimmer":"")+(p.life===0?" state-over":"")+(!old?" added":"");
-  card.innerHTML=`<div class="player-top"><span class="player-color"></span><div class="player-name">${esc(p.name)}${p.userId===roomData.ownerId?'<span class="player-host">♛</span>':""}</div><button class="aaa-btn">AAA</button><button class="remove">✕</button></div><div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${stateLabel(p.life)}</div></div><button class="life-btn plus">+</button></div>`;
-  if(old&&old.life!==p.life)card.querySelector(".life-main").classList.add("bump");
-  card.querySelector(".remove").onclick=()=>removePlayer(p.key,card);
-  card.querySelector(".minus").onclick=()=>changeLife(p.key,-1);
-  card.querySelector(".plus").onclick=()=>changeLife(p.key,1);
-  card.querySelector(".aaa-btn").onclick=()=>aaa(p.key);
-  playersEl.appendChild(card)
- }
- if(roomData.effect?.type==="aaa"&&roomData.effect.at>lastEffectAt){lastEffectAt=roomData.effect.at;requestAnimationFrame(()=>document.querySelectorAll(`.player:not([data-key="${CSS.escape(roomData.effect.sourceKey)}"])`).forEach(c=>{c.classList.add("aaa-hit");setTimeout(()=>c.classList.remove("aaa-hit"),520)}))}
- lastPlayers=Object.fromEntries(list.map(p=>[p.key,p]))
-}
-async function commitPlayers(newPlayers,label,effect=null,extra={}){
- const undo={players:roomData.players||{},history:roomData.history||[],mode:maxLives(),label,at:Date.now()};
- await update(roomRef(),{undo,players:newPlayers,updatedAt:Date.now(),...(effect?{effect}:{}),...extra})
-}
-async function changeLife(key,delta){const p=roomData.players?.[key];if(!p)return;const np=structuredClone(roomData.players);np[key].life=Math.max(0,Math.min(maxLives(),p.life+delta));haptic(delta<0?35:18);await commitPlayers(np,delta<0?"Leben abgezogen":"Leben hinzugefügt")}
-async function removePlayer(key,card){card?.classList.add("removing");setTimeout(async()=>{const np=structuredClone(roomData.players);delete np[key];await commitPlayers(np,"Spieler entfernt")},160)}
-async function aaa(sourceKey){const np=structuredClone(roomData.players);for(const [k,p] of Object.entries(np))if(k!==sourceKey)p.life=Math.max(0,p.life-1);haptic([25,40,25]);await commitPlayers(np,"AAA",{type:"aaa",sourceKey,at:Date.now()})}
-async function undoLast(){if(!roomData.undo)return;haptic(18);await update(roomRef(),{players:roomData.undo.players||{},history:roomData.undo.history||[],mode:roomData.undo.mode||4,undo:null,updatedAt:Date.now()})}
-
-async function attachSelfToRoom(id){
- if(!state.myName)return;
- const pr=ref(db,`rooms/${id}/players/${userPlayerKey}`),snap=await get(pr);
- if(!snap.exists()){
-  const all=(await get(ref(db,`rooms/${id}/players`))).val()||{};
-  const matching=Object.entries(all).find(([k,p])=>p?.name?.toLowerCase()===state.myName.toLowerCase()&&!p.userId);
-  if(matching){await update(ref(db,`rooms/${id}/players/${matching[0]}`),{userId:clientId});}
-  else await set(pr,{name:state.myName,life:Number((await get(ref(db,`rooms/${id}/mode`))).val()||4),color:hashColor(state.myName),userId:clientId,joinedAt:Date.now()})
- }
- const target=ref(db,`rooms/${id}/players/${userPlayerKey}`);disconnectOp=onDisconnect(target);await disconnectOp.remove()
-}
-async function connectRoom(id,join=true){
- if(currentRoom&&currentRoom!==id)await leaveRoom(true);
- currentRoom=id;localStorage.setItem("knack_last_room_v6",id);
- const initial=await get(roomRef(id));if(!initial.exists()){currentRoom="";return}
- let d=await migrateFirebaseRoom(id,initial.val());if(d.open===false){currentRoom="";return alert("Dieser Raum ist geschlossen.")}
- if(join)await attachSelfToRoom(id);
- if(unsub)unsub();unsub=onValue(roomRef(id),async snap=>{if(!snap.exists()){await leaveRoom(true);return}let d=await migrateFirebaseRoom(id,snap.val());if(d.open===false){alert("Der Raum wurde geschlossen.");await leaveRoom(true);return}roomData={...d,mode:Number(d.mode||4),players:d.players||{},history:Array.isArray(d.history)?d.history:Object.values(d.history||{})};renderPlayers()});
-}
-async function leaveRoom(silent=false){
- if(!currentRoom)return;try{await disconnectOp?.cancel()}catch{};disconnectOp=null;
- const own=ref(db,`rooms/${currentRoom}/players/${userPlayerKey}`);try{await remove(own)}catch{}
- if(unsub)unsub();unsub=null;currentRoom="";roomData={players:{},history:[],mode:Number(modeSelect.value||4)};localStorage.removeItem("knack_last_room_v6");renderPlayers();closeDrawer();if(!silent)haptic(18)
-}
-async function cleanupStaleRooms(){
- const snap=await get(ref(db,"rooms")),all=snap.val()||{},now=Date.now(),jobs=[];
- for(const [id,r] of Object.entries(all))if(r?.open!==false&&now-(r.updatedAt||r.createdAt||0)>STALE_MS)jobs.push(update(roomRef(id),{open:false,autoClosedAt:now}));
- await Promise.allSettled(jobs)
-}
-function timeAgo(ts){const m=Math.max(0,Math.floor((Date.now()-ts)/60000));if(m<1)return"gerade eben";if(m<60)return`vor ${m} Min.`;const h=Math.floor(m/60);return h<24?`vor ${h} Std.`:`vor ${Math.floor(h/24)} T.`}
-async function showRooms(){
- closeDrawer();await cleanupStaleRooms();const snap=await get(ref(db,"rooms")),all=snap.val()||{};
- const list=Object.entries(all).filter(([id,r])=>r&&r.open!==false&&Date.now()-(r.updatedAt||r.createdAt||0)<=STALE_MS).sort((a,b)=>(b[1].updatedAt||0)-(a[1].updatedAt||0));
- roomsBody.innerHTML=list.length?list.map(([id,r])=>{const count=r.players?Object.keys(r.players).length:0,logo=r.groupLogo?`<img src="./${r.groupLogo}">`:`<span class="room-generic">${esc((r.name||"K").slice(0,2).toUpperCase())}</span>`;return `<div class="room-card"><div class="room-logo">${logo}</div><div><div class="room-name">${esc(r.name||"Spielraum")} ${r.ownerId===clientId?'<span class="host-crown">♛</span>':""}</div><div class="room-meta"><span>Host: ${esc(r.ownerName||"Unbekannt")}</span><span>${count} Spieler</span><span>${Number(r.mode||4)} Leben</span><span class="room-fresh">${timeAgo(r.updatedAt||r.createdAt)}</span></div></div><button class="btn primary" data-room="${id}">Beitreten</button></div>`}).join(""):'<div class="empty">Zurzeit sind keine offenen Räume verfügbar.</div>';
- roomsBody.querySelectorAll("[data-room]").forEach(b=>b.onclick=async()=>{await connectRoom(b.dataset.room,true);closeModal("roomsModal")});openModal("roomsModal")
-}
-function fillRoomProfileSelect(){
- roomProfileSelect.innerHTML='<option value="">Kein Profil</option>';for(const n of Object.keys(profiles()).sort()){const o=document.createElement("option");o.value=n;o.textContent=n;roomProfileSelect.appendChild(o)}
-}
-function updateRoomProfilePreview(){
- const n=roomProfileSelect.value,p=profiles()[n];roomProfilePreview.innerHTML="";
- if(!p)return;
- roomNameInput.value=n;roomNameInput.disabled=true;
- roomProfilePreview.innerHTML=`<div class="room-card"><div class="room-logo">${p.groupLogo?`<img src="./${p.groupLogo}">`:'<span class="room-generic">'+esc(n.slice(0,2).toUpperCase())+'</span>'}</div><div><div class="room-name">${esc(n)}</div><div class="room-meta">${(p.members||[]).length} gespeicherte Spieler</div></div></div>`
-}
+async function leaveRoom(silent=false){if(currentRoom){try{await disconnectOp?.cancel()}catch{};try{await remove(ref(db,`rooms/${currentRoom}/players/${selfKey}`))}catch{}if(unsub)unsub()}currentRoom=null;roomData=null;unsub=null;disconnectOp=null;wasSelfPresent=false;localStorage.removeItem("knack_last_room_v7");render();if(!silent)haptic(15)}
+async function closeRoom(){if(!currentRoom||roomData.ownerId!==clientId)return;if(!confirm("Raum schließen?"))return;await update(roomRef(),{open:false,closedAt:Date.now()});await leaveRoom(true)}
+async function cleanup(){const s=await get(ref(db,"rooms")),all=s.val()||{},now=Date.now();await Promise.allSettled(Object.entries(all).filter(([id,r])=>r?.open!==false&&now-(r.updatedAt||r.createdAt||0)>STALE).map(([id])=>update(roomRef(id),{open:false,autoClosedAt:now})))}
+async function showRooms(){closeDrawer();await cleanup();const s=await get(ref(db,"rooms")),all=s.val()||{},list=Object.entries(all).filter(([id,r])=>r&&r.open!==false&&Date.now()-(r.updatedAt||r.createdAt||0)<=STALE).sort((a,b)=>(b[1].updatedAt||0)-(a[1].updatedAt||0));$("roomsBody").innerHTML=list.length?list.map(([id,r])=>`<div class="room-card"><div class="room-logo">${r.logo?`<img src="${r.logo}">`:(r.name||"K").slice(0,2).toUpperCase()}</div><div><div class="room-name">${esc(r.name||"Spielraum")}</div><div class="room-meta"><span>Host: ${esc(r.ownerName||"?")}</span><span>${r.players?Object.keys(r.players).length:0} Spieler</span><span>${r.mode||4} Leben</span></div></div><button class="btn primary" data-room="${id}">Beitreten</button></div>`).join(""):'<div class="empty">Keine offenen Räume.</div>';$("roomsBody").querySelectorAll("[data-room]").forEach(b=>b.onclick=async()=>{await connectRoom(b.dataset.room);closeModal("roomsModal")});openModal("roomsModal")}
+function openCreateRoom(){closeDrawer();refreshProfileSelects();$("roomNameInput").value="";$("roomProfileSelect").value="";openModal("createRoomModal")}
 async function createRoom(){
- if(!state.myName){closeModal("createRoomModal");openModal("onboardingModal");return}
- const profName=roomProfileSelect.value,p=profiles()[profName],name=profName||roomNameInput.value.trim()||`${state.myName}s Raum`,mode=Number(modeSelect.value||4),id=Date.now()+"-"+Math.random().toString(36).slice(2,8),players={};
- if(p)for(const [i,n] of (p.members||[]).entries())players["p_"+i]={name:n,life:mode,color:hashColor(n),static:true};
- const selfMatch=Object.entries(players).find(([k,x])=>x.name.toLowerCase()===state.myName.toLowerCase());
- if(selfMatch)players[selfMatch[0]].userId=clientId;else players[userPlayerKey]={name:state.myName,life:mode,color:hashColor(state.myName),userId:clientId,joinedAt:Date.now()};
- await set(roomRef(id),{schemaVersion:6,name,ownerId:clientId,ownerName:state.myName,groupLogo:p?.groupLogo||null,createdAt:Date.now(),updatedAt:Date.now(),open:true,mode,players,history:[]});
- await connectRoom(id,true);closeModal("createRoomModal")
+ if(!state.myName){openModal("onboardingModal");return}
+ const pn=$("roomProfileSelect").value,p=state.profiles[pn],name=pn||$("roomNameInput").value.trim()||`${state.myName}s Raum`,id=Date.now()+"-"+Math.random().toString(36).slice(2,7),mode=Number($("modeSelect").value||4),players={};
+ if(p)for(const [i,n] of (p.members||[]).entries())players["p_"+i]={name:n,life:mode,color:colorFor(n),static:true};
+ players[selfKey]={name:state.myName,life:mode,color:colorFor(state.myName),userId:clientId,joinedAt:Date.now()};
+ await set(roomRef(id),{name,logo:p?.logo||null,ownerId:clientId,ownerName:state.myName,open:true,createdAt:Date.now(),updatedAt:Date.now(),mode,players,history:[]});await connectRoom(id);closeModal("createRoomModal")
 }
-async function closeRoom(){if(!currentRoom)return;if(roomData.ownerId!==clientId)return alert("Nur der Host kann den Raum schließen.");if(!confirm("Raum wirklich schließen?"))return;await update(roomRef(),{open:false,closedAt:Date.now()});await leaveRoom(true)}
-async function addPlayer(){if(!currentRoom)return showRooms();const name=playerInput.value.trim();if(!name)return;const np=structuredClone(roomData.players);if(Object.values(np).some(p=>p.name.toLowerCase()===name.toLowerCase()))return alert("Spieler bereits vorhanden.");const key="m_"+Date.now();np[key]={name,life:maxLives(),color:hashColor(name),static:true};playerInput.value="";await commitPlayers(np,"Spieler hinzugefügt")}
-async function removeAllPlayers(){if(!currentRoom)return;if(!confirm("Alle Spieler entfernen?"))return;const keep={};if(roomData.players[userPlayerKey])keep[userPlayerKey]=roomData.players[userPlayerKey];await commitPlayers(keep,"Alle Spieler entfernt")}
-async function setMode(m){if(!currentRoom){roomData.mode=m;return}const np=structuredClone(roomData.players);for(const p of Object.values(np))p.life=m;const undo={players:roomData.players,history:roomData.history,mode:maxLives(),label:"Modus geändert",at:Date.now()};await update(roomRef(),{undo,players:np,mode:m,updatedAt:Date.now()})}
-async function newGame(){
- if(!currentRoom)return;const list=playersEntries();if(!list.length)return;let hist=[...(roomData.history||[])],max=Math.max(...list.map(p=>p.life)),winners=list.filter(p=>p.life===max&&max>0).map(p=>p.name);
- if(list.some(p=>p.life<maxLives()))hist.unshift({id:Date.now(),date:new Date().toISOString(),mode:maxLives(),winners,results:list.map(p=>({name:p.name,life:p.life,lost:maxLives()-Math.max(0,p.life)}))});
- hist=hist.slice(0,60);const np=structuredClone(roomData.players);for(const p of Object.values(np))p.life=maxLives();await commitPlayers(np,"Neues Spiel",null,{history:hist})
-}
-function renderHistory(){const h=roomData.history||[];historyBody.innerHTML=h.length?h.map((g,idx)=>`<div class="history-item"><div class="history-top"><strong>Spiel ${h.length-idx}</strong><span class="small">${new Date(g.date).toLocaleString("de-DE")}</span></div><div class="result-grid">${(g.results||[]).sort((a,b)=>a.lost-b.lost).map(r=>`<div>${esc(r.name)}${(g.winners||[]).includes(r.name)?" 🏆":""}</div><div style="text-align:right">${r.lost} verloren</div>`).join("")}</div></div>`).join(""):'<div class="empty">Noch keine Spiele gespeichert.</div>'}
-function rankingRows(mode){
- const map=new Map();for(const g of roomData.history||[])for(const r of g.results||[]){const k=r.name.toLowerCase();if(!map.has(k))map.set(k,{name:r.name,lost:0,games:0,wins:0});const x=map.get(k);x.lost+=r.lost;x.games++;if((g.winners||[]).includes(r.name))x.wins++}
- const a=[...map.values()];if(mode==="wins")a.sort((x,y)=>y.wins-x.wins||x.lost-y.lost);else if(mode==="avg")a.sort((x,y)=>(x.lost/x.games)-(y.lost/y.games));else a.sort((x,y)=>x.lost-y.lost||y.wins-x.wins);return a
-}
-function renderRanking(){
- const data=rankingRows(rankMode),medals=["🥇","🥈","🥉"];rankingBody.innerHTML=data.length?data.map((r,i)=>{const score=rankMode==="wins"?`${r.wins} Siege`:rankMode==="avg"?`${(r.lost/r.games).toFixed(2)} Ø`:r.lost;return `<div class="rank-item"><div class="rank-pos">${i<3?`<span class="medal">${medals[i]}</span>`:i+1}</div><div class="rank-name">${esc(r.name)}</div><div class="rank-score">${score}</div></div>`}).join(""):'<div class="empty">Noch keine Ranglistendaten.</div>'
-}
-function renderProfiles(){
- profilesBody.innerHTML=`<div class="profile-item group-profile"><img src="./piya-logo.png"><div><strong>PIYA-Knack</strong><div class="small">Vorgespeichertes Gruppenprofil</div></div></div><button class="btn primary" id="saveProfileNow" style="width:100%;margin:4px 0 10px">Aktuelle Spieler als Profil speichern</button>`+
- Object.entries(profiles()).filter(([n])=>n!=="PIYA-Knack").map(([n,p])=>`<div class="profile-item"><div class="profile-row"><div><strong>${esc(n)}</strong><div class="small">${(p.members||[]).map(esc).join(", ")}</div></div><div class="profile-actions"><button class="btn" data-load="${esc(n)}">Laden</button><button class="btn danger" data-del="${esc(n)}">Löschen</button></div></div></div>`).join("");
- document.getElementById("saveProfileNow").onclick=()=>{if(!currentRoom)return alert("Kein Raum geöffnet.");const n=prompt("Profilname:");if(!n)return;state.profiles[n.trim()]={members:playersEntries().map(p=>p.name)};persist();refreshProfiles();renderProfiles()};
- profilesBody.querySelectorAll("[data-load]").forEach(b=>b.onclick=async()=>{const p=profiles()[b.dataset.load];if(!p||!currentRoom)return;const np={};(p.members||[]).forEach((n,i)=>np["p_"+i]={name:n,life:maxLives(),color:hashColor(n),static:true});if(state.myName&&!Object.values(np).some(x=>x.name.toLowerCase()===state.myName.toLowerCase()))np[userPlayerKey]={name:state.myName,life:maxLives(),color:hashColor(state.myName),userId:clientId};await commitPlayers(np,"Profil geladen");closeModal("profilesModal")});
- profilesBody.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{delete state.profiles[b.dataset.del];persist();refreshProfiles();renderProfiles()})
-}
-function setupSettings(){
- themeSelect.innerHTML=Object.entries(THEMES).map(([k,t])=>`<option value="${k}">${t.name}</option>`).join("");themeSelect.value=state.theme;hapticToggle.classList.toggle("on",!!state.haptics)
-}
-async function resetStats(){if(!currentRoom)return alert("Kein Spielraum geöffnet.");if(!confirm("Statistiken wirklich zurücksetzen?"))return;await update(roomRef(),{history:[],undo:null,updatedAt:Date.now()});closeModal("settingsModal")}
 
-menuBtn.onclick=openDrawer;drawerClose.onclick=closeDrawer;drawerOverlay.onclick=e=>{if(e.target===drawerOverlay)closeDrawer()};
-drawerCreateRoom.onclick=()=>{closeDrawer();fillRoomProfileSelect();roomNameInput.disabled=false;roomNameInput.value="";roomProfileSelect.value="";roomProfilePreview.innerHTML="";openModal("createRoomModal")};
-drawerRooms.onclick=showRooms;drawerHistory.onclick=()=>{closeDrawer();renderHistory();openModal("historyModal")};drawerRanking.onclick=()=>{closeDrawer();renderRanking();openModal("rankingModal")};
-drawerProfile.onclick=()=>{closeDrawer();myNameInput.value=state.myName;openModal("myProfileModal")};drawerLeave.onclick=()=>leaveRoom();drawerCloseRoom.onclick=closeRoom;drawerSettings.onclick=()=>{closeDrawer();setupSettings();openModal("settingsModal")};
-roomProfileSelect.onchange=()=>{roomNameInput.disabled=false;if(roomProfileSelect.value)updateRoomProfilePreview();else{roomProfilePreview.innerHTML="";roomNameInput.disabled=false;roomNameInput.value=""}};
-createRoomBtn.onclick=createRoom;addPlayerBtn.onclick=addPlayer;playerInput.onkeydown=e=>{if(e.key==="Enter")addPlayer()};removeAllBtn.onclick=removeAllPlayers;modeSelect.onchange=()=>setMode(Number(modeSelect.value));newGameBtn.onclick=newGame;undoBtn.onclick=undoLast;
-profileBtn.onclick=()=>{renderProfiles();openModal("profilesModal")};loadProfileBtn.onclick=async()=>{const n=profileSelect.value,p=profiles()[n];if(!p||!currentRoom)return;const np={};(p.members||[]).forEach((x,i)=>np["p_"+i]={name:x,life:maxLives(),color:hashColor(x),static:true});if(state.myName&&!Object.values(np).some(x=>x.name.toLowerCase()===state.myName.toLowerCase()))np[userPlayerKey]={name:state.myName,life:maxLives(),color:hashColor(state.myName),userId:clientId};await commitPlayers(np,"Profil geladen")};
-saveMyNameBtn.onclick=()=>{const n=myNameInput.value.trim();if(!n)return;state.myName=n;persist();closeModal("myProfileModal")};
-onboardingSave.onclick=()=>{const n=onboardingName.value.trim();if(!n)return;state.myName=n;persist();closeModal("onboardingModal")};
-themeSelect.onchange=()=>applyTheme(themeSelect.value);hapticToggle.onclick=()=>{state.haptics=!state.haptics;persist();hapticToggle.classList.toggle("on",state.haptics);haptic(20)};resetStatsBtn.onclick=resetStats;
-document.querySelectorAll(".rank-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".rank-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");rankMode=b.dataset.rank;renderRanking()});
-document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));document.querySelectorAll(".modal-backdrop:not(.onboarding)").forEach(m=>m.onclick=e=>{if(e.target===m)m.classList.remove("open")});
+function historyData(){return data().history||[]}function renderHistory(){$("historyBody").innerHTML=historyData().length?historyData().map((g,i)=>`<div class="history-item"><div class="history-top"><strong>Spiel ${historyData().length-i}</strong><span class="small">${new Date(g.date).toLocaleString("de-DE")}</span></div><div class="result-grid">${(g.results||[]).map(r=>`<div>${esc(r.name)}${(g.winners||[]).includes(r.name)?" 🏆":""}</div><div style="text-align:right">${r.lost} verloren</div>`).join("")}</div></div>`).join(""):'<div class="empty">Noch keine Spiele.</div>'}
+function renderRanking(){const map=new Map();for(const g of historyData())for(const r of g.results||[]){const k=r.name.toLowerCase();if(!map.has(k))map.set(k,{name:r.name,lost:0,games:0,wins:0});const x=map.get(k);x.lost+=r.lost;x.games++;if((g.winners||[]).includes(r.name))x.wins++}let a=[...map.values()];if(rankMode==="wins")a.sort((x,y)=>y.wins-x.wins);else if(rankMode==="avg")a.sort((x,y)=>x.lost/x.games-y.lost/y.games);else a.sort((x,y)=>x.lost-y.lost);const med=["🥇","🥈","🥉"];$("rankingBody").innerHTML=a.length?a.map((r,i)=>`<div class="rank-item"><div class="rank-pos">${i<3?med[i]:i+1}</div><div class="rank-name">${esc(r.name)}</div><div class="rank-score">${rankMode==="wins"?r.wins+" Siege":rankMode==="avg"?(r.lost/r.games).toFixed(2)+" Ø":r.lost}</div></div>`).join(""):'<div class="empty">Noch keine Ranglistendaten.</div>'}
 
-refreshProfiles();renderPlayers();setupSettings();cleanupStaleRooms();
-if(standalone){const last=localStorage.getItem("knack_last_room_v6");if(last)get(roomRef(last)).then(s=>{if(s.exists()&&s.val().open!==false)connectRoom(last,true)})}
+function refreshProfileSelects(){for(const sel of [$("profileSelect"),$("roomProfileSelect")]){sel.innerHTML='<option value="">Profil auswählen</option>';for(const n of Object.keys(state.profiles).sort()){const o=document.createElement("option");o.value=n;o.textContent=n;sel.appendChild(o)}}}
+refreshProfileSelects();
+function renderProfilesList(){$("profilesBody").innerHTML=Object.entries(state.profiles).map(([n,p])=>`<div class="profile-item"><div class="profile-row"><div style="display:flex;align-items:center;gap:10px">${p.logo?`<img src="${p.logo}" style="width:44px;height:44px;border-radius:10px;object-fit:cover">`:""}<div><strong>${esc(n)}</strong><div class="small">${(p.members||[]).join(", ")}</div></div></div><div class="profile-actions"><button class="btn" data-edit="${esc(n)}">Bearbeiten</button><button class="btn danger" data-del="${esc(n)}">Löschen</button></div></div></div>`).join("")||'<div class="empty">Noch keine Profile.</div>';$("profilesBody").querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editProfile(b.dataset.edit));$("profilesBody").querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{delete state.profiles[b.dataset.del];persist();refreshProfileSelects();renderProfilesList()})}
+function editProfile(name=null){editingProfile=name;const p=name?state.profiles[name]:{members:[],logo:null};$("editProfileName").value=name||"";$("profileLogoPreview").innerHTML=p.logo?`<img src="${p.logo}">`:"Logo";renderMemberInputs(p.members||[]);openModal("profileEditModal")}
+function renderMemberInputs(members){$("editProfileMembers").innerHTML=members.map((n,i)=>`<div class="profile-member-row"><input value="${esc(n)}" data-member="${i}"><button class="btn danger" data-rm="${i}">✕</button></div>`).join("");$("editProfileMembers").querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{const vals=[...$("editProfileMembers").querySelectorAll("[data-member]")].map(x=>x.value);vals.splice(Number(b.dataset.rm),1);renderMemberInputs(vals)})}
+$("profileLogoInput").onchange=e=>{const f=e.target.files?.[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{$("profileLogoPreview").innerHTML=`<img src="${reader.result}">`;$("profileLogoPreview").dataset.logo=reader.result};reader.readAsDataURL(f)}
+$("addProfileMemberBtn").onclick=()=>{const vals=[...$("editProfileMembers").querySelectorAll("[data-member]")].map(x=>x.value);vals.push("");renderMemberInputs(vals)}
+$("saveProfileEditBtn").onclick=()=>{const name=$("editProfileName").value.trim();if(!name)return alert("Profilname fehlt.");const old=editingProfile?state.profiles[editingProfile]:null;const logo=$("profileLogoPreview").dataset.logo||old?.logo||null;const members=[...$("editProfileMembers").querySelectorAll("[data-member]")].map(x=>x.value.trim()).filter(Boolean);if(editingProfile&&editingProfile!==name)delete state.profiles[editingProfile];state.profiles[name]={members,logo};persist();refreshProfileSelects();renderProfilesList();closeModal("profileEditModal")}
+async function loadSelectedProfile(){const p=state.profiles[$("profileSelect").value];if(!p)return;const next={};(p.members||[]).forEach((n,i)=>next["p_"+i]={name:n,life:maxLives(),color:colorFor(n),static:true});if(online()&&roomData.players[selfKey])next[selfKey]=roomData.players[selfKey];await write(next,"Profil geladen");forceAnimateAll=true;render()}
+$("profileBtn").onclick=()=>{const members=entries().map(p=>p.name);editingProfile=null;$("editProfileName").value="";$("profileLogoPreview").innerHTML="Logo";$("profileLogoPreview").dataset.logo="";renderMemberInputs(members);openModal("profileEditModal")}
+
+function setupSettings(){$("themeSelect").innerHTML=Object.entries(THEMES).map(([k,t])=>`<option value="${k}">${t[0]}</option>`).join("");$("themeSelect").value=state.theme;$("hapticToggle").classList.toggle("on",state.haptics)}
+
+$("menuBtn").onclick=()=> $("drawerOverlay").classList.add("open");$("drawerClose").onclick=closeDrawer;$("drawerOverlay").onclick=e=>{if(e.target===$("drawerOverlay"))closeDrawer()}
+function closeDrawer(){$("drawerOverlay").classList.remove("open")}
+$("drawerCreateRoom").onclick=openCreateRoom;$("drawerRooms").onclick=showRooms;$("drawerHistory").onclick=()=>{closeDrawer();renderHistory();openModal("historyModal")};$("drawerRanking").onclick=()=>{closeDrawer();renderRanking();openModal("rankingModal")};$("drawerMyProfile").onclick=()=>{closeDrawer();$("myNameInput").value=state.myName;openModal("myProfileModal")};$("drawerProfiles").onclick=()=>{closeDrawer();renderProfilesList();openModal("profilesModal")};$("drawerLeave").onclick=()=>leaveRoom();$("drawerCloseRoom").onclick=closeRoom;$("drawerSettings").onclick=()=>{closeDrawer();setupSettings();openModal("settingsModal")}
+$("addPlayerBtn").onclick=addPlayer;$("playerInput").onkeydown=e=>{if(e.key==="Enter")addPlayer()};$("modeSelect").onchange=()=>setMode(Number($("modeSelect").value));$("loadProfileBtn").onclick=loadSelectedProfile;$("removeAllBtn").onclick=removeAll;$("undoBtn").onclick=undo;$("newGameBtn").onclick=confirmNewGame;$("confirmNewGameBtn").onclick=doNewGame;$("createRoomBtn").onclick=createRoom;$("newProfileBtn").onclick=()=>editProfile(null)
+$("saveMyNameBtn").onclick=()=>{const n=$("myNameInput").value.trim();if(!n)return;state.myName=n;persist();closeModal("myProfileModal")};$("onboardingSave").onclick=()=>{const n=$("onboardingName").value.trim();if(!n)return;state.myName=n;persist();closeModal("onboardingModal")}
+$("themeSelect").onchange=()=>applyTheme($("themeSelect").value);$("hapticToggle").onclick=()=>{state.haptics=!state.haptics;persist();$("hapticToggle").classList.toggle("on",state.haptics)}
+$("resetStatsBtn").onclick=async()=>{if(!confirm("Statistiken zurücksetzen?"))return;if(online())await update(roomRef(),{history:[],undo:null,updatedAt:Date.now()});else{state.offline.history=[];state.offline.undo=null;persist();render()}closeModal("settingsModal")}
+document.querySelectorAll(".rank-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".rank-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");rankMode=b.dataset.rank;renderRanking()})
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));document.querySelectorAll(".modal-backdrop:not(.onboarding)").forEach(m=>m.onclick=e=>{if(e.target===m)m.classList.remove("open")})
+
+render();setupSettings();cleanup();
+if(standalone){const last=localStorage.getItem("knack_last_room_v7");if(last)get(roomRef(last)).then(s=>{if(s.exists()&&s.val().open!==false)connectRoom(last)})}
 </script>
 </body></html>
