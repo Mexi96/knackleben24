@@ -1,192 +1,763 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Knack Lebenszähler</title>
-<style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:#111827;
-  color:white;
-  min-height:100vh;
-}
-main{max-width:760px;margin:auto;padding:20px}
-h1{text-align:center;margin:10px 0 6px}
-.sub{text-align:center;color:#9ca3af;margin:0 0 20px}
-.add{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:10px;
-  margin-bottom:18px;
-}
-input,button{
-  font:inherit;
-  border:0;
-  border-radius:14px;
-  padding:14px;
-}
-input{background:#1f2937;color:white;outline:1px solid #374151}
-button{background:#374151;color:white;font-weight:700}
-.add button{background:#f59e0b;color:#111827}
-.player{
-  background:#1f2937;
-  border-radius:20px;
-  overflow:hidden;
-  margin:14px 0;
-  border:1px solid #374151;
-}
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  padding:14px 16px;
-}
-.name{font-size:22px;font-weight:800;overflow:hidden;text-overflow:ellipsis}
-.remove{background:#7f1d1d;padding:9px 12px}
-.controls{
-  display:grid;
-  grid-template-columns:82px 1fr 82px;
-  min-height:145px;
-  border-top:1px solid #374151;
-}
-.controls button{
-  border-radius:0;
-  font-size:38px;
-  background:#273449;
-}
-.life{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  font-size:64px;
-  font-weight:900;
-  padding:10px;
-}
-.life.swim{font-size:38px;color:#38bdf8}
-.life.out{font-size:40px;color:#f87171}
-.reset{
-  width:100%;
-  margin-top:18px;
-  background:#4b5563;
-}
-@media(max-width:500px){
-  main{padding:14px}
-  .add{grid-template-columns:1fr}
-  .controls{grid-template-columns:68px 1fr 68px}
-  .life{font-size:56px}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Knackleben24</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#151d31;
+      --panel2:#1d2942;
+      --border:rgba(255,255,255,.10);
+      --text:#f8fafc;
+      --muted:#9aa7bd;
+      --accent:#f59e0b;
+      --accent2:#fbbf24;
+      --danger:#ef4444;
+      --ok:#22c55e;
+      --blue:#38bdf8;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+    body{
+      min-height:100svh;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(245,158,11,.16), transparent 34rem),
+        var(--bg);
+      overflow:hidden;
+    }
+    button,input,select{font:inherit}
+    button{cursor:pointer;touch-action:manipulation}
+    .app{
+      width:min(980px,100%);
+      height:100svh;
+      margin:auto;
+      display:grid;
+      grid-template-rows:auto auto 1fr;
+      gap:8px;
+      padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));
+      overflow:hidden;
+    }
+    .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      min-height:42px;
+    }
+    h1{
+      margin:0;
+      font-size:clamp(1.35rem,5vw,2rem);
+      line-height:1;
+      letter-spacing:-.03em;
+    }
+    .header-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+    .btn{
+      border:1px solid var(--border);
+      border-radius:11px;
+      background:var(--panel2);
+      color:var(--text);
+      padding:8px 10px;
+      font-size:.86rem;
+      font-weight:750;
+    }
+    .btn.primary{background:var(--accent);color:#171717;border-color:transparent}
+    .btn.danger{background:rgba(239,68,68,.14);color:#fecaca}
+    .toolbar{
+      display:grid;
+      grid-template-columns:minmax(0,1.3fr) auto minmax(120px,.85fr) auto;
+      gap:6px;
+      background:rgba(21,29,49,.86);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:7px;
+      backdrop-filter:blur(10px);
+    }
+    input,select{
+      width:100%;
+      min-width:0;
+      border:1px solid var(--border);
+      border-radius:10px;
+      background:#0f172a;
+      color:var(--text);
+      outline:none;
+      padding:9px 10px;
+      font-size:.9rem;
+    }
+    input:focus,select:focus{border-color:rgba(245,158,11,.75)}
+    .players{
+      min-height:0;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      grid-template-rows:repeat(3,minmax(0,1fr));
+      gap:8px;
+      overflow:auto;
+      scrollbar-width:none;
+      padding-bottom:1px;
+    }
+    .players::-webkit-scrollbar{display:none}
+    .player{
+      min-height:0;
+      border:1px solid var(--border);
+      border-radius:15px;
+      background:linear-gradient(180deg,rgba(29,41,66,.95),rgba(21,29,49,.95));
+      display:grid;
+      grid-template-rows:auto 1fr;
+      overflow:hidden;
+      box-shadow:0 8px 22px rgba(0,0,0,.14);
+    }
+    .player-top{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:6px;
+      align-items:center;
+      padding:7px 8px 5px;
+    }
+    .player-name{
+      min-width:0;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      font-size:clamp(.92rem,3.5vw,1.08rem);
+      font-weight:850;
+    }
+    .remove{
+      width:28px;height:28px;padding:0;
+      border-radius:8px;
+      border:1px solid var(--border);
+      background:rgba(239,68,68,.12);
+      color:#fecaca;
+      font-size:1rem;
+      line-height:1;
+    }
+    .life-row{
+      min-height:0;
+      display:grid;
+      grid-template-columns:45px minmax(0,1fr) 45px;
+      align-items:stretch;
+      border-top:1px solid var(--border);
+    }
+    .life-btn{
+      border:0;
+      border-radius:0;
+      background:rgba(255,255,255,.035);
+      color:white;
+      font-size:1.6rem;
+      font-weight:900;
+    }
+    .life-btn:active{background:rgba(255,255,255,.10)}
+    .life-display{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:2px 4px;
+    }
+    .life-main{
+      font-size:clamp(2rem,9vw,3.55rem);
+      font-weight:950;
+      line-height:.95;
+      letter-spacing:-.06em;
+    }
+    .life-sub{
+      margin-top:3px;
+      font-size:.67rem;
+      color:var(--muted);
+    }
+    .state-swimmer .life-main{font-size:clamp(1.15rem,5vw,2rem);color:var(--blue);letter-spacing:-.02em}
+    .state-over .life-main{font-size:clamp(1.05rem,4.7vw,1.85rem);color:#fca5a5;letter-spacing:-.02em}
+    .empty{
+      grid-column:1/-1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px dashed var(--border);
+      border-radius:15px;
+      color:var(--muted);
+      text-align:center;
+      padding:20px;
+    }
+
+    .modal-backdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(2,6,23,.72);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:14px;
+      z-index:50;
+    }
+    .modal-backdrop.open{display:flex}
+    .modal{
+      width:min(680px,100%);
+      max-height:min(78svh,720px);
+      overflow:auto;
+      background:#111a2d;
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow:0 25px 80px rgba(0,0,0,.45);
+    }
+    .modal-head{
+      position:sticky;
+      top:0;
+      background:#111a2d;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:14px 15px;
+      border-bottom:1px solid var(--border);
+      z-index:2;
+    }
+    .modal-head h2{margin:0;font-size:1.15rem}
+    .modal-body{padding:12px}
+    .close{
+      width:34px;height:34px;
+      border-radius:10px;border:1px solid var(--border);
+      background:var(--panel2);color:white;font-size:1.1rem
+    }
+    .history-item,.rank-item,.profile-item{
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:var(--panel);
+      padding:10px;
+      margin-bottom:8px;
+    }
+    .history-top,.rank-item,.profile-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .small{font-size:.78rem;color:var(--muted)}
+    .result-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:5px 10px;
+      margin-top:7px;
+      font-size:.84rem;
+    }
+    .rank-pos{
+      width:28px;height:28px;border-radius:50%;
+      display:grid;place-items:center;
+      background:var(--panel2);
+      font-weight:900;
+      flex:0 0 auto;
+    }
+    .rank-name{flex:1;min-width:0;font-weight:800;overflow:hidden;text-overflow:ellipsis}
+    .rank-score{font-weight:900;color:var(--accent2)}
+    .profile-actions{display:flex;gap:6px}
+    .profile-actions button{padding:7px 9px}
+    .section-title{margin:4px 0 8px;font-size:.88rem;color:var(--muted);font-weight:800}
+    .note{font-size:.78rem;color:var(--muted);line-height:1.35;margin-top:6px}
+
+    @media (max-width:700px){
+      .header{align-items:flex-start}
+      .header-actions .btn{padding:7px 8px;font-size:.77rem}
+      .toolbar{
+        grid-template-columns:minmax(0,1fr) auto;
+      }
+      .toolbar select{grid-column:1/2}
+      .toolbar .load-profile{grid-column:2/3}
+    }
+
+    @media (max-height:720px){
+      .app{gap:6px;padding-top:6px;padding-bottom:6px}
+      .header{min-height:34px}
+      h1{font-size:1.25rem}
+      .btn{padding:6px 8px;font-size:.75rem}
+      .toolbar{padding:5px}
+      input,select{padding:7px 8px;font-size:.82rem}
+      .players{gap:6px}
+      .player-top{padding:5px 7px 4px}
+      .remove{width:25px;height:25px}
+      .life-row{grid-template-columns:39px minmax(0,1fr) 39px}
+      .life-main{font-size:clamp(1.7rem,7vh,2.8rem)}
+      .state-swimmer .life-main{font-size:clamp(1rem,3.7vh,1.65rem)}
+      .state-over .life-main{font-size:clamp(.95rem,3.4vh,1.5rem)}
+      .life-sub{font-size:.58rem}
+    }
+
+    @media (min-width:760px){
+      .players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+    }
+  </style>
 </head>
 <body>
-<main>
-  <h1>Lebenszähler</h1>
-  <p class="sub">4 → 3 → 2 → Schwimmen → Raus</p>
+<div class="app">
+  <header class="header">
+    <h1>Knackleben24</h1>
+    <div class="header-actions">
+      <button class="btn" id="historyBtn">Letzte Spiele</button>
+      <button class="btn" id="rankingBtn">Rangliste</button>
+      <button class="btn primary" id="newGameBtn">Neues Spiel</button>
+    </div>
+  </header>
 
-  <div class="add">
-    <input id="nameInput" placeholder="Spielername" maxlength="30">
-    <button id="addBtn">Hinzufügen</button>
+  <section class="toolbar">
+    <input id="playerInput" type="text" maxlength="24" placeholder="Spielername eingeben" autocomplete="off" />
+    <button class="btn primary" id="addPlayerBtn">+ Spieler</button>
+    <select id="profileSelect" aria-label="Profil auswählen">
+      <option value="">Profil auswählen</option>
+    </select>
+    <button class="btn load-profile" id="loadProfileBtn">Laden</button>
+  </section>
+
+  <section class="players" id="players"></section>
+</div>
+
+<div class="modal-backdrop" id="historyModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Letzte Spiele</h2>
+      <button class="close" data-close="historyModal">✕</button>
+    </div>
+    <div class="modal-body" id="historyBody"></div>
   </div>
+</div>
 
-  <div id="players"></div>
+<div class="modal-backdrop" id="rankingModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Rangliste</h2>
+      <button class="close" data-close="rankingModal">✕</button>
+    </div>
+    <div class="modal-body" id="rankingBody"></div>
+  </div>
+</div>
 
-  <button class="reset" id="resetBtn">Alle auf 4 Leben setzen</button>
-</main>
+<div class="modal-backdrop" id="profilesModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Profile verwalten</h2>
+      <button class="close" data-close="profilesModal">✕</button>
+    </div>
+    <div class="modal-body" id="profilesBody"></div>
+  </div>
+</div>
 
 <script>
-(function(){
-  var players = [];
-  var container = document.getElementById('players');
-  var input = document.getElementById('nameInput');
+(() => {
+  const STORAGE = {
+    players: "knackleben24_players_v2",
+    profiles: "knackleben24_profiles_v2",
+    history: "knackleben24_history_v2"
+  };
 
-  function label(v){
-    if(v===4)return "4";
-    if(v===3)return "3";
-    if(v===2)return "2";
-    if(v===1)return "Schwimmen";
-    return "Raus";
+  let players = load(STORAGE.players, []);
+  let profiles = load(STORAGE.profiles, {});
+  let history = load(STORAGE.history, []);
+
+  const playersEl = document.getElementById("players");
+  const playerInput = document.getElementById("playerInput");
+  const profileSelect = document.getElementById("profileSelect");
+
+  function load(key, fallback){
+    try{
+      const value = JSON.parse(localStorage.getItem(key));
+      return value ?? fallback;
+    }catch{
+      return fallback;
+    }
   }
 
-  function render(){
-    container.innerHTML="";
-    players.forEach(function(p,i){
-      var card=document.createElement("div");
-      card.className="player";
+  function saveAll(){
+    localStorage.setItem(STORAGE.players, JSON.stringify(players));
+    localStorage.setItem(STORAGE.profiles, JSON.stringify(profiles));
+    localStorage.setItem(STORAGE.history, JSON.stringify(history));
+  }
 
-      var top=document.createElement("div");
-      top.className="top";
+  function stateLabel(life){
+    if(life === 4) return "4";
+    if(life === 3) return "3";
+    if(life === 2) return "2";
+    if(life === 1) return "Schwimmer";
+    return "Game Over";
+  }
 
-      var name=document.createElement("div");
-      name.className="name";
-      name.textContent=p.name;
+  function lostLives(life){
+    return 4 - Math.max(0, Math.min(4, life));
+  }
 
-      var remove=document.createElement("button");
-      remove.className="remove";
-      remove.textContent="Entfernen";
-      remove.onclick=function(){
-        players.splice(i,1);
-        render();
+  function renderPlayers(){
+    playersEl.innerHTML = "";
+
+    if(players.length === 0){
+      playersEl.innerHTML = '<div class="empty">Spieler oben eingeben oder ein gespeichertes Profil laden.</div>';
+      return;
+    }
+
+    players.forEach((p, i) => {
+      const card = document.createElement("article");
+      card.className = "player" + (p.life === 1 ? " state-swimmer" : "") + (p.life === 0 ? " state-over" : "");
+
+      const top = document.createElement("div");
+      top.className = "player-top";
+
+      const name = document.createElement("div");
+      name.className = "player-name";
+      name.textContent = p.name;
+
+      const remove = document.createElement("button");
+      remove.className = "remove";
+      remove.textContent = "✕";
+      remove.title = "Spieler entfernen";
+      remove.onclick = () => {
+        players.splice(i, 1);
+        saveAll();
+        renderPlayers();
       };
 
-      top.appendChild(name);
-      top.appendChild(remove);
+      top.append(name, remove);
 
-      var controls=document.createElement("div");
-      controls.className="controls";
+      const row = document.createElement("div");
+      row.className = "life-row";
 
-      var minus=document.createElement("button");
-      minus.textContent="−";
-      minus.onclick=function(){
-        if(players[i].life>0) players[i].life--;
-        render();
+      const minus = document.createElement("button");
+      minus.className = "life-btn";
+      minus.textContent = "−";
+      minus.onclick = () => {
+        players[i].life = Math.max(0, players[i].life - 1);
+        saveAll();
+        renderPlayers();
       };
 
-      var life=document.createElement("div");
-      life.className="life";
-      if(p.life===1) life.className+=" swim";
-      if(p.life===0) life.className+=" out";
-      life.textContent=label(p.life);
+      const display = document.createElement("div");
+      display.className = "life-display";
 
-      var plus=document.createElement("button");
-      plus.textContent="+";
-      plus.onclick=function(){
-        if(players[i].life<4) players[i].life++;
-        render();
+      const main = document.createElement("div");
+      main.className = "life-main";
+      main.textContent = stateLabel(p.life);
+
+      const sub = document.createElement("div");
+      sub.className = "life-sub";
+      sub.textContent = lostLives(p.life) + " Leben verloren";
+
+      display.append(main, sub);
+
+      const plus = document.createElement("button");
+      plus.className = "life-btn";
+      plus.textContent = "+";
+      plus.onclick = () => {
+        players[i].life = Math.min(4, players[i].life + 1);
+        saveAll();
+        renderPlayers();
       };
 
-      controls.appendChild(minus);
-      controls.appendChild(life);
-      controls.appendChild(plus);
-
-      card.appendChild(top);
-      card.appendChild(controls);
-      container.appendChild(card);
+      row.append(minus, display, plus);
+      card.append(top, row);
+      playersEl.appendChild(card);
     });
   }
 
-  function add(){
-    var n=input.value.trim();
-    if(!n)return;
-    players.push({name:n,life:4});
-    input.value="";
-    render();
-    input.focus();
+  function addPlayer(){
+    const name = playerInput.value.trim();
+    if(!name) return;
+
+    const exists = players.some(p => p.name.toLowerCase() === name.toLowerCase());
+    if(exists){
+      alert("Dieser Spieler ist bereits dabei.");
+      return;
+    }
+
+    players.push({ name, life: 4 });
+    playerInput.value = "";
+    saveAll();
+    renderPlayers();
+    playerInput.focus();
   }
 
-  document.getElementById("addBtn").onclick=add;
-  input.addEventListener("keydown",function(e){
-    if(e.key==="Enter") add();
-  });
-  document.getElementById("resetBtn").onclick=function(){
-    players.forEach(function(p){p.life=4});
-    render();
-  };
+  function currentRoundHasProgress(){
+    return players.some(p => p.life < 4);
+  }
 
-  render();
+  function saveCurrentRoundToHistory(){
+    if(players.length === 0) return false;
+    if(!currentRoundHasProgress()) return false;
+
+    const game = {
+      id: Date.now(),
+      date: new Date().toISOString(),
+      results: players.map(p => ({
+        name: p.name,
+        life: p.life,
+        lost: lostLives(p.life)
+      }))
+    };
+
+    history.unshift(game);
+    history = history.slice(0, 50);
+    return true;
+  }
+
+  function newGame(){
+    if(players.length === 0) return;
+
+    if(currentRoundHasProgress()){
+      saveCurrentRoundToHistory();
+    }
+
+    players = players.map(p => ({...p, life: 4}));
+    saveAll();
+    renderPlayers();
+  }
+
+  function formatDate(iso){
+    const d = new Date(iso);
+    return d.toLocaleString("de-DE", {
+      day:"2-digit", month:"2-digit", year:"2-digit",
+      hour:"2-digit", minute:"2-digit"
+    });
+  }
+
+  function renderHistory(){
+    const body = document.getElementById("historyBody");
+    if(history.length === 0){
+      body.innerHTML = '<div class="empty">Noch keine abgeschlossenen Spiele gespeichert.</div>';
+      return;
+    }
+
+    body.innerHTML = history.map((game, idx) => {
+      const sorted = [...game.results].sort((a,b) => a.lost - b.lost || a.name.localeCompare(b.name));
+      return `
+        <div class="history-item">
+          <div class="history-top">
+            <strong>Spiel ${history.length - idx}</strong>
+            <span class="small">${formatDate(game.date)}</span>
+          </div>
+          <div class="result-grid">
+            ${sorted.map(r => `<div>${escapeHtml(r.name)}</div><div style="text-align:right">${r.lost} verloren · ${escapeHtml(stateLabel(r.life))}</div>`).join("")}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function rankingData(){
+    const map = new Map();
+
+    for(const game of history){
+      for(const r of game.results){
+        const key = r.name.trim().toLowerCase();
+        if(!map.has(key)){
+          map.set(key, { name:r.name, lost:0, games:0 });
+        }
+        const item = map.get(key);
+        item.lost += r.lost;
+        item.games += 1;
+      }
+    }
+
+    // Aktuelle laufende Runde zusätzlich berücksichtigen.
+    for(const p of players){
+      const currentLost = lostLives(p.life);
+      if(currentLost <= 0) continue;
+      const key = p.name.trim().toLowerCase();
+      if(!map.has(key)){
+        map.set(key, { name:p.name, lost:0, games:0 });
+      }
+      map.get(key).lost += currentLost;
+    }
+
+    return [...map.values()].sort((a,b) =>
+      a.lost - b.lost ||
+      a.games - b.games ||
+      a.name.localeCompare(b.name, "de")
+    );
+  }
+
+  function renderRanking(){
+    const body = document.getElementById("rankingBody");
+    const ranking = rankingData();
+
+    if(ranking.length === 0){
+      body.innerHTML = '<div class="empty">Sobald Leben verloren wurden, erscheint hier die Rangliste.</div>';
+      return;
+    }
+
+    body.innerHTML = `
+      <div class="section-title">Weniger verlorene Leben = bessere Platzierung</div>
+      ${ranking.map((r,i) => `
+        <div class="rank-item">
+          <div class="rank-pos">${i+1}</div>
+          <div class="rank-name">${escapeHtml(r.name)}</div>
+          <div class="rank-score">${r.lost}</div>
+        </div>
+      `).join("")}
+      <div class="note">Gezählt werden alle gespeicherten Spiele sowie aktuell bereits verlorene Leben der laufenden Runde.</div>
+    `;
+  }
+
+  function refreshProfiles(){
+    const current = profileSelect.value;
+    profileSelect.innerHTML = '<option value="">Profil auswählen</option>';
+
+    Object.keys(profiles)
+      .sort((a,b) => a.localeCompare(b, "de"))
+      .forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        profileSelect.appendChild(opt);
+      });
+
+    if(profiles[current]) profileSelect.value = current;
+  }
+
+  function saveProfile(){
+    if(players.length === 0){
+      alert("Füge zuerst Spieler hinzu.");
+      return;
+    }
+
+    const name = prompt("Name für das Profil:");
+    if(!name || !name.trim()) return;
+
+    const cleanName = name.trim();
+    profiles[cleanName] = players.map(p => p.name);
+    saveAll();
+    refreshProfiles();
+    profileSelect.value = cleanName;
+  }
+
+  function loadProfile(){
+    const name = profileSelect.value;
+    if(!name || !profiles[name]){
+      alert("Bitte zuerst ein Profil auswählen.");
+      return;
+    }
+
+    players = profiles[name].map(playerName => ({name: playerName, life:4}));
+    saveAll();
+    renderPlayers();
+  }
+
+  function renderProfiles(){
+    const body = document.getElementById("profilesBody");
+    const names = Object.keys(profiles).sort((a,b)=>a.localeCompare(b,"de"));
+
+    let html = `
+      <button class="btn primary" id="saveProfileInside" style="width:100%;margin-bottom:10px">
+        Aktuelle Spieler als Profil speichern
+      </button>
+    `;
+
+    if(names.length === 0){
+      html += '<div class="empty">Noch keine Profile gespeichert.</div>';
+    }else{
+      html += names.map(name => `
+        <div class="profile-item">
+          <div class="profile-row">
+            <div>
+              <strong>${escapeHtml(name)}</strong>
+              <div class="small">${profiles[name].map(escapeHtml).join(", ")}</div>
+            </div>
+            <div class="profile-actions">
+              <button class="btn" data-load-profile="${escapeAttr(name)}">Laden</button>
+              <button class="btn danger" data-delete-profile="${escapeAttr(name)}">Löschen</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    body.innerHTML = html;
+
+    document.getElementById("saveProfileInside").onclick = () => {
+      saveProfile();
+      renderProfiles();
+    };
+
+    body.querySelectorAll("[data-load-profile]").forEach(btn => {
+      btn.onclick = () => {
+        profileSelect.value = btn.dataset.loadProfile;
+        loadProfile();
+        closeModal("profilesModal");
+      };
+    });
+
+    body.querySelectorAll("[data-delete-profile]").forEach(btn => {
+      btn.onclick = () => {
+        const name = btn.dataset.deleteProfile;
+        if(confirm(`Profil "${name}" löschen?`)){
+          delete profiles[name];
+          saveAll();
+          refreshProfiles();
+          renderProfiles();
+        }
+      };
+    });
+  }
+
+  function openModal(id){
+    if(id === "historyModal") renderHistory();
+    if(id === "rankingModal") renderRanking();
+    if(id === "profilesModal") renderProfiles();
+    document.getElementById(id).classList.add("open");
+  }
+
+  function closeModal(id){
+    document.getElementById(id).classList.remove("open");
+  }
+
+  function escapeHtml(value){
+    return String(value)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function escapeAttr(value){
+    return escapeHtml(value);
+  }
+
+  document.getElementById("addPlayerBtn").onclick = addPlayer;
+  playerInput.addEventListener("keydown", e => {
+    if(e.key === "Enter") addPlayer();
+  });
+
+  document.getElementById("newGameBtn").onclick = newGame;
+  document.getElementById("historyBtn").onclick = () => openModal("historyModal");
+  document.getElementById("rankingBtn").onclick = () => openModal("rankingModal");
+  document.getElementById("loadProfileBtn").onclick = loadProfile;
+
+  // Long press / double-click on profile dropdown area is unnecessary:
+  // click the dropdown label area via context menu? Better: double click profile select -> manage.
+  profileSelect.addEventListener("dblclick", () => openModal("profilesModal"));
+  profileSelect.addEventListener("contextmenu", e => {
+    e.preventDefault();
+    openModal("profilesModal");
+  });
+
+  // Add an extra profile management button next to select dynamically.
+  const manageBtn = document.createElement("button");
+  manageBtn.className = "btn";
+  manageBtn.textContent = "Profil +";
+  manageBtn.title = "Profile speichern/verwalten";
+  manageBtn.onclick = () => openModal("profilesModal");
+  document.querySelector(".toolbar").appendChild(manageBtn);
+
+  document.querySelectorAll("[data-close]").forEach(btn => {
+    btn.onclick = () => closeModal(btn.dataset.close);
+  });
+
+  document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
+    backdrop.addEventListener("click", e => {
+      if(e.target === backdrop) backdrop.classList.remove("open");
+    });
+  });
+
+  refreshProfiles();
+  renderPlayers();
 })();
 </script>
 </body>
