@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Knack Lebenszähler</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#111827;
+  color:white;
+  min-height:100vh;
+}
+main{max-width:760px;margin:auto;padding:20px}
+h1{text-align:center;margin:10px 0 6px}
+.sub{text-align:center;color:#9ca3af;margin:0 0 20px}
+.add{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  margin-bottom:18px;
+}
+input,button{
+  font:inherit;
+  border:0;
+  border-radius:14px;
+  padding:14px;
+}
+input{background:#1f2937;color:white;outline:1px solid #374151}
+button{background:#374151;color:white;font-weight:700}
+.add button{background:#f59e0b;color:#111827}
+.player{
+  background:#1f2937;
+  border-radius:20px;
+  overflow:hidden;
+  margin:14px 0;
+  border:1px solid #374151;
+}
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:14px 16px;
+}
+.name{font-size:22px;font-weight:800;overflow:hidden;text-overflow:ellipsis}
+.remove{background:#7f1d1d;padding:9px 12px}
+.controls{
+  display:grid;
+  grid-template-columns:82px 1fr 82px;
+  min-height:145px;
+  border-top:1px solid #374151;
+}
+.controls button{
+  border-radius:0;
+  font-size:38px;
+  background:#273449;
+}
+.life{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:64px;
+  font-weight:900;
+  padding:10px;
+}
+.life.swim{font-size:38px;color:#38bdf8}
+.life.out{font-size:40px;color:#f87171}
+.reset{
+  width:100%;
+  margin-top:18px;
+  background:#4b5563;
+}
+@media(max-width:500px){
+  main{padding:14px}
+  .add{grid-template-columns:1fr}
+  .controls{grid-template-columns:68px 1fr 68px}
+  .life{font-size:56px}
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>Lebenszähler</h1>
+  <p class="sub">4 → 3 → 2 → Schwimmen → Raus</p>
+
+  <div class="add">
+    <input id="nameInput" placeholder="Spielername" maxlength="30">
+    <button id="addBtn">Hinzufügen</button>
+  </div>
+
+  <div id="players"></div>
+
+  <button class="reset" id="resetBtn">Alle auf 4 Leben setzen</button>
+</main>
+
+<script>
+(function(){
+  var players = [];
+  var container = document.getElementById('players');
+  var input = document.getElementById('nameInput');
+
+  function label(v){
+    if(v===4)return "4";
+    if(v===3)return "3";
+    if(v===2)return "2";
+    if(v===1)return "Schwimmen";
+    return "Raus";
+  }
+
+  function render(){
+    container.innerHTML="";
+    players.forEach(function(p,i){
+      var card=document.createElement("div");
+      card.className="player";
+
+      var top=document.createElement("div");
+      top.className="top";
+
+      var name=document.createElement("div");
+      name.className="name";
+      name.textContent=p.name;
+
+      var remove=document.createElement("button");
+      remove.className="remove";
+      remove.textContent="Entfernen";
+      remove.onclick=function(){
+        players.splice(i,1);
+        render();
+      };
+
+      top.appendChild(name);
+      top.appendChild(remove);
+
+      var controls=document.createElement("div");
+      controls.className="controls";
+
+      var minus=document.createElement("button");
+      minus.textContent="−";
+      minus.onclick=function(){
+        if(players[i].life>0) players[i].life--;
+        render();
+      };
+
+      var life=document.createElement("div");
+      life.className="life";
+      if(p.life===1) life.className+=" swim";
+      if(p.life===0) life.className+=" out";
+      life.textContent=label(p.life);
+
+      var plus=document.createElement("button");
+      plus.textContent="+";
+      plus.onclick=function(){
+        if(players[i].life<4) players[i].life++;
+        render();
+      };
+
+      controls.appendChild(minus);
+      controls.appendChild(life);
+      controls.appendChild(plus);
+
+      card.appendChild(top);
+      card.appendChild(controls);
+      container.appendChild(card);
+    });
+  }
+
+  function add(){
+    var n=input.value.trim();
+    if(!n)return;
+    players.push({name:n,life:4});
+    input.value="";
+    render();
+    input.focus();
+  }
+
+  document.getElementById("addBtn").onclick=add;
+  input.addEventListener("keydown",function(e){
+    if(e.key==="Enter") add();
+  });
+  document.getElementById("resetBtn").onclick=function(){
+    players.forEach(function(p){p.life=4});
+    render();
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>
