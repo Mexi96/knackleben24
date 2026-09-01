@@ -1,6 +1,6 @@
 {
-  "name": "Knackleben24",
-  "short_name": "Knackleben24",
+  "name": "KnackTracker",
+  "short_name": "KnackTracker",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
