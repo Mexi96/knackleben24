@@ -15,111 +15,88 @@
   --bg:#050505;--panel:#0c0c0c;--panel2:#151515;--panel3:#1f1f1f;
   --border:rgba(255,255,255,.12);--text:#fff;--muted:#aaa;
   --accent:#d4af37;--accent2:#f4d66b;--danger:#ef4444;--ok:#22c55e;--blue:#fff;
-  --overlay:rgba(0,0,0,.76);
-  --logo-card:#d8d8d8;--logo-gap:#050505;
+  --overlay:rgba(0,0,0,.76)
 }
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 body{min-height:100svh;background:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 34rem),var(--bg)}
 button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}.hidden{display:none!important}
 
-/* Theme-aware card logo */
-.logo-mark{position:relative;width:100%;height:100%;display:block}
-.logo-card{position:absolute;width:43%;height:58%;top:22%;border-radius:11%;background:var(--logo-card)}
-.logo-card::after{content:"";position:absolute;inset:-3px;border-radius:inherit;background:var(--logo-gap);z-index:-1}
-.logo-card.left{left:18%;transform:rotate(-12deg);z-index:3}
-.logo-card.mid{left:30%;transform:rotate(0deg);z-index:2}
-.logo-card.right{left:42%;transform:rotate(12deg);z-index:1}
-
-/* Browser installation */
+/* install */
 #installGate{min-height:100svh;display:grid;place-items:center;padding:18px}
 .install-card{width:min(520px,100%);background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.35)}
-.install-logo{width:86px;height:86px;border-radius:20px;background:var(--bg);margin-bottom:14px;overflow:hidden}
+.install-logo{width:86px;height:86px;border-radius:20px;overflow:hidden;margin-bottom:14px}
+.install-logo img,.app-logo img{width:100%;height:100%;object-fit:cover;display:block}
 .install-card h1{margin:0 0 6px;font-size:clamp(2rem,9vw,3rem);letter-spacing:-.05em}
 .install-card>p{color:var(--muted);line-height:1.45;margin:0 0 16px}
 .steps{display:grid;gap:10px}.step{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:12px}
-.num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111;display:grid;place-items:center;font-weight:900}
-.step strong{display:block;margin-bottom:2px}.hint{font-size:.84rem;color:var(--muted);line-height:1.35}
+.num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111;display:grid;place-items:center;font-weight:900}.step strong{display:block;margin-bottom:2px}.hint{font-size:.84rem;color:var(--muted);line-height:1.35}
 
-/* App + splash */
-#appRoot{width:min(980px,100%);height:100svh;margin:auto;display:grid;grid-template-rows:auto auto 1fr;gap:8px;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));overflow:hidden}
+/* splash */
 #splash{position:fixed;inset:0;background:var(--bg);z-index:200;overflow:hidden;display:grid;place-items:center}
-#splash.wipe{animation:splashWipe .62s cubic-bezier(.72,0,.22,1) forwards}
+#splash.wipe{animation:splashWipe .85s cubic-bezier(.72,0,.22,1) forwards}
 .splash-word{display:flex;gap:.01em;font-size:clamp(4rem,20vw,9rem);font-weight:950;letter-spacing:-.06em;color:var(--text)}
-.splash-word span{opacity:0;transform:translateY(18px) scale(.7);animation:letterBuild .12s cubic-bezier(.2,.8,.3,1.25) forwards}
-.splash-word span:nth-child(1){animation-delay:.04s}.splash-word span:nth-child(2){animation-delay:.10s}.splash-word span:nth-child(3){animation-delay:.16s}.splash-word span:nth-child(4){animation-delay:.22s}.splash-word span:nth-child(5){animation-delay:.28s}
-@keyframes letterBuild{to{opacity:1;transform:none}}
-@keyframes splashWipe{from{clip-path:inset(0 0 0 0)}to{clip-path:inset(0 100% 0 0)}}
+.splash-word span{opacity:0;transform:translateY(20px) scale(.68);animation:letterBuild .16s cubic-bezier(.2,.8,.3,1.25) forwards}
+.splash-word span:nth-child(1){animation-delay:.08s}.splash-word span:nth-child(2){animation-delay:.18s}.splash-word span:nth-child(3){animation-delay:.28s}.splash-word span:nth-child(4){animation-delay:.38s}.splash-word span:nth-child(5){animation-delay:.48s}
+@keyframes letterBuild{to{opacity:1;transform:none}}@keyframes splashWipe{from{clip-path:inset(0 0 0 0)}to{clip-path:inset(0 100% 0 0)}}
 
-.header{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:42px}
-.header-left{display:flex;align-items:center;gap:8px;min-width:0}
+/* main */
+#appRoot{width:min(980px,100%);height:100svh;margin:auto;display:grid;grid-template-rows:auto auto 1fr;gap:8px;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));overflow:hidden}
+.header{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:42px}.header-left{display:flex;align-items:center;gap:8px;min-width:0}
 .menu-btn{width:38px;height:38px;padding:0;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);display:grid;place-items:center}
 .hamburger{width:18px;height:14px;display:grid;gap:3px}.hamburger span{height:2px;background:currentColor;border-radius:2px}
-.app-logo{width:38px;height:38px;border-radius:10px;background:var(--bg);overflow:hidden;flex:0 0 auto}
-.brand-wrap{min-width:0}.brand{font-size:clamp(1.2rem,5vw,1.9rem);font-weight:950;letter-spacing:-.04em;line-height:1}
-.roomline{font-size:.72rem;color:var(--muted);margin-top:3px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.room-code{color:var(--accent2);font-weight:900;letter-spacing:.08em}.online-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}
+.app-logo{width:38px;height:38px;border-radius:10px;overflow:hidden;flex:0 0 auto}.brand-wrap{min-width:0}.brand{font-size:clamp(1.2rem,5vw,1.9rem);font-weight:950;letter-spacing:-.04em;line-height:1}
+.roomline{font-size:.72rem;color:var(--muted);margin-top:3px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.room-code{color:var(--accent2);font-weight:900;letter-spacing:.08em}.online-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}
 .header-actions{display:flex;gap:6px;justify-content:flex-end}
-.btn{border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 12px;font-weight:800;transition:transform .14s ease}
-.btn:active{transform:scale(.96)}.btn.primary{background:var(--accent);color:#111;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}
+.btn{border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 12px;font-weight:800;transition:transform .14s ease}.btn:active{transform:scale(.96)}
+.btn.primary{background:var(--accent);color:#111;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}
 input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius:11px;background:color-mix(in srgb,var(--panel2) 84%,#000);color:var(--text);outline:none;padding:10px 11px}
 input:focus,select:focus{border-color:var(--accent)}
-.toolbar{display:grid;grid-template-columns:minmax(0,1.3fr) auto minmax(112px,.72fr) minmax(115px,.8fr) auto auto auto;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:7px}
-.players{min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:8px;overflow:auto;scrollbar-width:none}
-.players::-webkit-scrollbar{display:none}
+.toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:7px}
+.toolbar-row2{grid-column:1/-1;display:grid;grid-template-columns:minmax(110px,.7fr) minmax(130px,1fr) auto auto auto;gap:6px}
+.players{min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:8px;overflow:auto;scrollbar-width:none}.players::-webkit-scrollbar{display:none}
 .player{min-height:0;border:1px solid var(--border);border-radius:15px;background:linear-gradient(180deg,var(--panel2),var(--panel));display:grid;grid-template-rows:auto 1fr;overflow:hidden;transition:transform .2s ease,opacity .2s ease}
 .player.added{animation:playerIn .28s ease both}.player.removing{animation:playerOut .22s ease both}
 @keyframes playerIn{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:none}}@keyframes playerOut{to{opacity:0;transform:scale(.92) translateY(6px)}}
-.player-top{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;align-items:center;padding:7px 8px 5px}
-.player-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(.92rem,3.5vw,1.08rem);font-weight:850}
-.aaa-btn,.remove{height:28px;border-radius:8px;border:1px solid var(--border);font-weight:900}
-.aaa-btn{padding:0 8px;background:color-mix(in srgb,var(--accent) 14%,var(--panel2));color:var(--accent2);font-size:.72rem}.remove{width:28px;padding:0;background:rgba(239,68,68,.12);color:#fecaca}
-.life-row{min-height:0;display:grid;grid-template-columns:45px minmax(0,1fr) 45px;align-items:stretch;border-top:1px solid var(--border)}
-.life-btn{border:0;border-radius:0;background:rgba(255,255,255,.035);color:var(--text);font-size:1.6rem;font-weight:900}
-.life-display{min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px 4px}
-.life-main{font-size:clamp(2rem,9vw,3.55rem);font-weight:950;line-height:.95;letter-spacing:-.06em}.life-main.bump{animation:lifeBump .26s ease}
-@keyframes lifeBump{0%{transform:scale(1)}45%{transform:scale(1.18)}100%{transform:scale(1)}}
-.state-swimmer .life-main{font-size:clamp(1.15rem,5vw,2rem);color:var(--blue);letter-spacing:-.02em}.state-over .life-main{font-size:clamp(1.05rem,4.7vw,1.85rem);color:#fca5a5;letter-spacing:-.02em}
+.player-top{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;align-items:center;padding:7px 8px 5px}.player-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(.92rem,3.5vw,1.08rem);font-weight:850}
+.aaa-btn,.remove{height:28px;border-radius:8px;border:1px solid var(--border);font-weight:900}.aaa-btn{padding:0 8px;background:color-mix(in srgb,var(--accent) 14%,var(--panel2));color:var(--accent2);font-size:.72rem}.remove{width:28px;padding:0;background:rgba(239,68,68,.12);color:#fecaca}
+.life-row{min-height:0;display:grid;grid-template-columns:45px minmax(0,1fr) 45px;align-items:stretch;border-top:1px solid var(--border)}.life-btn{border:0;border-radius:0;background:rgba(255,255,255,.035);color:var(--text);font-size:1.6rem;font-weight:900}
+.life-display{min-width:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px 4px}.life-main{font-size:clamp(2rem,9vw,3.55rem);font-weight:950;line-height:.95;letter-spacing:-.06em}.life-main.bump{animation:lifeBump .26s ease}
+@keyframes lifeBump{0%{transform:scale(1)}45%{transform:scale(1.18)}100%{transform:scale(1)}}.state-swimmer .life-main{font-size:clamp(1.15rem,5vw,2rem);color:var(--blue);letter-spacing:-.02em}.state-over .life-main{font-size:clamp(1.05rem,4.7vw,1.85rem);color:#fca5a5;letter-spacing:-.02em}
 .empty{grid-column:1/-1;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border);border-radius:15px;color:var(--muted);text-align:center;padding:20px}
 
-/* Drawer + modals */
+/* drawer */
 .drawer-overlay{position:fixed;inset:0;background:rgba(2,6,23,.55);opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:80}.drawer-overlay.open{opacity:1;pointer-events:auto}
-.drawer{position:absolute;left:0;top:0;bottom:0;width:min(330px,86vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:transform .24s ease;padding:max(16px,env(safe-area-inset-top)) 14px 16px;box-shadow:20px 0 50px rgba(0,0,0,.25)}
+.drawer{position:absolute;left:0;top:0;bottom:0;width:min(340px,88vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:transform .24s ease;padding:max(16px,env(safe-area-inset-top)) 14px 16px;box-shadow:20px 0 50px rgba(0,0,0,.25);display:flex;flex-direction:column}
 .drawer-overlay.open .drawer{transform:translateX(0)}.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.drawer-title{font-size:1.2rem;font-weight:950}
-.drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
-.drawer-nav{display:grid;gap:8px}.drawer-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800}.drawer-item:active{background:var(--panel2);border-color:var(--border)}
-.drawer-icon{width:24px;text-align:center;font-size:1.1rem}.drawer-spacer{height:1px;background:var(--border);margin:8px 0}
+.drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}.drawer-nav{display:grid;gap:8px}.drawer-bottom{margin-top:auto}
+.drawer-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800}.drawer-item:active{background:var(--panel2);border-color:var(--border)}
+.drawer-icon{width:28px;text-align:center;font-size:1.2rem}.drawer-icon.settings{font-size:1.55rem}.drawer-spacer{height:1px;background:var(--border);margin:8px 0}
+
+/* room list + modal */
 .modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:14px;z-index:90}.modal-backdrop.open{display:flex}
 .modal{width:min(680px,100%);max-height:min(82svh,740px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:18px;box-shadow:0 25px 80px rgba(0,0,0,.45)}
 .modal-head{position:sticky;top:0;background:var(--panel);display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 15px;border-bottom:1px solid var(--border);z-index:2}.modal-head h2{margin:0;font-size:1.15rem}.modal-body{padding:12px}
 .close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
-.history-item,.rank-item,.profile-item,.settings-section{border:1px solid var(--border);border-radius:12px;background:var(--panel2);padding:10px;margin-bottom:8px}
+.room-card,.history-item,.rank-item,.profile-item,.settings-section{border:1px solid var(--border);border-radius:12px;background:var(--panel2);padding:10px;margin-bottom:8px}
+.room-card{display:flex;align-items:center;justify-content:space-between;gap:10px}.room-name{font-weight:900}.room-meta{font-size:.76rem;color:var(--muted);margin-top:2px}
 .history-top,.rank-item,.profile-row{display:flex;justify-content:space-between;align-items:center;gap:10px}.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 10px;margin-top:7px;font-size:.84rem}.small{font-size:.78rem;color:var(--muted)}
-.rank-pos{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--panel3);font-weight:900;flex:0 0 auto}.rank-name{flex:1;min-width:0;font-weight:800;overflow:hidden;text-overflow:ellipsis}.rank-score{font-weight:900;color:var(--accent2)}
-.medal{font-size:1.1rem}.profile-actions{display:flex;gap:6px}.theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.theme-card{border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--panel3);display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--text)}.theme-card.active{outline:2px solid var(--accent)}
+.rank-pos{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--panel3);font-weight:900;flex:0 0 auto}.rank-name{flex:1;min-width:0;font-weight:800;overflow:hidden;text-overflow:ellipsis}.rank-score{font-weight:900;color:var(--accent2)}.medal{font-size:1.1rem}
+.profile-actions{display:flex;gap:6px}.theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.theme-card{border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--panel3);display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--text)}.theme-card.active{outline:2px solid var(--accent)}
 .swatches{display:flex;gap:4px}.swatch{width:15px;height:15px;border-radius:50%;border:1px solid rgba(127,127,127,.3)}.settings-section h3{margin:0 0 8px;font-size:1rem}
 
 @media(max-width:760px){
   .header-actions .btn{padding:7px 8px;font-size:.74rem}
-  .toolbar{grid-template-columns:minmax(0,1fr) auto minmax(105px,.8fr) auto}
-  .toolbar .profile-select{grid-column:1/2}.toolbar .profile-load{grid-column:2/3}.toolbar .profile-save{grid-column:3/4}.toolbar .remove-all{grid-column:4/5}
+  .toolbar-row2{grid-template-columns:minmax(100px,.7fr) minmax(110px,1fr) auto;grid-auto-rows:auto}
+  .toolbar-row2 .load-btn{grid-column:3}.toolbar-row2 .profile-save{grid-column:1/2}.toolbar-row2 .remove-all{grid-column:2/4}
 }
-@media(max-height:720px){
-  #appRoot{gap:6px;padding-top:6px;padding-bottom:6px}.header{min-height:34px}.brand{font-size:1.05rem}.app-logo{width:32px;height:32px}
-  .btn{padding:6px 8px;font-size:.72rem}.toolbar{padding:5px}input,select{padding:7px 8px;font-size:.8rem}.players{gap:6px}.player-top{padding:5px 7px 4px}.aaa-btn,.remove{height:25px}.remove{width:25px}
-  .life-row{grid-template-columns:39px minmax(0,1fr) 39px}.life-main{font-size:clamp(1.7rem,7vh,2.8rem)}.state-swimmer .life-main{font-size:clamp(1rem,3.7vh,1.65rem)}.state-over .life-main{font-size:clamp(.95rem,3.4vh,1.5rem)}
-}
+@media(max-height:720px){#appRoot{gap:6px;padding-top:6px;padding-bottom:6px}.header{min-height:34px}.brand{font-size:1.05rem}.app-logo{width:32px;height:32px}.btn{padding:6px 8px;font-size:.72rem}.toolbar{padding:5px}input,select{padding:7px 8px;font-size:.8rem}.players{gap:6px}.player-top{padding:5px 7px 4px}.aaa-btn,.remove{height:25px}.remove{width:25px}.life-row{grid-template-columns:39px minmax(0,1fr) 39px}.life-main{font-size:clamp(1.7rem,7vh,2.8rem)}}
 @media(min-width:760px){.players{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
-
 <section id="installGate">
   <div class="install-card">
-    <div class="install-logo">
-      <span class="logo-mark"><span class="logo-card right"></span><span class="logo-card mid"></span><span class="logo-card left"></span></span>
-    </div>
+    <div class="install-logo"><img id="installLogo" src="./logo-dark.png" alt=""></div>
     <h1>Knack</h1>
     <p>Knack funktioniert ausschließlich als Web‑App vom Home‑Bildschirm.</p>
     <div class="steps">
@@ -131,82 +108,67 @@ input:focus,select:focus{border-color:var(--accent)}
 </section>
 
 <section id="appRoot" class="hidden">
-  <header class="header">
-    <div class="header-left">
-      <button class="menu-btn" id="menuBtn"><span class="hamburger"><span></span><span></span><span></span></span></button>
-      <div class="app-logo">
-        <span class="logo-mark"><span class="logo-card right"></span><span class="logo-card mid"></span><span class="logo-card left"></span></span>
-      </div>
-      <div class="brand-wrap">
-        <div class="brand">Knack</div>
-        <div class="roomline"><span><span class="online-dot"></span> Live</span><span>Raum <span class="room-code" id="roomCodeLabel">–</span></span></div>
-      </div>
-    </div>
-    <div class="header-actions">
-      <button class="btn" id="copyCodeBtn">Code kopieren</button>
-      <button class="btn primary" id="newGameBtn">Neues Spiel</button>
-    </div>
-  </header>
+<header class="header">
+  <div class="header-left">
+    <button class="menu-btn" id="menuBtn"><span class="hamburger"><span></span><span></span><span></span></span></button>
+    <div class="app-logo"><img id="appLogo" src="./logo-dark.png" alt="Knack"></div>
+    <div class="brand-wrap"><div class="brand">Knack</div><div class="roomline"><span><span class="online-dot"></span> Live</span><span id="roomNameLine">Kein Raum</span></div></div>
+  </div>
+  <div class="header-actions"><button class="btn primary" id="newGameBtn">Neues Spiel</button></div>
+</header>
 
-  <section class="toolbar">
-    <input id="playerInput" maxlength="24" placeholder="Spielername eingeben" autocomplete="off">
-    <button class="btn primary" id="addPlayerBtn">+ Spieler</button>
-    <select id="modeSelect" aria-label="Startleben">
-      <option value="3">3 Leben</option>
-      <option value="4" selected>4 Leben</option>
-      <option value="5">5 Leben</option>
-    </select>
-    <select id="profileSelect" class="profile-select"><option value="">Profil auswählen</option></select>
-    <button class="btn profile-load" id="loadProfileBtn">Laden</button>
+<section class="toolbar">
+  <input id="playerInput" maxlength="24" placeholder="Spielername eingeben" autocomplete="off">
+  <button class="btn primary" id="addPlayerBtn">+ Spieler</button>
+  <div class="toolbar-row2">
+    <select id="modeSelect"><option value="3">3 Leben</option><option value="4" selected>4 Leben</option><option value="5">5 Leben</option></select>
+    <select id="profileSelect"><option value="">Profil auswählen</option></select>
+    <button class="btn load-btn" id="loadProfileBtn">Laden</button>
     <button class="btn profile-save" id="profileBtn">Profil +</button>
     <button class="btn danger remove-all" id="removeAllBtn">Alle entfernen</button>
-  </section>
-
-  <section class="players" id="players"></section>
+  </div>
+</section>
+<section class="players" id="players"></section>
 </section>
 
 <div id="splash" class="hidden"><div class="splash-word"><span>K</span><span>N</span><span>A</span><span>C</span><span>K</span></div></div>
 
 <div class="drawer-overlay" id="drawerOverlay">
-  <aside class="drawer">
-    <div class="drawer-head"><div class="drawer-title">Knack</div><button class="drawer-close" id="drawerClose">✕</button></div>
-    <nav class="drawer-nav">
-      <button class="drawer-item" id="drawerRoom"><span class="drawer-icon">◫</span><span>Spielraum</span></button>
-      <button class="drawer-item" id="drawerHistory"><span class="drawer-icon">↶</span><span>Letzte Spiele</span></button>
-      <button class="drawer-item" id="drawerRanking"><span class="drawer-icon">🏆</span><span>Rangliste</span></button>
-      <div class="drawer-spacer"></div>
-      <button class="drawer-item" id="drawerSettings"><span class="drawer-icon">⚙︎</span><span>Einstellungen</span></button>
-    </nav>
-  </aside>
+<aside class="drawer">
+  <div class="drawer-head"><div class="drawer-title">Knack</div><button class="drawer-close" id="drawerClose">✕</button></div>
+  <nav class="drawer-nav">
+    <button class="drawer-item" id="drawerCreateRoom"><span class="drawer-icon">＋</span><span>Spielraum erstellen</span></button>
+    <button class="drawer-item" id="drawerRooms"><span class="drawer-icon">⌂</span><span>Verfügbare Räume</span></button>
+    <button class="drawer-item" id="drawerHistory"><span class="drawer-icon">🕘</span><span>Letzte Spiele</span></button>
+    <button class="drawer-item" id="drawerRanking"><span class="drawer-icon">🏆</span><span>Rangliste</span></button>
+    <div class="drawer-spacer"></div>
+    <button class="drawer-item" id="drawerProfile"><span class="drawer-icon">👤</span><span>Profil</span></button>
+  </nav>
+  <div class="drawer-bottom">
+    <button class="drawer-item" id="drawerSettings"><span class="drawer-icon settings">⚙︎</span><span>Einstellungen</span></button>
+  </div>
+</aside>
 </div>
 
-<div class="modal-backdrop" id="roomModal"><div class="modal"><div class="modal-head"><h2>Spielraum</h2><button class="close" data-close="roomModal">✕</button></div><div class="modal-body">
-<button class="btn primary" id="createRoomBtn" style="width:100%;margin-bottom:10px">Neues Spiel erstellen</button>
-<div style="display:grid;grid-template-columns:1fr auto;gap:8px"><input id="roomInput" maxlength="4" placeholder="Raumcode"><button class="btn" id="joinRoomBtn">Beitreten</button></div>
-<div id="roomError" class="small" style="color:#fca5a5;margin-top:8px"></div></div></div></div>
-
+<div class="modal-backdrop" id="roomsModal"><div class="modal"><div class="modal-head"><h2>Verfügbare Räume</h2><button class="close" data-close="roomsModal">✕</button></div><div class="modal-body" id="roomsBody"></div></div></div>
+<div class="modal-backdrop" id="createRoomModal"><div class="modal"><div class="modal-head"><h2>Spielraum erstellen</h2><button class="close" data-close="createRoomModal">✕</button></div><div class="modal-body"><div class="small" id="createRoomHint" style="margin-bottom:10px"></div><button class="btn primary" id="createRoomBtn" style="width:100%">Raum erstellen</button></div></div></div>
+<div class="modal-backdrop" id="roomControlModal"><div class="modal"><div class="modal-head"><h2>Aktueller Raum</h2><button class="close" data-close="roomControlModal">✕</button></div><div class="modal-body"><div id="roomControlInfo" class="room-card"></div><button class="btn danger" id="closeRoomBtn" style="width:100%;margin-top:8px">Raum schließen</button></div></div></div>
 <div class="modal-backdrop" id="historyModal"><div class="modal"><div class="modal-head"><h2>Letzte Spiele</h2><button class="close" data-close="historyModal">✕</button></div><div class="modal-body" id="historyBody"></div></div></div>
 <div class="modal-backdrop" id="rankingModal"><div class="modal"><div class="modal-head"><h2>Rangliste</h2><button class="close" data-close="rankingModal">✕</button></div><div class="modal-body" id="rankingBody"></div></div></div>
-<div class="modal-backdrop" id="profilesModal"><div class="modal"><div class="modal-head"><h2>Profile</h2><button class="close" data-close="profilesModal">✕</button></div><div class="modal-body" id="profilesBody"></div></div></div>
-
-<div class="modal-backdrop" id="settingsModal"><div class="modal"><div class="modal-head"><h2>Einstellungen</h2><button class="close" data-close="settingsModal">✕</button></div><div class="modal-body">
-<div class="settings-section"><h3>App-Design</h3><div class="theme-grid" id="themeGrid"></div></div>
-<div class="settings-section"><h3>Statistiken</h3><div class="small" style="margin-bottom:10px">Löscht die letzten Spiele und setzt die Rangliste dieses Raums zurück.</div><button class="btn danger" id="resetStatsBtn" style="width:100%">Statistiken zurücksetzen</button></div>
-</div></div></div>
+<div class="modal-backdrop" id="profilesModal"><div class="modal"><div class="modal-head"><h2>Spielerprofile</h2><button class="close" data-close="profilesModal">✕</button></div><div class="modal-body" id="profilesBody"></div></div></div>
+<div class="modal-backdrop" id="myProfileModal"><div class="modal"><div class="modal-head"><h2>Profil</h2><button class="close" data-close="myProfileModal">✕</button></div><div class="modal-body"><div class="small" style="margin-bottom:8px">Dein Name wird für neu erstellte Räume verwendet, sofern kein Spielerprofil ausgewählt ist.</div><input id="myNameInput" maxlength="24" placeholder="Dein Name"><button class="btn primary" id="saveMyNameBtn" style="width:100%;margin-top:8px">Speichern</button></div></div></div>
+<div class="modal-backdrop" id="settingsModal"><div class="modal"><div class="modal-head"><h2>Einstellungen</h2><button class="close" data-close="settingsModal">✕</button></div><div class="modal-body"><div class="settings-section"><h3>App-Design</h3><div class="theme-grid" id="themeGrid"></div></div><div class="settings-section"><h3>Statistiken</h3><div class="small" style="margin-bottom:10px">Löscht die letzten Spiele und setzt die Rangliste dieses Raums zurück.</div><button class="btn danger" id="resetStatsBtn" style="width:100%">Statistiken zurücksetzen</button></div></div></div></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, update } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+import { getDatabase, ref, set, get, onValue, update, remove } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
 const isStandalone=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
 const installGate=document.getElementById("installGate"),appRoot=document.getElementById("appRoot"),splash=document.getElementById("splash");
-
 if(isStandalone){
-  installGate.classList.add("hidden");
-  appRoot.classList.remove("hidden"); // interface sits directly behind the splash
-  splash.classList.remove("hidden");
-  setTimeout(()=>splash.classList.add("wipe"),520);
-  setTimeout(()=>splash.classList.add("hidden"),1160);
+  installGate.classList.add("hidden");appRoot.classList.remove("hidden");splash.classList.remove("hidden");
+  setTimeout(()=>splash.classList.add("wipe"),1350);
+  setTimeout(()=>splash.classList.add("hidden"),2250);
 }
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
 
@@ -223,24 +185,31 @@ const firebaseConfig={
 const fbApp=initializeApp(firebaseConfig),db=getDatabase(fbApp);
 
 const THEMES={
-  dark:{name:"Dunkel",vars:{"--bg":"#050505","--panel":"#0c0c0c","--panel2":"#151515","--panel3":"#1f1f1f","--text":"#ffffff","--muted":"#aaaaaa","--accent":"#d4af37","--accent2":"#f4d66b","--blue":"#ffffff","--logo-card":"#d9d9d9","--logo-gap":"#050505"}},
-  light:{name:"Hell",vars:{"--bg":"#f3f4f6","--panel":"#ffffff","--panel2":"#eceff3","--panel3":"#dfe4ea","--text":"#111827","--muted":"#687386","--accent":"#c79a18","--accent2":"#a87900","--blue":"#2563eb","--logo-card":"#3b4350","--logo-gap":"#f3f4f6"}},
-  amber:{name:"Amber",vars:{"--bg":"#0b1020","--panel":"#151d31","--panel2":"#1d2942","--panel3":"#24314d","--text":"#f8fafc","--muted":"#9aa7bd","--accent":"#f59e0b","--accent2":"#fbbf24","--blue":"#38bdf8","--logo-card":"#fbbf24","--logo-gap":"#0b1020"}},
-  blue:{name:"Blau",vars:{"--bg":"#08111f","--panel":"#10223a","--panel2":"#17304d","--panel3":"#1f3d60","--text":"#f8fafc","--muted":"#a8b7cc","--accent":"#38bdf8","--accent2":"#7dd3fc","--blue":"#60a5fa","--logo-card":"#7dd3fc","--logo-gap":"#08111f"}},
-  green:{name:"Grün",vars:{"--bg":"#07140f","--panel":"#10241b","--panel2":"#183326","--panel3":"#204431","--text":"#f5fff9","--muted":"#9dc3ae","--accent":"#34d399","--accent2":"#6ee7b7","--blue":"#22d3ee","--logo-card":"#6ee7b7","--logo-gap":"#07140f"}},
-  purple:{name:"Violett",vars:{"--bg":"#120b1d","--panel":"#21142f","--panel2":"#2d1b40","--panel3":"#3b2453","--text":"#fbf8ff","--muted":"#b8a5cd","--accent":"#a78bfa","--accent2":"#c4b5fd","--blue":"#818cf8","--logo-card":"#c4b5fd","--logo-gap":"#120b1d"}},
-  red:{name:"Rot",vars:{"--bg":"#160909","--panel":"#281010","--panel2":"#3a1717","--panel3":"#4a1d1d","--text":"#fff7f7","--muted":"#c9aaaa","--accent":"#f87171","--accent2":"#fca5a5","--blue":"#fb7185","--logo-card":"#fca5a5","--logo-gap":"#160909"}},
-  cyan:{name:"Cyan",vars:{"--bg":"#061416","--panel":"#0d262a","--panel2":"#12373d","--panel3":"#184850","--text":"#f4ffff","--muted":"#9fc2c7","--accent":"#22d3ee","--accent2":"#67e8f9","--blue":"#06b6d4","--logo-card":"#67e8f9","--logo-gap":"#061416"}}
+  dark:{name:"Dunkel",vars:{"--bg":"#050505","--panel":"#0c0c0c","--panel2":"#151515","--panel3":"#1f1f1f","--text":"#ffffff","--muted":"#aaaaaa","--accent":"#d4af37","--accent2":"#f4d66b","--blue":"#ffffff"}},
+  light:{name:"Hell",vars:{"--bg":"#f3f4f6","--panel":"#ffffff","--panel2":"#eceff3","--panel3":"#dfe4ea","--text":"#111827","--muted":"#687386","--accent":"#c79a18","--accent2":"#a87900","--blue":"#2563eb"}},
+  amber:{name:"Amber",vars:{"--bg":"#0b1020","--panel":"#151d31","--panel2":"#1d2942","--panel3":"#24314d","--text":"#f8fafc","--muted":"#9aa7bd","--accent":"#f59e0b","--accent2":"#fbbf24","--blue":"#38bdf8"}},
+  blue:{name:"Blau",vars:{"--bg":"#08111f","--panel":"#10223a","--panel2":"#17304d","--panel3":"#1f3d60","--text":"#f8fafc","--muted":"#a8b7cc","--accent":"#38bdf8","--accent2":"#7dd3fc","--blue":"#60a5fa"}},
+  green:{name:"Grün",vars:{"--bg":"#07140f","--panel":"#10241b","--panel2":"#183326","--panel3":"#204431","--text":"#f5fff9","--muted":"#9dc3ae","--accent":"#34d399","--accent2":"#6ee7b7","--blue":"#22d3ee"}},
+  purple:{name:"Violett",vars:{"--bg":"#120b1d","--panel":"#21142f","--panel2":"#2d1b40","--panel3":"#3b2453","--text":"#fbf8ff","--muted":"#b8a5cd","--accent":"#a78bfa","--accent2":"#c4b5fd","--blue":"#818cf8"}},
+  red:{name:"Rot",vars:{"--bg":"#160909","--panel":"#281010","--panel2":"#3a1717","--panel3":"#4a1d1d","--text":"#fff7f7","--muted":"#c9aaaa","--accent":"#f87171","--accent2":"#fca5a5","--blue":"#fb7185"}},
+  cyan:{name:"Cyan",vars:{"--bg":"#061416","--panel":"#0d262a","--panel2":"#12373d","--panel3":"#184850","--text":"#f4ffff","--muted":"#9fc2c7","--accent":"#22d3ee","--accent2":"#67e8f9","--blue":"#06b6d4"}},
+  orange:{name:"Orange",vars:{"--bg":"#160c05","--panel":"#271508","--panel2":"#3b200c","--panel3":"#4d2b12","--text":"#fff8f2","--muted":"#cdb7a4","--accent":"#ff8a2a","--accent2":"#ffb56d","--blue":"#ffd2ac"}},
+  pink:{name:"Pink",vars:{"--bg":"#170713","--panel":"#2a1024","--panel2":"#3b1733","--panel3":"#4e2043","--text":"#fff7fd","--muted":"#c8a6be","--accent":"#ff66c7","--accent2":"#ff9add","--blue":"#eab8ff"}},
+  ice:{name:"Eis",vars:{"--bg":"#071116","--panel":"#0e2029","--panel2":"#15303c","--panel3":"#1c414f","--text":"#f5fcff","--muted":"#a7c4d0","--accent":"#bdeaff","--accent2":"#e1f7ff","--blue":"#7dd3fc"}},
+  sand:{name:"Sand",vars:{"--bg":"#17130d","--panel":"#292116","--panel2":"#3b3021","--panel3":"#4d402d","--text":"#fffaf1","--muted":"#cbbda7","--accent":"#d8b36d","--accent2":"#ead09a","--blue":"#e8d7bb"}}
 };
-let currentTheme=localStorage.getItem("knacktracker_theme")||"dark";
-let profiles=JSON.parse(localStorage.getItem("knacktracker_profiles")||"{}");
+let currentTheme=localStorage.getItem("knack_theme")||"dark";
+let playerProfiles=JSON.parse(localStorage.getItem("knack_player_profiles")||"{}");
+let myName=localStorage.getItem("knack_my_name")||"";
+let clientId=localStorage.getItem("knack_client_id");
+if(!clientId){clientId=crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random();localStorage.setItem("knack_client_id",clientId)}
 let currentRoom="",roomData={players:[],history:[],mode:4},unsubscribeRoom=null,lastPlayerCount=0,lastLifeMap={};
-const playersEl=document.getElementById("players"),playerInput=document.getElementById("playerInput"),profileSelect=document.getElementById("profileSelect"),modeSelect=document.getElementById("modeSelect");
 
+const playersEl=document.getElementById("players"),playerInput=document.getElementById("playerInput"),profileSelect=document.getElementById("profileSelect"),modeSelect=document.getElementById("modeSelect");
 function applyTheme(key){
-  const t=THEMES[key]||THEMES.dark;
-  Object.entries(t.vars).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
-  currentTheme=key;localStorage.setItem("knacktracker_theme",key);renderThemeGrid()
+  const t=THEMES[key]||THEMES.dark;Object.entries(t.vars).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
+  currentTheme=key;localStorage.setItem("knack_theme",key);
+  document.getElementById("appLogo").src=`./logo-${key}.png`;document.getElementById("installLogo").src=`./logo-${key}.png`;renderThemeGrid()
 }
 applyTheme(currentTheme);
 function renderThemeGrid(){
@@ -248,24 +217,32 @@ function renderThemeGrid(){
   grid.innerHTML=Object.entries(THEMES).map(([key,t])=>`<button class="theme-card ${key===currentTheme?"active":""}" data-theme="${key}"><strong>${t.name}</strong><span class="swatches"><span class="swatch" style="background:${t.vars["--bg"]}"></span><span class="swatch" style="background:${t.vars["--panel2"]}"></span><span class="swatch" style="background:${t.vars["--accent"]}"></span></span></button>`).join("");
   grid.querySelectorAll("[data-theme]").forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme))
 }
-function normalizeRoom(c){return String(c||"").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,4)}
-function makeRoomCode(){const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let s="";for(let i=0;i<4;i++)s+=chars[Math.floor(Math.random()*chars.length)];return s}
-function maxLives(){return Number(roomData.mode||4)}function stateLabel(l){if(l<=0)return"Game Over";if(l===1)return"Schwimmer";return String(l)}
-function roomRef(){return ref(db,"rooms/"+currentRoom)}
+function roomRef(id=currentRoom){return ref(db,"rooms/"+id)}
+function maxLives(){return Number(roomData.mode||4)}
+function stateLabel(l){if(l<=0)return"Game Over";if(l===1)return"Schwimmer";return String(l)}
 function escapeHtml(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-function openModal(id){document.getElementById(id).classList.add("open")}function closeModal(id){document.getElementById(id).classList.remove("open")}
-function openDrawer(){document.getElementById("drawerOverlay").classList.add("open")}function closeDrawer(){document.getElementById("drawerOverlay").classList.remove("open")}
+function openModal(id){document.getElementById(id).classList.add("open")}function closeModal(id){document.getElementById(id).classList.remove("open")}function openDrawer(){document.getElementById("drawerOverlay").classList.add("open")}function closeDrawer(){document.getElementById("drawerOverlay").classList.remove("open")}
 
+function selectedProfileName(){
+  const key=profileSelect.value;return key&&playerProfiles[key]?key:""
+}
+function creatorRoomName(){
+  const p=selectedProfileName();if(p)return p;
+  if(myName.trim())return myName.trim();
+  return "Knack-Raum"
+}
+function refreshProfiles(){
+  profileSelect.innerHTML='<option value="">Profil auswählen</option>';Object.keys(playerProfiles).sort().forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;profileSelect.appendChild(o)})
+}
 function renderPlayers(){
-  const players=roomData.players||[],addedIndex=players.length>lastPlayerCount?players.length-1:-1;
-  modeSelect.value=String(maxLives());playersEl.innerHTML="";
-  if(!currentRoom){playersEl.innerHTML='<div class="empty"><div><strong>Noch kein Spielraum geöffnet.</strong><br><br><button class="btn primary" id="openRoomSetup">Spiel erstellen / beitreten</button></div></div>';document.getElementById("openRoomSetup").onclick=()=>openModal("roomModal");lastPlayerCount=0;lastLifeMap={};return}
+  const players=roomData.players||[],addedIndex=players.length>lastPlayerCount?players.length-1:-1;modeSelect.value=String(maxLives());playersEl.innerHTML="";
+  document.getElementById("roomNameLine").textContent=currentRoom?(roomData.name||"Spielraum"):"Kein Raum";
+  if(!currentRoom){playersEl.innerHTML='<div class="empty"><div><strong>Noch kein Spielraum geöffnet.</strong><br><br><button class="btn primary" id="openRooms">Verfügbare Räume</button></div></div>';document.getElementById("openRooms").onclick=showRooms;lastPlayerCount=0;lastLifeMap={};return}
   if(!players.length){playersEl.innerHTML='<div class="empty">Spieler oben hinzufügen oder ein Profil laden.</div>';lastPlayerCount=0;lastLifeMap={};return}
   players.forEach((p,i)=>{
     const card=document.createElement("article");card.className="player"+(p.life===1?" state-swimmer":"")+(p.life===0?" state-over":"")+(i===addedIndex?" added":"");
     card.innerHTML=`<div class="player-top"><div class="player-name"></div><button class="aaa-btn">AAA</button><button class="remove">✕</button></div><div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${stateLabel(p.life)}</div></div><button class="life-btn plus">+</button></div>`;
-    card.querySelector(".player-name").textContent=p.name;
-    const key=p.name.toLowerCase();if(lastLifeMap[key]!==undefined&&lastLifeMap[key]!==p.life)card.querySelector(".life-main").classList.add("bump");
+    card.querySelector(".player-name").textContent=p.name;const key=p.name.toLowerCase();if(lastLifeMap[key]!==undefined&&lastLifeMap[key]!==p.life)card.querySelector(".life-main").classList.add("bump");
     card.querySelector(".remove").onclick=async()=>{card.classList.add("removing");setTimeout(async()=>{const a=[...players];a.splice(i,1);await update(roomRef(),{players:a,updatedAt:Date.now()})},180)};
     card.querySelector(".minus").onclick=async()=>{const a=players.map(x=>({...x}));a[i].life=Math.max(0,a[i].life-1);await update(roomRef(),{players:a,updatedAt:Date.now()})};
     card.querySelector(".plus").onclick=async()=>{const a=players.map(x=>({...x}));a[i].life=Math.min(maxLives(),a[i].life+1);await update(roomRef(),{players:a,updatedAt:Date.now()})};
@@ -274,65 +251,62 @@ function renderPlayers(){
   });
   lastPlayerCount=players.length;lastLifeMap=Object.fromEntries(players.map(p=>[p.name.toLowerCase(),p.life]))
 }
-function connectRoom(){
-  if(unsubscribeRoom)unsubscribeRoom();
-  unsubscribeRoom=onValue(roomRef(),snap=>{const d=snap.val();if(!d)return;roomData={...d,mode:Number(d.mode||4),players:Array.isArray(d.players)?d.players:Object.values(d.players||{}),history:Array.isArray(d.history)?d.history:Object.values(d.history||{})};document.getElementById("roomCodeLabel").textContent=currentRoom;renderPlayers()})
+function connectRoom(id){
+  currentRoom=id;if(unsubscribeRoom)unsubscribeRoom();
+  unsubscribeRoom=onValue(roomRef(),snap=>{const d=snap.val();if(!d){currentRoom="";localStorage.removeItem("knack_last_room");renderPlayers();return}
+    roomData={...d,mode:Number(d.mode||4),players:Array.isArray(d.players)?d.players:Object.values(d.players||{}),history:Array.isArray(d.history)?d.history:Object.values(d.history||{})};
+    renderPlayers()
+  });
+  localStorage.setItem("knack_last_room",id)
 }
 async function createRoom(){
-  let code="";
-  for(let n=0;n<10;n++){const candidate=makeRoomCode(),snap=await get(ref(db,"rooms/"+candidate));if(!snap.exists()){code=candidate;break}}
-  if(!code)return alert("Kein freier Raumcode gefunden. Bitte erneut versuchen.");
-  currentRoom=code;await set(roomRef(),{createdAt:Date.now(),updatedAt:Date.now(),players:[],history:[],mode:Number(modeSelect.value||4)});
-  localStorage.setItem("knacktracker_last_room",code);connectRoom();closeModal("roomModal")
+  const key=String(Date.now())+"-"+Math.random().toString(36).slice(2,8);
+  const name=creatorRoomName();const selected=selectedProfileName();
+  const initialPlayers=selected&&playerProfiles[selected]?playerProfiles[selected].map(n=>({name:n,life:Number(modeSelect.value||4)})):[];
+  await set(roomRef(key),{name,ownerId:clientId,ownerName:myName||"",createdAt:Date.now(),updatedAt:Date.now(),open:true,mode:Number(modeSelect.value||4),players:initialPlayers,history:[]});
+  connectRoom(key);closeModal("createRoomModal")
 }
-async function joinRoom(){
-  const code=normalizeRoom(document.getElementById("roomInput").value);if(code.length!==4){document.getElementById("roomError").textContent="Bitte 4-stelligen Raumcode eingeben.";return}
-  const snap=await get(ref(db,"rooms/"+code));if(!snap.exists()){document.getElementById("roomError").textContent="Raum nicht gefunden.";return}
-  currentRoom=code;localStorage.setItem("knacktracker_last_room",code);connectRoom();closeModal("roomModal")
+async function showRooms(){
+  closeDrawer();const snap=await get(ref(db,"rooms"));const all=snap.val()||{};
+  const rooms=Object.entries(all).filter(([id,r])=>r&&r.open!==false).sort((a,b)=>(b[1].createdAt||0)-(a[1].createdAt||0));
+  const body=document.getElementById("roomsBody");
+  body.innerHTML=rooms.length?rooms.map(([id,r])=>`<div class="room-card"><div><div class="room-name">${escapeHtml(r.name||"Spielraum")}</div><div class="room-meta">${(r.players?Object.keys(r.players).length:0)} Spieler · ${Number(r.mode||4)} Leben</div></div><button class="btn primary" data-room="${id}">Beitreten</button></div>`).join(""):'<div class="empty">Zurzeit sind keine offenen Räume verfügbar.</div>';
+  body.querySelectorAll("[data-room]").forEach(b=>b.onclick=()=>{connectRoom(b.dataset.room);closeModal("roomsModal")});
+  openModal("roomsModal")
 }
-async function setMode(mode){
-  if(!currentRoom){roomData.mode=mode;modeSelect.value=String(mode);return}
-  const players=(roomData.players||[]).map(p=>({...p,life:mode}));await update(roomRef(),{mode,players,updatedAt:Date.now()})
+async function closeCurrentRoom(){
+  if(!currentRoom)return;
+  if(roomData.ownerId!==clientId)return alert("Nur der Ersteller dieses Raums kann ihn schließen.");
+  if(!confirm("Raum wirklich schließen?"))return;
+  await update(roomRef(),{open:false,closedAt:Date.now()});currentRoom="";localStorage.removeItem("knack_last_room");closeModal("roomControlModal");renderPlayers()
 }
-async function addPlayer(){
-  if(!currentRoom){openModal("roomModal");return}
-  const name=playerInput.value.trim();if(!name)return;const a=[...(roomData.players||[])];if(a.some(p=>p.name.toLowerCase()===name.toLowerCase()))return alert("Spieler bereits vorhanden.");
-  a.push({name,life:maxLives()});playerInput.value="";await update(roomRef(),{players:a,updatedAt:Date.now()})
-}
+async function setMode(mode){if(!currentRoom){roomData.mode=mode;return}const players=(roomData.players||[]).map(p=>({...p,life:mode}));await update(roomRef(),{mode,players,updatedAt:Date.now()})}
+async function addPlayer(){if(!currentRoom){showRooms();return}const name=playerInput.value.trim();if(!name)return;const a=[...(roomData.players||[])];if(a.some(p=>p.name.toLowerCase()===name.toLowerCase()))return alert("Spieler bereits vorhanden.");a.push({name,life:maxLives()});playerInput.value="";await update(roomRef(),{players:a,updatedAt:Date.now()})}
 async function removeAllPlayers(){if(!currentRoom||!(roomData.players||[]).length)return;if(!confirm("Alle Spieler entfernen?"))return;await update(roomRef(),{players:[],updatedAt:Date.now()})}
-async function newGame(){
-  if(!currentRoom)return;const players=roomData.players||[];if(!players.length)return;let hist=[...(roomData.history||[])];
-  if(players.some(p=>p.life<maxLives())){hist.unshift({id:Date.now(),date:new Date().toISOString(),mode:maxLives(),results:players.map(p=>({name:p.name,life:p.life,lost:maxLives()-Math.max(0,p.life)}))});hist=hist.slice(0,50)}
-  await update(roomRef(),{players:players.map(p=>({...p,life:maxLives()})),history:hist,updatedAt:Date.now()})
-}
-function renderHistory(){
-  const b=document.getElementById("historyBody"),h=roomData.history||[];if(!h.length){b.innerHTML='<div class="empty">Noch keine Spiele gespeichert.</div>';return}
-  b.innerHTML=h.map((g,idx)=>`<div class="history-item"><div class="history-top"><strong>Spiel ${h.length-idx}</strong><span class="small">${new Date(g.date).toLocaleString("de-DE")}</span></div><div class="result-grid">${(g.results||[]).map(r=>`<div>${escapeHtml(r.name)}</div><div style="text-align:right">${r.lost} verloren</div>`).join("")}</div></div>`).join("")
-}
-function renderRanking(){
-  const map=new Map();for(const g of roomData.history||[])for(const r of g.results||[]){const k=r.name.toLowerCase();if(!map.has(k))map.set(k,{name:r.name,lost:0});map.get(k).lost+=r.lost}
-  const data=[...map.values()].sort((a,b)=>a.lost-b.lost||a.name.localeCompare(b.name,"de")),medals=["🥇","🥈","🥉"];
-  document.getElementById("rankingBody").innerHTML=data.length?data.map((r,i)=>`<div class="rank-item"><div class="rank-pos">${i<3?`<span class="medal">${medals[i]}</span>`:i+1}</div><div class="rank-name">${escapeHtml(r.name)}</div><div class="rank-score">${r.lost}</div></div>`).join(""):'<div class="empty">Noch keine Ranglistendaten.</div>'
-}
-function refreshProfiles(){profileSelect.innerHTML='<option value="">Profil auswählen</option>';Object.keys(profiles).sort().forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;profileSelect.appendChild(o)})}
+async function newGame(){if(!currentRoom)return;const players=roomData.players||[];if(!players.length)return;let hist=[...(roomData.history||[])];if(players.some(p=>p.life<maxLives())){hist.unshift({id:Date.now(),date:new Date().toISOString(),mode:maxLives(),results:players.map(p=>({name:p.name,life:p.life,lost:maxLives()-Math.max(0,p.life)}))});hist=hist.slice(0,50)}await update(roomRef(),{players:players.map(p=>({...p,life:maxLives()})),history:hist,updatedAt:Date.now()})}
+function renderHistory(){const b=document.getElementById("historyBody"),h=roomData.history||[];if(!h.length){b.innerHTML='<div class="empty">Noch keine Spiele gespeichert.</div>';return}b.innerHTML=h.map((g,idx)=>`<div class="history-item"><div class="history-top"><strong>Spiel ${h.length-idx}</strong><span class="small">${new Date(g.date).toLocaleString("de-DE")}</span></div><div class="result-grid">${(g.results||[]).map(r=>`<div>${escapeHtml(r.name)}</div><div style="text-align:right">${r.lost} verloren</div>`).join("")}</div></div>`).join("")}
+function renderRanking(){const map=new Map();for(const g of roomData.history||[])for(const r of g.results||[]){const k=r.name.toLowerCase();if(!map.has(k))map.set(k,{name:r.name,lost:0});map.get(k).lost+=r.lost}const data=[...map.values()].sort((a,b)=>a.lost-b.lost||a.name.localeCompare(b.name,"de")),medals=["🥇","🥈","🥉"];document.getElementById("rankingBody").innerHTML=data.length?data.map((r,i)=>`<div class="rank-item"><div class="rank-pos">${i<3?`<span class="medal">${medals[i]}</span>`:i+1}</div><div class="rank-name">${escapeHtml(r.name)}</div><div class="rank-score">${r.lost}</div></div>`).join(""):'<div class="empty">Noch keine Ranglistendaten.</div>'}
 function renderProfiles(){
-  const b=document.getElementById("profilesBody");b.innerHTML=`<button class="btn primary" id="saveProfileNow" style="width:100%;margin-bottom:10px">Aktuelle Spieler als Profil speichern</button>`+Object.keys(profiles).map(n=>`<div class="profile-item"><div class="profile-row"><div><strong>${escapeHtml(n)}</strong><div class="small">${profiles[n].map(escapeHtml).join(", ")}</div></div><div class="profile-actions"><button class="btn" data-load="${escapeHtml(n)}">Laden</button><button class="btn danger" data-del="${escapeHtml(n)}">Löschen</button></div></div></div>`).join("");
-  document.getElementById("saveProfileNow").onclick=()=>{if(!(roomData.players||[]).length)return alert("Keine Spieler vorhanden.");const n=prompt("Profilname:");if(!n)return;profiles[n.trim()]=roomData.players.map(p=>p.name);localStorage.setItem("knacktracker_profiles",JSON.stringify(profiles));refreshProfiles();renderProfiles()};
-  b.querySelectorAll("[data-load]").forEach(x=>x.onclick=async()=>{if(!currentRoom)return;await update(roomRef(),{players:profiles[x.dataset.load].map(n=>({name:n,life:maxLives()}))});closeModal("profilesModal")});
-  b.querySelectorAll("[data-del]").forEach(x=>x.onclick=()=>{delete profiles[x.dataset.del];localStorage.setItem("knacktracker_profiles",JSON.stringify(profiles));refreshProfiles();renderProfiles()})
+  const b=document.getElementById("profilesBody");b.innerHTML=`<button class="btn primary" id="saveProfileNow" style="width:100%;margin-bottom:10px">Aktuelle Spieler als Profil speichern</button>`+Object.keys(playerProfiles).map(n=>`<div class="profile-item"><div class="profile-row"><div><strong>${escapeHtml(n)}</strong><div class="small">${playerProfiles[n].map(escapeHtml).join(", ")}</div></div><div class="profile-actions"><button class="btn" data-load="${escapeHtml(n)}">Laden</button><button class="btn danger" data-del="${escapeHtml(n)}">Löschen</button></div></div></div>`).join("");
+  document.getElementById("saveProfileNow").onclick=()=>{if(!(roomData.players||[]).length)return alert("Keine Spieler vorhanden.");const n=prompt("Profilname:");if(!n)return;playerProfiles[n.trim()]=roomData.players.map(p=>p.name);localStorage.setItem("knack_player_profiles",JSON.stringify(playerProfiles));refreshProfiles();renderProfiles()};
+  b.querySelectorAll("[data-load]").forEach(x=>x.onclick=async()=>{if(!currentRoom)return;await update(roomRef(),{players:playerProfiles[x.dataset.load].map(n=>({name:n,life:maxLives()}))});closeModal("profilesModal")});
+  b.querySelectorAll("[data-del]").forEach(x=>x.onclick=()=>{delete playerProfiles[x.dataset.del];localStorage.setItem("knack_player_profiles",JSON.stringify(playerProfiles));refreshProfiles();renderProfiles()})
 }
 async function resetStats(){if(!currentRoom)return alert("Kein Spielraum geöffnet.");if(!confirm("Letzte Spiele und Rangliste dieses Raums wirklich zurücksetzen?"))return;await update(roomRef(),{history:[],updatedAt:Date.now()});closeModal("settingsModal")}
 
 document.getElementById("menuBtn").onclick=openDrawer;document.getElementById("drawerClose").onclick=closeDrawer;document.getElementById("drawerOverlay").addEventListener("click",e=>{if(e.target.id==="drawerOverlay")closeDrawer()});
-document.getElementById("drawerRoom").onclick=()=>{closeDrawer();openModal("roomModal")};document.getElementById("drawerHistory").onclick=()=>{closeDrawer();renderHistory();openModal("historyModal")};document.getElementById("drawerRanking").onclick=()=>{closeDrawer();renderRanking();openModal("rankingModal")};document.getElementById("drawerSettings").onclick=()=>{closeDrawer();renderThemeGrid();openModal("settingsModal")};
-modeSelect.onchange=()=>setMode(Number(modeSelect.value));document.getElementById("createRoomBtn").onclick=createRoom;document.getElementById("joinRoomBtn").onclick=joinRoom;document.getElementById("addPlayerBtn").onclick=addPlayer;playerInput.addEventListener("keydown",e=>{if(e.key==="Enter")addPlayer()});
-document.getElementById("newGameBtn").onclick=newGame;document.getElementById("removeAllBtn").onclick=removeAllPlayers;
-document.getElementById("profileBtn").onclick=()=>{renderProfiles();openModal("profilesModal")};document.getElementById("loadProfileBtn").onclick=async()=>{if(!currentRoom)return openModal("roomModal");const n=profileSelect.value;if(!n||!profiles[n])return;await update(roomRef(),{players:profiles[n].map(x=>({name:x,life:maxLives()}))})};
-document.getElementById("copyCodeBtn").onclick=async()=>{if(!currentRoom)return openModal("roomModal");try{await navigator.clipboard.writeText(currentRoom);const b=document.getElementById("copyCodeBtn"),old=b.textContent;b.textContent="Kopiert ✓";setTimeout(()=>b.textContent=old,1200)}catch{alert("Code: "+currentRoom)}};
-document.getElementById("resetStatsBtn").onclick=resetStats;document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));document.querySelectorAll(".modal-backdrop").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("open")}));
+document.getElementById("drawerCreateRoom").onclick=()=>{closeDrawer();document.getElementById("createRoomHint").textContent=`Raumname: ${creatorRoomName()}`;openModal("createRoomModal")};
+document.getElementById("drawerRooms").onclick=showRooms;document.getElementById("drawerHistory").onclick=()=>{closeDrawer();renderHistory();openModal("historyModal")};document.getElementById("drawerRanking").onclick=()=>{closeDrawer();renderRanking();openModal("rankingModal")};
+document.getElementById("drawerProfile").onclick=()=>{closeDrawer();document.getElementById("myNameInput").value=myName;openModal("myProfileModal")};
+document.getElementById("drawerSettings").onclick=()=>{closeDrawer();renderThemeGrid();openModal("settingsModal")};
+modeSelect.onchange=()=>setMode(Number(modeSelect.value));document.getElementById("createRoomBtn").onclick=createRoom;document.getElementById("addPlayerBtn").onclick=addPlayer;playerInput.addEventListener("keydown",e=>{if(e.key==="Enter")addPlayer()});document.getElementById("newGameBtn").onclick=newGame;document.getElementById("removeAllBtn").onclick=removeAllPlayers;
+document.getElementById("profileBtn").onclick=()=>{renderProfiles();openModal("profilesModal")};document.getElementById("loadProfileBtn").onclick=async()=>{if(!currentRoom)return;const n=profileSelect.value;if(!n||!playerProfiles[n])return;await update(roomRef(),{players:playerProfiles[n].map(x=>({name:x,life:maxLives()}))})};
+document.getElementById("saveMyNameBtn").onclick=()=>{myName=document.getElementById("myNameInput").value.trim();localStorage.setItem("knack_my_name",myName);closeModal("myProfileModal")};
+document.getElementById("resetStatsBtn").onclick=resetStats;document.getElementById("closeRoomBtn").onclick=closeCurrentRoom;
+document.getElementById("roomNameLine").onclick=()=>{if(!currentRoom)return;document.getElementById("roomControlInfo").innerHTML=`<div><div class="room-name">${escapeHtml(roomData.name||"Spielraum")}</div><div class="room-meta">${roomData.ownerId===clientId?"Du bist der Ersteller":"Erstellt von einem anderen Spieler"}</div></div>`;document.getElementById("closeRoomBtn").style.display=roomData.ownerId===clientId?"block":"none";openModal("roomControlModal")};
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));document.querySelectorAll(".modal-backdrop").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("open")}));
 
 refreshProfiles();renderPlayers();renderThemeGrid();
-if(isStandalone){const last=localStorage.getItem("knacktracker_last_room");if(last)get(ref(db,"rooms/"+last)).then(s=>{if(s.exists()){currentRoom=last;connectRoom()}})}
+if(isStandalone){const last=localStorage.getItem("knack_last_room");if(last)get(roomRef(last)).then(s=>{if(s.exists()&&s.val().open!==false)connectRoom(last)})}
 </script>
-</body>
-</html>
+</body></html>
