@@ -31,14 +31,14 @@ button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation
 .header{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:42px}
 .header-left{display:flex;align-items:center;gap:8px;min-width:0}.menu-btn{width:38px;height:38px;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);display:grid;place-items:center;flex:0 0 auto}.hamburger{width:18px;height:14px;display:grid;gap:3px}.hamburger span{height:2px;background:currentColor}
 .app-logo{width:38px;height:38px;border-radius:10px;overflow:hidden;flex:0 0 auto}.brand{font-size:38px;line-height:38px;font-weight:950;white-space:nowrap;letter-spacing:-.035em}
-.btn{border:1px solid var(--border);border-radius:11px;background:var(--panel2);color:var(--text);padding:9px 10px;font-weight:800;white-space:nowrap}.btn.primary{background:var(--accent);color:#111;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}.btn:active{transform:scale(.97)}#removeAllBtn{font-size:1.7rem;font-weight:950;line-height:1;display:flex;align-items:center;justify-content:center}.icon-btn{width:38px;height:38px;padding:0;display:grid;place-items:center;font-size:1.15rem;line-height:1}.profile-gear{font-size:2rem;line-height:1;display:block}
-input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius:10px;background:color-mix(in srgb,var(--panel2) 84%,#000);color:var(--text);padding:9px 10px;font-size:.9rem}
+.btn{border:1px solid var(--border);border-radius:11px;background:var(--panel2);color:var(--text);padding:9px 9px;font-weight:800;white-space:nowrap;overflow:visible;text-overflow:clip;min-width:0}.btn.primary{background:var(--accent);color:#111;border-color:transparent}.btn.danger{background:rgba(239,68,68,.13);color:#fecaca}.btn:active{transform:scale(.97)}#removeAllBtn{font-size:.78rem;font-weight:900;display:flex;align-items:center;justify-content:center}.icon-btn{width:38px;height:38px;padding:0;display:grid;place-items:center;font-size:1.15rem;line-height:1}.profile-gear{font-size:2rem;line-height:1;display:block}
+input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius:10px;background:color-mix(in srgb,var(--panel2) 84%,#000);color:var(--text);padding:9px 9px;font-size:.88rem}
 .control-stack{display:grid;gap:7px;background:transparent;border:0;padding:0}
 .control-row{display:grid;gap:6px;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:7px}
-.row-player{grid-template-columns:minmax(92px,.55fr) minmax(0,1fr) 38px}
-.row-profile{grid-template-columns:minmax(0,1fr) auto 38px}
+.row-player{grid-template-columns:minmax(88px,.55fr) minmax(150px,1fr) minmax(106px,.72fr)}
+.row-profile{grid-template-columns:minmax(130px,1fr) minmax(94px,.65fr) minmax(82px,.55fr)}
 .row-life{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-.row-profile #profileAddBtn,.row-profile #profileLoadBtn{background:color-mix(in srgb,var(--accent) 18%,var(--panel2));border-color:color-mix(in srgb,var(--accent) 38%,var(--border));color:var(--text)}
+.row-profile #profileAddBtn{background:color-mix(in srgb,var(--accent) 18%,var(--panel2));border-color:color-mix(in srgb,var(--accent) 38%,var(--border));color:var(--text)}
 
 .player-picker-btn{min-width:0;overflow:hidden;text-overflow:ellipsis;background:color-mix(in srgb,var(--accent) 12%,var(--panel2));border-color:color-mix(in srgb,var(--accent) 32%,var(--border))}
 .quick-player-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -51,9 +51,6 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 .quick-check{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;font-size:.75rem}
 .quick-player.selected .quick-check{background:var(--accent);color:#111;border-color:var(--accent)}
 .quick-picker-footer{position:sticky;bottom:0;background:var(--panel);padding-top:10px;margin-top:10px}
-.drag-handle{width:27px;height:28px;border:0;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;padding:0;font-size:1.08rem;line-height:1;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
-.drag-handle:active{cursor:grabbing;color:var(--accent2)}
-.player.dragging{opacity:.78;transform:scale(.985);z-index:5;box-shadow:0 10px 28px rgba(0,0,0,.28)}
 
 .mini-help{font-size:.68rem;color:var(--muted);margin-top:-1px}
 
@@ -79,7 +76,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 @keyframes lifeBump{45%{transform:scale(1.18)}}
 @keyframes swimmerPulse{50%{box-shadow:inset 0 0 0 3px color-mix(in srgb,#ef4444 88%,transparent),inset 0 0 30px color-mix(in srgb,#ef4444 42%,transparent)}}
 
-.player-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:6px;align-items:center;padding:7px 8px 5px}
+.player-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 8px 5px}
 .player-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;background:var(--pc);display:grid;place-items:center;color:#111;font-weight:950;font-size:.72rem;flex:0 0 auto}
 .player-avatar img{width:100%;height:100%;object-fit:cover}.player-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:850}
 .remove{width:28px;height:28px;padding:0;border-radius:8px;border:1px solid var(--border);background:rgba(239,68,68,.12);color:#fecaca;font-weight:900;display:flex;align-items:center;justify-content:center;line-height:1}
@@ -101,7 +98,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 .drawer{position:absolute;left:0;top:0;bottom:0;width:min(340px,88vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:.24s;padding:max(16px,env(safe-area-inset-top)) 14px max(16px,env(safe-area-inset-bottom));display:flex;flex-direction:column}.drawer-overlay.open .drawer{transform:none}
 .drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.drawer-title{font-weight:950;font-size:1.2rem}.drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
 .drawer-nav{display:grid;gap:8px}.drawer-bottom{margin-top:auto}.drawer-item{display:flex;align-items:center;gap:12px;width:100%;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800;text-align:left}.drawer-item:active{background:var(--panel2)}
-.drawer-icon{width:28px;text-align:center;font-size:1.2rem;color:var(--accent2)}.drawer-icon.settings{font-size:1.55rem}.drawer-spacer{height:0;background:transparent;margin:2px 0}
+.drawer-icon{width:28px;height:28px;display:grid;place-items:center;color:var(--accent2);flex:0 0 28px}.drawer-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.drawer-icon.settings svg{width:24px;height:24px}.drawer-spacer{height:0;background:transparent;margin:2px 0}
 
 .modal-backdrop{position:fixed;inset:0;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:14px;z-index:90}.modal-backdrop.open{display:flex}
 .modal{width:min(680px,100%);max-height:min(84dvh,760px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:18px}.modal-head{position:sticky;top:0;background:var(--panel);display:flex;justify-content:space-between;align-items:center;padding:14px 15px;border-bottom:1px solid var(--border);z-index:2}.modal-head h2{margin:0;font-size:1.15rem}.modal-body{padding:12px}.close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
@@ -122,8 +119,8 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 
 @media(max-width:640px){
  .brand{font-size:34px;line-height:34px}.header .btn{font-size:.76rem;padding:8px 9px}
- .row-player{grid-template-columns:minmax(92px,.55fr) minmax(0,1fr) 38px}
- .row-profile{grid-template-columns:minmax(0,1fr) auto 36px}
+ .row-player{grid-template-columns:minmax(88px,.55fr) minmax(150px,1fr) minmax(106px,.72fr)}
+ .row-profile{grid-template-columns:minmax(118px,1fr) minmax(88px,.64fr) minmax(76px,.56fr)}
  .row-life{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
  .control-row .btn{font-size:.75rem;padding:8px 9px}
  .rank-tabs{grid-template-columns:1fr}
@@ -169,13 +166,13 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
     <option value="5">5 Leben</option>
    </select>
    <button class="btn player-picker-btn" id="playerPickerBtn">Spieler auswählen</button>
-   <button class="btn danger icon-btn" id="removeAllBtn" aria-label="Alle entfernen">✕</button>
+   <button class="btn danger" id="removeAllBtn">Alle entfernen</button>
   </div>
 
   <div class="control-row row-profile">
    <select id="profileSelect"><option value="">Profil</option></select>
    <button class="btn" id="profileAddBtn">Hinzufügen</button>
-   <button class="btn icon-btn" id="profileManageBtn" aria-label="Profil bearbeiten"><span class="profile-gear">⚙︎</span></button>
+   <button class="btn danger" id="profileDeleteMainBtn">Löschen</button>
   </div>
  </section>
 
@@ -192,15 +189,15 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 
 <div class="drawer-overlay" id="drawerOverlay">
  <aside class="drawer">
-  <div class="drawer-head"><div class="drawer-title">Knack</div><button class="drawer-close" id="drawerClose">✕</button></div>
+  <div class="drawer-head"><div></div><button class="drawer-close" id="drawerClose">✕</button></div>
   <nav class="drawer-nav">
-   <button class="drawer-item" id="drawerPlayers"><span class="drawer-icon">👥</span><span>Spieler</span></button>
-   <button class="drawer-item" id="drawerHistory"><span class="drawer-icon">↶</span><span>Letzte Spiele</span></button>
-   <button class="drawer-item" id="drawerRanking"><span class="drawer-icon">🏆</span><span>Rangliste</span></button>
-   <button class="drawer-item" id="drawerQr"><span class="drawer-icon">▦</span><span>QR-Code</span></button>
+   <button class="drawer-item" id="drawerPlayers"><span class="drawer-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20a6 6 0 0 1 12 0M14 15a5 5 0 0 1 7 5"/></svg></span><span>Spieler</span></button>
+   <button class="drawer-item" id="drawerHistory"><span class="drawer-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg></span><span>Letzte Spiele</span></button>
+   <button class="drawer-item" id="drawerRanking"><span class="drawer-icon"><svg viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0Z"/><path d="M12 12v5M8 21h8M10 17h4"/><path d="M8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4"/></svg></span><span>Rangliste</span></button>
+   <button class="drawer-item" id="drawerQr"><span class="drawer-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6"/><rect x="15" y="3" width="6" height="6"/><rect x="3" y="15" width="6" height="6"/><path d="M15 15h3v3h3M15 21h3M21 15v3"/></svg></span><span>QR-Code</span></button>
   </nav>
   <div class="drawer-bottom">
-   <button class="drawer-item" id="drawerSettings"><span class="drawer-icon settings">⚙︎</span><span>Einstellungen</span></button>
+   <button class="drawer-item" id="drawerSettings"><span class="drawer-icon settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1L7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1H21v4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg></span><span>Einstellungen</span></button>
   </div>
  </aside>
 </div>
@@ -209,7 +206,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 <div class="modal-backdrop" id="quickPlayerModal"><div class="modal">
  <div class="modal-head"><h2>Spieler auswählen</h2><button class="close" data-close="quickPlayerModal">✕</button></div>
  <div class="modal-body">
-  <div class="small" style="margin-bottom:10px">Mehrere Spieler können gleichzeitig ausgewählt werden.</div>
+  
   <div class="quick-player-grid" id="quickPlayerGrid"></div>
   <div class="quick-picker-footer">
    <button class="btn primary" id="applyPlayerSelectionBtn" style="width:100%" disabled>Auswahl übernehmen</button>
@@ -306,12 +303,17 @@ const THEMES={
  amber:["Amber","#0b1020","#151d31","#1d2942","#24314d","#f8fafc","#9aa7bd","#f59e0b","#fbbf24","#38bdf8"],
  carbon:["Carbon","#050505","#0b0b0b","#171717","#232323","#ffffff","#a3a3a3","#d4af37","#f7dc79","#ffffff"],
  paper:["Paper","#f5f1e8","#fffdf8","#ebe5d8","#ddd3c0","#1d1b17","#736b5e","#9f7a22","#c49a34","#325ea8"],
- neon:["Neon","#06070b","#11131d","#191d2a","#242a3a","#f8fbff","#9298ad","#c7ff00","#f5ff7a","#ff3bd4"],
- forest:["Forest","#08120c","#102016","#18301f","#23442c","#f3fff6","#9fbea9","#6fd08c","#a7edb7","#d6c27a"],
- sunset:["Sunset","#1b0b12","#32131e","#4a1d29","#62303c","#fff6f4","#cba8aa","#ff7a59","#ffb36b","#ffc2d1"],
- ocean:["Ocean","#06131b","#0c2632","#12394a","#1b5065","#effbff","#9fc2d0","#44b6d9","#80d9ef","#f1d36c"],
- plum:["Plum","#130a16","#24102a","#36183d","#4b2252","#fff7ff","#c7a8cf","#d18be8","#edb8f7","#79d7c2"],
- mocha:["Mocha","#16100d","#271c17","#3a2921","#51392e","#fff8f1","#c9b2a3","#c18a5b","#dfb183","#9cc5b1"]
+ neon:["Neon Arcade","#07080d","#131422","#1d2030","#292d40","#fbfbff","#979bb2","#c7ff00","#ff3bd4","#55e7ff"],
+ forest:["Forest Lodge","#08120c","#102016","#18301f","#23442c","#f3fff6","#9fbea9","#6fd08c","#d6c27a","#d98c5f"],
+ sunset:["Sunset Club","#1b0b12","#32131e","#4a1d29","#62303c","#fff6f4","#cba8aa","#ff7a59","#ffb36b","#6fc6d8"],
+ ocean:["Ocean Gold","#06131b","#0c2632","#12394a","#1b5065","#effbff","#9fc2d0","#44b6d9","#f1d36c","#ef8b6f"],
+ plum:["Plum Mint","#130a16","#24102a","#36183d","#4b2252","#fff7ff","#c7a8cf","#d18be8","#79d7c2","#f4c95d"],
+ mocha:["Mocha Sage","#16100d","#271c17","#3a2921","#51392e","#fff8f1","#c9b2a3","#c18a5b","#9cc5b1","#e4c46a"],
+ cobalt:["Cobalt Coral","#081020","#101f3d","#192f58","#234274","#f5f8ff","#aab7d1","#4f8cff","#ff765f","#ffd166"],
+ cherry:["Cherry Cream","#20090f","#39121c","#531b29","#702638","#fff7f2","#d5aaa7","#ff4f72","#ffd1a8","#8ed6c8"],
+ retro:["Retro Pop","#161326","#27203d","#393057","#514274","#fff9e8","#bdb4cf","#ffb703","#fb7185","#56cfe1"],
+ nordic:["Nordic","#eef2ef","#ffffff","#dfe8e2","#cad8cf","#17231d","#68766e","#4d7c6a","#c08b5c","#56758d"],
+ ember:["Ember","#160b08","#29130d","#3d1d13","#55281b","#fff7ef","#c6a89a","#ff6b35","#f7c548","#5aa9a6"]
 };
 const COLORS=["#60a5fa","#34d399","#f59e0b","#a78bfa","#f87171","#22d3ee","#f472b6","#84cc16","#fb923c","#e879f9","#facc15","#14b8a6","#f43f5e","#8b5cf6","#0ea5e9","#22c55e"];
 const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random();
@@ -334,7 +336,7 @@ const playerById=id=>sharedPlayers[id]||null;
 function applyTheme(k){
  const t=THEMES[k]||THEMES.amber,[nm,bg,p,p2,p3,tx,mu,a,a2,bl]=t,r=document.documentElement.style;
  [["--bg",bg],["--panel",p],["--panel2",p2],["--panel3",p3],["--text",tx],["--muted",mu],["--accent",a],["--accent2",a2],["--blue",bl]].forEach(([x,v])=>r.setProperty(x,v));
- state.theme=k;persist();const logoMap={amber:"amber",carbon:"dark",paper:"light",neon:"green",forest:"green",sunset:"orange",ocean:"blue",plum:"purple",mocha:"sand"};const lk=logoMap[k]||"amber";for(const id of ["appLogo","installLogo","splashLogo"])$(id).src=`./logo-${lk}.png`;
+ state.theme=k;persist();const logoMap={amber:"amber",carbon:"dark",paper:"light",neon:"green",forest:"green",sunset:"orange",ocean:"blue",plum:"purple",mocha:"sand",cobalt:"blue",cherry:"red",retro:"pink",nordic:"light",ember:"orange"};const lk=logoMap[k]||"amber";for(const id of ["appLogo","installLogo","splashLogo"])$(id).src=`./logo-${lk}.png`;
 }
 applyTheme(state.theme);
 
@@ -372,7 +374,7 @@ function renderGame(){
   card.className="player added"+(gp.life===1?" state-swimmer swimmer":"")+(gp.life<=0?" state-over":"")+(animateLifeId===gp.id?" life-change":"");
   card.style.setProperty("--pc",p.color||"#60a5fa");
   const avatar=p.photo?`<img src="${p.photo}">`:initials(p.name);
-  card.innerHTML=`<div class="player-top"><div class="player-avatar" style="background:${p.color||"#60a5fa"}">${avatar}</div><div class="player-name">${esc(p.name)}</div><button class="drag-handle" aria-label="Spieler verschieben" title="Verschieben">⠿</button><button class="remove">✕</button></div><div class="aaa-row"><button class="aaa-btn">Super-Knack</button></div><div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${gp.life<=0?"Game Over":gp.life===1?"Schwimmer":gp.life}</div></div><button class="life-btn plus">+</button></div>`;
+  card.innerHTML=`<div class="player-top"><div class="player-avatar" style="background:${p.color||"#60a5fa"}">${avatar}</div><div class="player-name">${esc(p.name)}</div><button class="remove">✕</button></div><div class="aaa-row"><button class="aaa-btn">Super-Knack</button></div><div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${gp.life<=0?"Game Over":gp.life===1?"Schwimmer":gp.life}</div></div><button class="life-btn plus">+</button></div>`;
   card.querySelector(".minus").onclick=()=>life(gp.id,-1);
   card.querySelector(".plus").onclick=()=>life(gp.id,1);
   card.querySelector(".aaa-btn").onclick=()=>{
@@ -381,50 +383,12 @@ function renderGame(){
    openModal("confirmAaaModal");
   };
   card.querySelector(".remove").onclick=()=>removeGamePlayer(gp.id,card);
-  installDrag(card.querySelector(".drag-handle"),card,gp.id,playersBox);
   playersBox.appendChild(card);
  });
  animateLifeId=null;animateNewId=null;
 }
 
 
-let dragState=null;
-function installDrag(handle,card,gameId,playersBox){
- handle.addEventListener("pointerdown",e=>{
-   if(e.button!==undefined&&e.button!==0)return;
-   e.preventDefault();
-   handle.setPointerCapture?.(e.pointerId);
-   dragState={gameId,pointerId:e.pointerId,before:snap(),card,playersBox,moved:false};
-   card.classList.add("dragging");
- });
- handle.addEventListener("pointermove",e=>{
-   if(!dragState||dragState.pointerId!==e.pointerId||dragState.card!==card)return;
-   e.preventDefault();
-   const target=document.elementFromPoint(e.clientX,e.clientY)?.closest(".player");
-   if(!target||target===card||target.parentElement!==playersBox)return;
-   const rect=target.getBoundingClientRect();
-   const before=e.clientY<rect.top+rect.height/2 || (Math.abs(e.clientY-(rect.top+rect.height/2))<rect.height*.22 && e.clientX<rect.left+rect.width/2);
-   if(before)playersBox.insertBefore(card,target);else playersBox.insertBefore(card,target.nextSibling);
-   dragState.moved=true;
- });
- const end=e=>{
-   if(!dragState||dragState.pointerId!==e.pointerId||dragState.card!==card)return;
-   card.classList.remove("dragging");
-   if(dragState.moved){
-     const order=[...playersBox.querySelectorAll(".player")].map(el=>el.dataset.gameId);
-     const map=new Map(state.game.players.map(p=>[p.id,p]));
-     const reordered=order.map(id=>map.get(id)).filter(Boolean);
-     if(reordered.length===state.game.players.length){
-       state.game.undo={players:dragState.before,label:"Reihenfolge geändert"};
-       state.game.players=reordered;
-       persist();
-     }
-   }
-   dragState=null;
- };
- handle.addEventListener("pointerup",end);
- handle.addEventListener("pointercancel",end);
-}
 function addPlayerToGame(playerId){
  if(!playerId)return;
  if(state.game.players.some(p=>p.playerId===playerId))return alert("Spieler ist bereits dabei.");
@@ -558,7 +522,7 @@ async function finishRound(){
 
 function renderSharedPlayers(){
  const list=Object.entries(sharedPlayers).sort((a,b)=>String(a[1].name).localeCompare(String(b[1].name),"de",{sensitivity:"base"}));
- $("sharedPlayersList").innerHTML=list.length?list.map(([id,p])=>`<div class="player-item"><div class="player-item-row"><div class="player-list-main"><div class="player-list-avatar" style="background:${p.color||"#60a5fa"}">${p.photo?`<img src="${p.photo}">`:initials(p.name)}</div><div><strong>${esc(p.name)}</strong><div class="small">Für alle Geräte synchronisiert</div></div></div><div class="player-list-actions"><button class="btn" data-edit="${id}">Bearbeiten</button><button class="btn danger" data-del="${id}">Löschen</button></div></div></div>`).join(""):'<div class="empty">Noch keine Spieler.</div>';
+ $("sharedPlayersList").innerHTML=list.length?list.map(([id,p])=>`<div class="player-item"><div class="player-item-row"><div class="player-list-main"><div class="player-list-avatar" style="background:${p.color||"#60a5fa"}">${p.photo?`<img src="${p.photo}">`:initials(p.name)}</div><div><strong>${esc(p.name)}</strong></div></div><div class="player-list-actions"><button class="btn" data-edit="${id}">Bearbeiten</button><button class="btn danger" data-del="${id}">Löschen</button></div></div></div>`).join(""):'<div class="empty">Noch keine Spieler.</div>';
  $("sharedPlayersList").querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>openPlayerEditor(b.dataset.edit));
  $("sharedPlayersList").querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>deleteSharedPlayer(b.dataset.del));
 }
@@ -647,7 +611,12 @@ $("drawerSettings").onclick=()=>{closeDrawer();renderThemeGrid();openModal("sett
 $("playerPickerBtn").onclick=openQuickPlayerPicker;$("applyPlayerSelectionBtn").onclick=applyQuickPlayerSelection;
 $("profileAddBtn").onclick=addProfile;
 $("profileSelect").onchange=()=>{if($("profileSelect").value)loadProfile();};
-$("profileManageBtn").onclick=openProfileManager;$("profileRenameBtn").onclick=renameProfile;$("profileDeleteBtn").onclick=deleteProfile;
+$("profileDeleteMainBtn").onclick=()=>{
+ const name=$("profileSelect").value;
+ if(!name)return alert("Bitte zuerst ein Profil auswählen.");
+ if(!confirm(`Profil "${name}" wirklich löschen?`))return;
+ delete state.profiles[name];persist();refreshSelects();
+};
 $("livesSelect").onchange=()=>changeLives($("livesSelect").value);
 $("removeAllBtn").onclick=removeAll;$("undoBtn").onclick=undo;
 $("newGameBtn").onclick=()=>openModal("confirmNewGameModal");$("confirmNewGameBtn").onclick=finishRound;$("confirmAaaBtn").onclick=confirmAaa;
