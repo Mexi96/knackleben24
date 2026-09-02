@@ -35,10 +35,26 @@ button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation
 input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius:10px;background:color-mix(in srgb,var(--panel2) 84%,#000);color:var(--text);padding:9px 10px;font-size:.9rem}
 .control-stack{display:grid;gap:7px;background:transparent;border:0;padding:0}
 .control-row{display:grid;gap:6px;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:7px}
-.row-player{grid-template-columns:minmax(92px,.55fr) minmax(0,1fr) auto 38px}
-.row-profile{grid-template-columns:minmax(0,1fr) auto auto 38px}
+.row-player{grid-template-columns:minmax(92px,.55fr) minmax(0,1fr) 38px}
+.row-profile{grid-template-columns:minmax(0,1fr) auto 38px}
 .row-life{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 .row-profile #profileAddBtn,.row-profile #profileLoadBtn{background:color-mix(in srgb,var(--accent) 18%,var(--panel2));border-color:color-mix(in srgb,var(--accent) 38%,var(--border));color:var(--text)}
+
+.player-picker-btn{min-width:0;overflow:hidden;text-overflow:ellipsis;background:color-mix(in srgb,var(--accent) 12%,var(--panel2));border-color:color-mix(in srgb,var(--accent) 32%,var(--border))}
+.quick-player-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.quick-player{min-width:0;display:grid;grid-template-columns:42px minmax(0,1fr) 24px;align-items:center;gap:9px;border:1px solid var(--border);border-radius:13px;background:var(--panel2);color:var(--text);padding:8px;text-align:left}
+.quick-player.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 13%,var(--panel2))}
+.quick-player.in-game{opacity:.42}
+.quick-avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;display:grid;place-items:center;color:#111;font-size:.72rem;font-weight:950}
+.quick-avatar img{width:100%;height:100%;object-fit:cover}
+.quick-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:850}
+.quick-check{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;font-size:.75rem}
+.quick-player.selected .quick-check{background:var(--accent);color:#111;border-color:var(--accent)}
+.quick-picker-footer{position:sticky;bottom:0;background:var(--panel);padding-top:10px;margin-top:10px}
+.drag-handle{width:27px;height:28px;border:0;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;padding:0;font-size:1.08rem;line-height:1;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.drag-handle:active{cursor:grabbing;color:var(--accent2)}
+.player.dragging{opacity:.78;transform:scale(.985);z-index:5;box-shadow:0 10px 28px rgba(0,0,0,.28)}
+
 .mini-help{font-size:.68rem;color:var(--muted);margin-top:-1px}
 
 .players{min-height:0;display:grid;gap:8px;overflow:hidden;scrollbar-width:none;align-content:stretch}.players::-webkit-scrollbar{display:none}
@@ -63,7 +79,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 @keyframes lifeBump{45%{transform:scale(1.18)}}
 @keyframes swimmerPulse{50%{box-shadow:inset 0 0 0 3px color-mix(in srgb,#ef4444 88%,transparent),inset 0 0 30px color-mix(in srgb,#ef4444 42%,transparent)}}
 
-.player-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 8px 5px}
+.player-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:6px;align-items:center;padding:7px 8px 5px}
 .player-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;background:var(--pc);display:grid;place-items:center;color:#111;font-weight:950;font-size:.72rem;flex:0 0 auto}
 .player-avatar img{width:100%;height:100%;object-fit:cover}.player-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:850}
 .remove{width:28px;height:28px;padding:0;border-radius:8px;border:1px solid var(--border);background:rgba(239,68,68,.12);color:#fecaca;font-weight:900;display:flex;align-items:center;justify-content:center;line-height:1}
@@ -106,8 +122,8 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 
 @media(max-width:640px){
  .brand{font-size:34px;line-height:34px}.header .btn{font-size:.76rem;padding:8px 9px}
- .row-player{grid-template-columns:minmax(92px,.55fr) minmax(0,1fr) auto 38px}
- .row-profile{grid-template-columns:minmax(0,1fr) auto auto 36px}
+ .row-player{grid-template-columns:minmax(92px,.55fr) minmax(0,1fr) 38px}
+ .row-profile{grid-template-columns:minmax(0,1fr) auto 36px}
  .row-life{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
  .control-row .btn{font-size:.75rem;padding:8px 9px}
  .rank-tabs{grid-template-columns:1fr}
@@ -152,15 +168,13 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
     <option value="4">4 Leben</option>
     <option value="5">5 Leben</option>
    </select>
-   <select id="knownPlayerSelect"><option value="">Spieler</option></select>
-   <button class="btn primary" id="addPlayerBtn">Hinzufügen</button>
+   <button class="btn player-picker-btn" id="playerPickerBtn">Spieler auswählen</button>
    <button class="btn danger icon-btn" id="removeAllBtn" aria-label="Alle entfernen">✕</button>
   </div>
 
   <div class="control-row row-profile">
    <select id="profileSelect"><option value="">Profil</option></select>
    <button class="btn" id="profileAddBtn">Hinzufügen</button>
-   <button class="btn" id="profileLoadBtn">Laden</button>
    <button class="btn icon-btn" id="profileManageBtn" aria-label="Profil bearbeiten"><span class="profile-gear">⚙︎</span></button>
   </div>
  </section>
@@ -190,6 +204,18 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
   </div>
  </aside>
 </div>
+
+
+<div class="modal-backdrop" id="quickPlayerModal"><div class="modal">
+ <div class="modal-head"><h2>Spieler auswählen</h2><button class="close" data-close="quickPlayerModal">✕</button></div>
+ <div class="modal-body">
+  <div class="small" style="margin-bottom:10px">Mehrere Spieler können gleichzeitig ausgewählt werden.</div>
+  <div class="quick-player-grid" id="quickPlayerGrid"></div>
+  <div class="quick-picker-footer">
+   <button class="btn primary" id="applyPlayerSelectionBtn" style="width:100%" disabled>Auswahl übernehmen</button>
+  </div>
+ </div>
+</div></div>
 
 <div class="modal-backdrop" id="playersModal"><div class="modal">
  <div class="modal-head"><h2>Spieler</h2><button class="close" data-close="playersModal">✕</button></div>
@@ -321,9 +347,10 @@ function snap(){return JSON.parse(JSON.stringify(state.game.players))}
 function setUndo(label){state.game.undo={players:snap(),label}}
 
 function refreshSelects(){
- const sorted=Object.entries(sharedPlayers).sort((a,b)=>String(a[1].name).localeCompare(String(b[1].name),"de",{sensitivity:"base"}));
- $("knownPlayerSelect").innerHTML='<option value="">Spieler</option>'+sorted.map(([id,p])=>`<option value="${id}">${esc(p.name)}</option>`).join("");
- $("profileSelect").innerHTML='<option value="">Profil</option>'+Object.keys(state.profiles||{}).sort().map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join("");
+ const profileSelect=$("profileSelect");
+ const selectedProfile=profileSelect?.value||"";
+ profileSelect.innerHTML='<option value="">Profil</option>'+Object.keys(state.profiles||{}).sort((a,b)=>a.localeCompare(b,"de",{sensitivity:"base"})).map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join("");
+ if(selectedProfile&&state.profiles[selectedProfile])profileSelect.value=selectedProfile;
  $("livesSelect").value=String(state.lives);
 }
 
@@ -341,10 +368,11 @@ function renderGame(){
  valid.forEach(gp=>{
   const p=playerById(gp.playerId);
   const card=document.createElement("article");
+  card.dataset.gameId=gp.id;
   card.className="player added"+(gp.life===1?" state-swimmer swimmer":"")+(gp.life<=0?" state-over":"")+(animateLifeId===gp.id?" life-change":"");
   card.style.setProperty("--pc",p.color||"#60a5fa");
   const avatar=p.photo?`<img src="${p.photo}">`:initials(p.name);
-  card.innerHTML=`<div class="player-top"><div class="player-avatar" style="background:${p.color||"#60a5fa"}">${avatar}</div><div class="player-name">${esc(p.name)}</div><button class="remove">✕</button></div><div class="aaa-row"><button class="aaa-btn">Super-Knack</button></div><div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${gp.life<=0?"Game Over":gp.life===1?"Schwimmer":gp.life}</div></div><button class="life-btn plus">+</button></div>`;
+  card.innerHTML=`<div class="player-top"><div class="player-avatar" style="background:${p.color||"#60a5fa"}">${avatar}</div><div class="player-name">${esc(p.name)}</div><button class="drag-handle" aria-label="Spieler verschieben" title="Verschieben">⠿</button><button class="remove">✕</button></div><div class="aaa-row"><button class="aaa-btn">Super-Knack</button></div><div class="life-row"><button class="life-btn minus">−</button><div class="life-display"><div class="life-main">${gp.life<=0?"Game Over":gp.life===1?"Schwimmer":gp.life}</div></div><button class="life-btn plus">+</button></div>`;
   card.querySelector(".minus").onclick=()=>life(gp.id,-1);
   card.querySelector(".plus").onclick=()=>life(gp.id,1);
   card.querySelector(".aaa-btn").onclick=()=>{
@@ -353,21 +381,98 @@ function renderGame(){
    openModal("confirmAaaModal");
   };
   card.querySelector(".remove").onclick=()=>removeGamePlayer(gp.id,card);
+  installDrag(card.querySelector(".drag-handle"),card,gp.id,playersBox);
   playersBox.appendChild(card);
  });
  animateLifeId=null;animateNewId=null;
 }
 
+
+let dragState=null;
+function installDrag(handle,card,gameId,playersBox){
+ handle.addEventListener("pointerdown",e=>{
+   if(e.button!==undefined&&e.button!==0)return;
+   e.preventDefault();
+   handle.setPointerCapture?.(e.pointerId);
+   dragState={gameId,pointerId:e.pointerId,before:snap(),card,playersBox,moved:false};
+   card.classList.add("dragging");
+ });
+ handle.addEventListener("pointermove",e=>{
+   if(!dragState||dragState.pointerId!==e.pointerId||dragState.card!==card)return;
+   e.preventDefault();
+   const target=document.elementFromPoint(e.clientX,e.clientY)?.closest(".player");
+   if(!target||target===card||target.parentElement!==playersBox)return;
+   const rect=target.getBoundingClientRect();
+   const before=e.clientY<rect.top+rect.height/2 || (Math.abs(e.clientY-(rect.top+rect.height/2))<rect.height*.22 && e.clientX<rect.left+rect.width/2);
+   if(before)playersBox.insertBefore(card,target);else playersBox.insertBefore(card,target.nextSibling);
+   dragState.moved=true;
+ });
+ const end=e=>{
+   if(!dragState||dragState.pointerId!==e.pointerId||dragState.card!==card)return;
+   card.classList.remove("dragging");
+   if(dragState.moved){
+     const order=[...playersBox.querySelectorAll(".player")].map(el=>el.dataset.gameId);
+     const map=new Map(state.game.players.map(p=>[p.id,p]));
+     const reordered=order.map(id=>map.get(id)).filter(Boolean);
+     if(reordered.length===state.game.players.length){
+       state.game.undo={players:dragState.before,label:"Reihenfolge geändert"};
+       state.game.players=reordered;
+       persist();
+     }
+   }
+   dragState=null;
+ };
+ handle.addEventListener("pointerup",end);
+ handle.addEventListener("pointercancel",end);
+}
 function addPlayerToGame(playerId){
  if(!playerId)return;
  if(state.game.players.some(p=>p.playerId===playerId))return alert("Spieler ist bereits dabei.");
  setUndo("Spieler hinzugefügt");
  const id=uid();state.game.players.push({id,playerId,life:state.lives});animateNewId=id;persist();renderGame();
 }
-function addFromMain(){
- const selected=$("knownPlayerSelect").value;
- if(!selected)return alert("Bitte einen Spieler auswählen.");
- addPlayerToGame(selected);
+let quickSelected=new Set();
+
+function renderQuickPlayerPicker(){
+ const grid=$("quickPlayerGrid");
+ const inGame=new Set(state.game.players.map(p=>p.playerId));
+ const list=Object.entries(sharedPlayers).sort((a,b)=>String(a[1].name).localeCompare(String(b[1].name),"de",{sensitivity:"base"}));
+ grid.innerHTML=list.length?list.map(([id,p])=>{
+   const selected=quickSelected.has(id);
+   const already=inGame.has(id);
+   const avatar=p.photo?`<img src="${p.photo}">`:initials(p.name);
+   return `<button class="quick-player ${selected?"selected":""} ${already?"in-game":""}" data-pick="${id}" ${already?"disabled":""}><span class="quick-avatar" style="background:${p.color||"#60a5fa"}">${avatar}</span><span class="quick-name">${esc(p.name)}</span><span class="quick-check">${selected?"✓":already?"✓":""}</span></button>`;
+ }).join(""):'<div class="empty" style="grid-column:1/-1">Noch keine Spieler gespeichert.</div>';
+ grid.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{
+   const id=b.dataset.pick;
+   if(quickSelected.has(id))quickSelected.delete(id);else quickSelected.add(id);
+   renderQuickPlayerPicker();
+ });
+ const apply=$("applyPlayerSelectionBtn");
+ apply.disabled=quickSelected.size===0;
+ apply.textContent=quickSelected.size?`Auswahl übernehmen (${quickSelected.size})`:"Auswahl übernehmen";
+}
+function openQuickPlayerPicker(){
+ quickSelected=new Set();
+ renderQuickPlayerPicker();
+ openModal("quickPlayerModal");
+}
+function applyQuickPlayerSelection(){
+ if(!quickSelected.size)return;
+ const before=snap();
+ let changed=false;
+ for(const playerId of quickSelected){
+   if(!state.game.players.some(p=>p.playerId===playerId)){
+     state.game.players.push({id:uid(),playerId,life:state.lives});
+     changed=true;
+   }
+ }
+ if(changed){
+   state.game.undo={players:before,label:"Spieler hinzugefügt"};
+   persist();renderGame();
+ }
+ quickSelected.clear();
+ closeModal("quickPlayerModal");
 }
 function life(id,d){
  setUndo("Leben geändert");
@@ -539,8 +644,10 @@ $("drawerPlayers").onclick=()=>{closeDrawer();renderSharedPlayers();openModal("p
 $("drawerHistory").onclick=showHistory;$("drawerRanking").onclick=showRanking;$("drawerQr").onclick=()=>{closeDrawer();openModal("qrModal")};
 $("drawerSettings").onclick=()=>{closeDrawer();renderThemeGrid();openModal("settingsModal")};
 
-$("addPlayerBtn").onclick=addFromMain;
-$("profileAddBtn").onclick=addProfile;$("profileLoadBtn").onclick=loadProfile;$("profileManageBtn").onclick=openProfileManager;$("profileRenameBtn").onclick=renameProfile;$("profileDeleteBtn").onclick=deleteProfile;
+$("playerPickerBtn").onclick=openQuickPlayerPicker;$("applyPlayerSelectionBtn").onclick=applyQuickPlayerSelection;
+$("profileAddBtn").onclick=addProfile;
+$("profileSelect").onchange=()=>{if($("profileSelect").value)loadProfile();};
+$("profileManageBtn").onclick=openProfileManager;$("profileRenameBtn").onclick=renameProfile;$("profileDeleteBtn").onclick=deleteProfile;
 $("livesSelect").onchange=()=>changeLives($("livesSelect").value);
 $("removeAllBtn").onclick=removeAll;$("undoBtn").onclick=undo;
 $("newGameBtn").onclick=()=>openModal("confirmNewGameModal");$("confirmNewGameBtn").onclick=finishRound;$("confirmAaaBtn").onclick=confirmAaa;
@@ -562,6 +669,7 @@ document.querySelectorAll(".modal-backdrop").forEach(m=>m.onclick=e=>{if(e.targe
 onValue(ref(db,"sharedPlayers"),snap=>{
  sharedPlayers=snap.val()||{};
  refreshSelects();renderSharedPlayers();renderGame();
+ if($("quickPlayerModal").classList.contains("open"))renderQuickPlayerPicker();
 });
 migrateLocalPlayersToCloud();
 persist();refreshSelects();renderGame();
