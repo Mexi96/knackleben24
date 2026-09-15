@@ -14,20 +14,24 @@
 :root{
  --bg:#050505;--panel:#0c0c0c;--panel2:#151515;--panel3:#1f1f1f;
  --border:rgba(255,255,255,.12);--text:#fff;--muted:#aaa;--accent:#d4af37;--accent2:#f4d66b;
- --danger:#ef4444;--blue:#fff;--overlay:rgba(0,0,0,.78)
+ --danger:#ef4444;--blue:#fff;--overlay:rgba(0,0,0,.78);
+ --ios-top-offset:18px;
+ --app-top-padding:max(24px,calc(env(safe-area-inset-top) + var(--ios-top-offset)));
+ --drawer-top-padding:max(24px,calc(env(safe-area-inset-top) + 18px));
+ --install-top-padding:max(26px,calc(env(safe-area-inset-top) + 20px))
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 body{min-height:100dvh;background:radial-gradient(circle at 50% -10%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 34rem),var(--bg)}
 button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}.hidden{display:none!important}
 
-#installGate{height:100dvh;overflow:auto;display:grid;place-items:center;padding:18px}
+#installGate{height:100dvh;overflow:auto;display:grid;place-items:center;padding:var(--install-top-padding) 18px 18px}
 .install-card{width:min(520px,100%);background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:22px}
 .install-logo{width:86px;height:86px;border-radius:20px;overflow:hidden;margin-bottom:14px}.install-logo img,.app-logo img{width:100%;height:100%;object-fit:cover;display:block}
 .install-card h1{margin:0 0 6px;font-size:clamp(2rem,9vw,3rem)}.install-card>p{color:var(--muted)}
 .steps{display:grid;gap:10px}.step{display:grid;grid-template-columns:34px 1fr;gap:10px;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:12px}.num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111;display:grid;place-items:center;font-weight:900}.hint{font-size:.84rem;color:var(--muted)}
 
-#appRoot{width:min(980px,100%);height:100dvh;margin:auto;display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));overflow:hidden}
+#appRoot{width:min(980px,100%);height:100dvh;margin:auto;display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;padding:var(--app-top-padding) 10px max(8px,env(safe-area-inset-bottom));overflow:hidden}
 .header{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:42px}
 .header-left{display:flex;align-items:center;gap:8px;min-width:0}.menu-btn{width:38px;height:38px;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);display:grid;place-items:center;flex:0 0 auto}.hamburger{width:18px;height:14px;display:grid;gap:3px}.hamburger span{height:2px;background:currentColor}
 .app-logo{width:38px;height:38px;border-radius:10px;overflow:hidden;flex:0 0 auto}.brand{font-size:38px;line-height:38px;font-weight:950;white-space:nowrap;letter-spacing:-.035em}
@@ -95,8 +99,8 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 @keyframes logoBuild{to{opacity:1;transform:none}}@keyframes letterBuild{to{opacity:1;transform:none}}@keyframes splashWipe{0%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 100% 0 0)}}
 
 .drawer-overlay{position:fixed;inset:0;background:rgba(2,6,23,.55);opacity:0;pointer-events:none;transition:.22s;z-index:80}.drawer-overlay.open{opacity:1;pointer-events:auto}
-.drawer{position:absolute;left:0;top:0;bottom:0;width:min(340px,88vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:.24s;padding:max(16px,env(safe-area-inset-top)) 14px max(16px,env(safe-area-inset-bottom));display:flex;flex-direction:column}.drawer-overlay.open .drawer{transform:none}
-.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.drawer-title{font-weight:950;font-size:1.2rem}.drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
+.drawer{position:absolute;left:0;top:0;bottom:0;width:min(340px,88vw);background:var(--panel);border-right:1px solid var(--border);transform:translateX(-100%);transition:.24s;padding:var(--drawer-top-padding) 14px max(16px,env(safe-area-inset-bottom));display:flex;flex-direction:column}.drawer-overlay.open .drawer{transform:none}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.drawer-title{font-weight:950;font-size:1.2rem}.drawer-close{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text)}
 .drawer-nav{display:grid;gap:8px}.drawer-bottom{margin-top:auto}.drawer-item{display:flex;align-items:center;gap:12px;width:100%;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--text);font-weight:800;text-align:left}.drawer-item:active{background:var(--panel2)}
 .drawer-icon{width:28px;height:28px;display:grid;place-items:center;color:var(--accent2);flex:0 0 28px}.drawer-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.drawer-icon.settings svg{width:24px;height:24px}.drawer-spacer{height:0;background:transparent;margin:2px 0}
 
@@ -113,7 +117,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 .theme-card{border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--panel3);display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--text);font-weight:800}
 .theme-card.active{outline:2px solid var(--accent)}
 .swatches{display:flex;gap:4px}.swatch{width:15px;height:15px;border-radius:50%;border:1px solid rgba(127,127,127,.3)}
-@media(max-width:520px){.theme-grid{grid-template-columns:1fr 1fr}.theme-card{font-size:.8rem;padding:9px}}
+@media(max-width:520px){:root{--ios-top-offset:22px}.theme-grid{grid-template-columns:1fr 1fr}.theme-card{font-size:.8rem;padding:9px}}
 
 .qr-box{text-align:center}.qr-box img{width:min(290px,80vw);background:#fff;border-radius:16px;padding:8px}
 
