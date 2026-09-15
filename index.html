@@ -15,10 +15,10 @@
  --bg:#050505;--panel:#0c0c0c;--panel2:#151515;--panel3:#1f1f1f;
  --border:rgba(255,255,255,.12);--text:#fff;--muted:#aaa;--accent:#d4af37;--accent2:#f4d66b;
  --danger:#ef4444;--blue:#fff;--overlay:rgba(0,0,0,.78);
- --ios-top-offset:18px;
+ --ios-top-offset:24px;
  --app-top-padding:max(24px,calc(env(safe-area-inset-top) + var(--ios-top-offset)));
- --drawer-top-padding:max(24px,calc(env(safe-area-inset-top) + 18px));
- --install-top-padding:max(26px,calc(env(safe-area-inset-top) + 20px))
+ --drawer-top-padding:max(28px,calc(env(safe-area-inset-top) + 24px));
+ --install-top-padding:max(30px,calc(env(safe-area-inset-top) + 26px))
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
@@ -117,7 +117,7 @@ input,select{width:100%;min-width:0;border:1px solid var(--border);border-radius
 .theme-card{border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--panel3);display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--text);font-weight:800}
 .theme-card.active{outline:2px solid var(--accent)}
 .swatches{display:flex;gap:4px}.swatch{width:15px;height:15px;border-radius:50%;border:1px solid rgba(127,127,127,.3)}
-@media(max-width:520px){:root{--ios-top-offset:22px}.theme-grid{grid-template-columns:1fr 1fr}.theme-card{font-size:.8rem;padding:9px}}
+@media(max-width:520px){:root{--ios-top-offset:28px}.theme-grid{grid-template-columns:1fr 1fr}.theme-card{font-size:.8rem;padding:9px}}
 
 .qr-box{text-align:center}.qr-box img{width:min(290px,80vw);background:#fff;border-radius:16px;padding:8px}
 
